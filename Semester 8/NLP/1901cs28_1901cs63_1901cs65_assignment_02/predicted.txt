@@ -1,0 +1,500 @@
+sentence:
+@SammieLynnsMom @tg1.781 they will be all done by Sunday trust me *wink* 
+predicted_sequence:
+<s> B I I O O O O O O O O I </s> 
+
+sentence:
+Made it back home to GA . It sucks not to be at Disney world , but its good to be home . Time to start planning the next Disney World trip . 
+predicted_sequence:
+<s> O O O O O O O O O O O O O B I O O O O O O O O O O O I O O I I I O </s> 
+
+sentence:
+' Breaking Dawn ' Returns to Vancouver on January 11th http://bit.ly/dbDMs8 
+predicted_sequence:
+<s> O I I O I O I O I I I </s> 
+
+sentence:
+@ls_n perhaps , but folks may find something in the gallery that is helpful in their day-to-day work as well . Even just to use it . 
+predicted_sequence:
+<s> B I O O O O O O O O O O O O O O I I O O O O O O O O O </s> 
+
+sentence:
+@Carr.t aye been tonight - excellent 
+predicted_sequence:
+<s> B I O O O O </s> 
+
+sentence:
+RT @LilTwist : RT this if you want me to go back live on Ustream later tonight 
+predicted_sequence:
+<s> O O O O O O O O O O O O O O O I O </s> 
+
+sentence:
+@Hollly_ 16 b 17 in feb 
+predicted_sequence:
+<s> B I I I O I </s> 
+
+sentence:
+RT @obsidianchao : OF FUCKING COURSE . I GET HOME AND MY BROTHER IS ON THE MOTHER FUCKING XBOX . Worst fucking day ever . 
+predicted_sequence:
+<s> O O O O I I O O O O O O O O O O O I I O O I I I O </s> 
+
+sentence:
+I haven't driven to bc in years , and I am just stunned by how beautiful the drive is . 
+predicted_sequence:
+<s> O O I O I O O O O O O O O O O I O I O O </s> 
+
+sentence:
+@daraobriain hmmm . Cant wait . Comin on Thursday . First time to the Apollo . 
+predicted_sequence:
+<s> B I O O O O O O I O O O O O O O </s> 
+
+sentence:
+RT @Hatshepsutely : @adamlambert please , oh please wear the infamous beach hat tonight during your encore ( in lieu of a rasta wig) . &lt; 3333 
+predicted_sequence:
+<s> O O O I I O O O O O I I I O O O I O O I I O I I O O I </s> 
+
+sentence:
+When I said good night , I ended up watching movies on my laptop . Yep . No sleep again . Time to take a bath now ! It 's gonna be a looong day . 
+predicted_sequence:
+<s> O O O O O O O O O O I O O O O I O O O O O O O O O O O O O O O O O O I O </s> 
+
+sentence:
+'On set filming Chris " Rainy Days " video . This is the final scene then we can finally edit it .' 
+predicted_sequence:
+<s> B I I I O I I O O O O O O O I O O O O I O I </s> 
+
+sentence:
+@EimearJedward auditioning on sunday :) xo 
+predicted_sequence:
+<s> B I O O O O </s> 
+
+sentence:
+@SheSo_Major they giving the nigga a realllllll hard time about it lmfaoo as they should and now his feelings are hurt ... i like him tho LMAO 
+predicted_sequence:
+<s> B I I O I O I I O O O O O O O O O O O I I O O O O O I </s> 
+
+sentence:
+The Wolves to host the Lions for game time ! Follow us for scores and updates throughout the game ! 
+predicted_sequence:
+<s> O I O I O I O O O O O O O O O I I O O O </s> 
+
+sentence:
+Man gets 2. years in murder plot against judge http://bit.ly/agB9iL 
+predicted_sequence:
+<s> O O I O O I I I I I </s> 
+
+sentence:
+... around all day isnt good for you , least i get home-relaxing time , thursday and frees to keeep me sane :) 
+predicted_sequence:
+<s> O O O O I O O O O O O O O O O O O I O I O I O </s> 
+
+sentence:
+Today is the COMPLETE OPPOSITE of yesterday - . - 
+predicted_sequence:
+<s> O O O O I I I O O O </s> 
+
+sentence:
+#SIUC Whats the Plan For tonight ?? Whos Goin to the BLAST 
+predicted_sequence:
+<s> B I O I O O O I I O O O </s> 
+
+sentence:
+Just changed my twitter background , check it out ! Found it at http://twitrounds.com .. September 17 , 2.1. , 2:52 pm 
+predicted_sequence:
+<s> O O O B I O O O O O O O O O O O I O O O O I </s> 
+
+sentence:
+time to get some sleep . been out from 4pm till now . 
+predicted_sequence:
+<s> O O O O O O O O O O I O O </s> 
+
+sentence:
+'Come to " MRB @ 61 Roadhouse BBQ " Sunday , October 1. from 12:.. pm to 4:.. pm . We are playing for the 61 Roadhouse ... http://fb.me/G1FbJGw1' 
+predicted_sequence:
+<s> B O O O I I I I O O O O I O I I O I I O O O O O O O I O I </s> 
+
+sentence:
+RT @OMBieberJokes : Little Girl : Santa Is So Awesome ! Me : No Little Girl ... You Only Use The Word " Awesome " When You Are Referring To Just ... 
+predicted_sequence:
+<s> O O O O I O I O O O O O O O O O O O O O O O O O O O O O O O O O </s> 
+
+sentence:
+Today = Morton 's Salt motto + Murphy 's Law 
+predicted_sequence:
+<s> O O I O I I I I O I </s> 
+
+sentence:
+@FLAM3Z13. half the time in inglewood the other half in mv ... where u been 
+predicted_sequence:
+<s> B I O O O O O O I O I O O O O </s> 
+
+sentence:
+RT @shan7792 : its annoying tht ppl ask me what race i am before they ask me my name -_- 
+predicted_sequence:
+<s> O O O O I I I I O O O O O O O O O O O I </s> 
+
+sentence:
+My boobs look HUGE today ! #NAME? 
+predicted_sequence:
+<s> O O I I O O O </s> 
+
+sentence:
+@tanyahowse ok this may sound stupid but can u tell them jedsweemonster says hi :' ) 
+predicted_sequence:
+<s> B I O O O I O O O O O I I I I O </s> 
+
+sentence:
+Serious Eats : Leftovers : The Day 's Stray Links #Food http://portfo.li/t/7/rjE 
+predicted_sequence:
+<s> B I O I O O O O I I I I </s> 
+
+sentence:
+What is it with people and punctuality ? I used to be that guy and honestly , it 's a haze now . Just be on time . It 's not like its a surprise . 
+predicted_sequence:
+<s> O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O </s> 
+
+sentence:
+he likes prince , paul simon , and o.d.b. i may have found my soul mate . 
+predicted_sequence:
+<s> O I I O O I O O O O O O O O O I O </s> 
+
+sentence:
+Come to " 6th Biannual 24 Hour Prayer Focus " Saturday , November 13 from 1.:.. am to 1:.. pm . Mark the Date !!! http://fb.me/JyYXPmql 
+predicted_sequence:
+<s> O O O O I I I I I O O O O I O I I O I I O I O I O I </s> 
+
+sentence:
+@RaniLovezYou Yeah , he 's had a few shows over here . Great chef , glad I wasn't disappointed ! His wife gave birth a couple of days ago , aww . 
+predicted_sequence:
+<s> B I O O O O O O O O O O O O O O O O I O O O I I O O I I I O O O </s> 
+
+sentence:
+I'm tired after school today ! 
+predicted_sequence:
+<s> O O O O O O </s> 
+
+sentence:
+It 's supposed to rain in The Bay on Sunday ... well , weather.com says &quot; showers &quot;. Whatever , same thing . 
+predicted_sequence:
+<s> O O O O O O O O O O O O O O I O I I I O O O O </s> 
+
+sentence:
+cant wait to see my beautiful neice nx week , gonna spoil her rotton 
+predicted_sequence:
+<s> O O O O O O I I O O O I O I </s> 
+
+sentence:
+GuitarNews : RockHouse : The Weekend Read For Sept . 17th 2.1. - Guitar Lessons , Articles and More : http://bit.ly/bmHnln 
+predicted_sequence:
+<s> B O I O O O O O O O O I O I I O O O O O O </s> 
+
+sentence:
+What a productive day . Not . 
+predicted_sequence:
+<s> O O O I O O O </s> 
+
+sentence:
+right . Five Star Day came out in may this year . why haven't ANY trailers come out here in Scotland yet ? i've waited about a year for this ! 
+predicted_sequence:
+<s> O O O I I I O O O O O O O O O I O O O O O I O O I O O O O O O </s> 
+
+sentence:
+@jeffpulver @wildman94 @MusicIsGood4U thanks for hitting me and @shoewolf up . Let me know when that DM with all the info has been sent . 
+predicted_sequence:
+<s> B I I I O I O O O O O O O O O O O O O O O O O O O </s> 
+
+sentence:
+is up and ready for his last day on the punt until Stakes Day ... #sadbuttrue 
+predicted_sequence:
+<s> O O O O O O O O O O O I I I O I </s> 
+
+sentence:
+@alealshinn @BambingBling ~~~ @sunchips this is the second time they have messed up .... about to give up on them 
+predicted_sequence:
+<s> B I I I O O O O O O O O O O O O O O O O </s> 
+
+sentence:
+@Daniim92 tks :D obviously its one of the happiest day in my life lol 
+predicted_sequence:
+<s> B I O I O O O O I I O O O O </s> 
+
+sentence:
+RT @mrdaveyd : PG&lt;E donated 35G to state committe chairman investigating them 1day after explosion in #sanBrunofire -Who is still defendi ... 
+predicted_sequence:
+<s> O O O I I I O I I I I I I O I O I I O O I O </s> 
+
+sentence:
+@coulditbeJenG It was 2. years ago . They're coming after me , I just know it . 
+predicted_sequence:
+<s> B O O O O O O O O O O O O O O O O </s> 
+
+sentence:
+@peasmom3 and as if I was n't obsessed with AFL already , after Sunday I 've gotten even more so !! I 'm so obsessed with his sexiness !!!! 
+predicted_sequence:
+<s> B O O O O O O I O I I O O O O O I O O O O O O O O O O I I </s> 
+
+sentence:
+Of course , I was stunned . This , after all , was an inanimate object . 
+predicted_sequence:
+<s> O O O O O O O O O O O O O O O I O </s> 
+
+sentence:
+Halo Reach was a bit crap tonight 
+predicted_sequence:
+<s> B I O O O I O </s> 
+
+sentence:
+So here in Belgium its now 7minutes before midnight ,, Tell me how late it is were you live :D 
+predicted_sequence:
+<s> O O O B I O I I I I I O O O O O O O O O </s> 
+
+sentence:
+We are tied as the 5th band to compete in South 1.7 's Battle of the Bands next Friday for the spot to open for ... http://fb.me/IxhGnUhs 
+predicted_sequence:
+<s> O O I O O I I O O O I I O I I O I O O O O O O O O O O </s> 
+
+sentence:
+RT @eljmayes : Ladbrokes Labour Leadership Market- http://bit.ly/cD3Rn8 Ed Miliband 's odds have shortened significantly in the last week . 
+predicted_sequence:
+<s> O O O I I I I I I I O I O I I O O O O O </s> 
+
+sentence:
+@Zerinaakers talking about as far as shooting for location its going to be on #Vh1 so by the end of the month i should know something 
+predicted_sequence:
+<s> B I O O I O I O I O O O O O O O O O O O O O O O O O </s> 
+
+sentence:
+First Day of Autumn Networking Mixer at Dick 's Carpet next T ... http://conta.cc/ap95gL via #constantcontact 
+predicted_sequence:
+<s> O O O I I I O I O I O I O I I I </s> 
+
+sentence:
+Why hate on somebody for doing well when you can simply say great job and move on .. [Haters u can kill yourself ] cuz ur losers 
+predicted_sequence:
+<s> O O O O O O O O O O O O O I O I O O O O O O I I I I I </s> 
+
+sentence:
+Wat a day today . But oh well i love her *Danielle ily* 
+predicted_sequence:
+<s> O O O O O O O O O O O O I </s> 
+
+sentence:
+@Vivianna_loves I just bought Dior mascara for the first time ..... its the only mascara that doesn't make me wanna wear lashes . 
+predicted_sequence:
+<s> B O O O I I O O O O O O O O I O O O O O O I O </s> 
+
+sentence:
+realy bored smack down tonite yay !! ( : mood : bored-_- ha ! 
+predicted_sequence:
+<s> B I I I I I O O O O O I I O </s> 
+
+sentence:
+Bloggers : Who are you writing for ? | Social Media Today http://bit.ly/9mY.NK 
+predicted_sequence:
+<s> B O O O O O O O O O I O I </s> 
+
+sentence:
+RT @LilTwist : RT this if you want me to go back live on Ustream later tonight 
+predicted_sequence:
+<s> O O O O O O O O O O O O O O O I O </s> 
+
+sentence:
+The British have a remarkable talent for keeping calm , even when there is no crisis . 
+predicted_sequence:
+<s> O I O O O I O O I O O O O O O O O </s> 
+
+sentence:
+@sfgiantsfan55 omg Todo Cabio has been my fav since like `.7 i still listen to their CD all the time i want the new one . alejate de mi ... 
+predicted_sequence:
+<s> B I I I O O O O I O I O O O O O O O O O O O O O O O O I I O </s> 
+
+sentence:
+Resources - Tweets of the Week ( 9.13 . 1. - 9.17 . 1.) : This weeks Tweets of the Week has some cool inspiration , coupl ... http://bit.ly/95X8G5 
+predicted_sequence:
+<s> B O I I O O O I O I O I O I O O O O O O O O O O I O O O I </s> 
+
+sentence:
+well poolnewsfeed when you're good , you're good ! 
+predicted_sequence:
+<s> O I O O O O O O O </s> 
+
+sentence:
+@zeeDOTi i might join in if I make it home in time . :) 
+predicted_sequence:
+<s> B O O I O O O O O O O O O O </s> 
+
+sentence:
+When TIFF is in Tdot , ALWAYS have ur camera in purse ! Managed to get a pic of EVA MENDES ! Didn't know she was signing autographs @ the mall . 
+predicted_sequence:
+<s> O O O O O O O O O O O I O O O O O O O I I O O O O O O I I O I O </s> 
+
+sentence:
+I see her tomorrow : 3 so yeah~ ca n't wait 
+predicted_sequence:
+<s> O O O O O O O O I I I </s> 
+
+sentence:
+@singingislife15 Follow Friday :) 
+predicted_sequence:
+<s> B I I O </s> 
+
+sentence:
+@TheGayDragon @RealmOfMachias Sir .. I SWEAR I had nothing to do with it this time .. honest .. please don't hurt me .. 
+predicted_sequence:
+<s> B I I O O O O O O O O O O O O O O O O O I O O </s> 
+
+sentence:
+RT @Quotealicious : When ever i see a cute love story movie , It 's always you that comes into my mind #Quotealicious 
+predicted_sequence:
+<s> O O O O O O O O O O I I O O O O O O O I O O I </s> 
+
+sentence:
+Exclusive : Rep . Steve King on ObamaCare , Tea Party , and Constitution Day : The inclusion of the Tenth Amendment in ... http://bit.ly/cYITA8 
+predicted_sequence:
+<s> B O I O I I O I O O O O O O I O O I I O I I O O O </s> 
+
+sentence:
+@TimothyJMoore Thnx , I'm glad they weren't totally ignored , but one isn't many when you think how many there are in the CofE ! 
+predicted_sequence:
+<s> B I O O O O I I I O O O O I O O O O O O O O O O O </s> 
+
+sentence:
+Justice Breyer 's About Face : Koran-Burning Is Constitutionally Protected After All via Atlas Shrugs http://tinyurl.com/39wg73o 
+predicted_sequence:
+<s> B I O O O O I O I I O O O I I I </s> 
+
+sentence:
+Don't forget to come and see us at the football game tomorrow afternoon ! Go Reivers ! 
+predicted_sequence:
+<s> O O O O O O O O O O O O O O O O O </s> 
+
+sentence:
+... asked me a question for once , but no ! You ask me about fucking donuts you donut ... have a nice day :P 
+predicted_sequence:
+<s> O O O O O O O O O O O O O O O O I O I O O O O O O </s> 
+
+sentence:
+Here we go , Friday night craziness 
+predicted_sequence:
+<s> O O O O O O I </s> 
+
+sentence:
+CHILLIN @LIVE TONIGHT ! 
+predicted_sequence:
+<s> B I O O </s> 
+
+sentence:
+ugh so this chick onFB jus wrote this long status cussin me out , but im not even gonna stoop to her leve but i wanna bomb her ass out so bad 
+predicted_sequence:
+<s> O O O O I I I O O I I O O O O O O O O I O O O O O O I O I O O O </s> 
+
+sentence:
+today just doesn't feel like a Friday 
+predicted_sequence:
+<s> O O O O O O O </s> 
+
+sentence:
+APO disaster relief tomorrow 1.-12 . Sign up on the website ! 
+predicted_sequence:
+<s> B I I O I O I O O O O O </s> 
+
+sentence:
+Every seven years you lose around half of your friends , and replace them with new friends . 
+predicted_sequence:
+<s> O I O O O O I I O O O O O O O O O O </s> 
+
+sentence:
+RT @rainnwilson : Hey , Seattle-ites ! Check it : http://www.officetally.com/rainn-wilson-and-friends-seattle-oct-23 
+predicted_sequence:
+<s> O O O O O O O O O O O </s> 
+
+sentence:
+For code I've written since Sept ' 9 , the delay between commit to SCM and running on customer hardware has been about 1. days . 
+predicted_sequence:
+<s> O O O I I I I I O O O I I O O O O O O I O O O I I O </s> 
+
+sentence:
+Balloon glowing ? We'd love to see you before or after at Pi ! CWE and Delmar are around the corner , Kirkwood &amp; ... http://fb.me/I6SZ52nW 
+predicted_sequence:
+<s> B I O I O O O O O O O O O O I O I O I O I O O I O I </s> 
+
+sentence:
+All caught up on @SHO_weeds ! After eating a full meal that was the next thing on my list to do after graduating ! 
+predicted_sequence:
+<s> O O O O O O O O O O I O O O O O O O O O O O O O </s> 
+
+sentence:
+http://bit.ly/aTTQYq When Pepsi to ring usually confirm to , winning a Nokia 58.. ? 
+predicted_sequence:
+<s> B O I O O I I O O O O I I O </s> 
+
+sentence:
+RT @Slijterijmeisje : Kreeg net een bruikbare tip van iemand die vorige week was begonnen met een whiskydieet , hij was nu al 3 dagen kwijt 
+predicted_sequence:
+<s> O O O O I I I I I I I I O O O I I I O O O O I I I I </s> 
+
+sentence:
+#news Dems to voters : You may hate us , but GOP is worse ( AP ) ( Yahoo ! ) : Share With Friends : | Latest Top Ne ... http://adpro.co/aQxQtY 
+predicted_sequence:
+<s> B I O O O O O O O O O B O I O I O O I O O O O O O O O O I I O I </s> 
+
+sentence:
+@snufflesgirl25 @mo9x Well . just beg @1..monkeysmusic .. PLEASE come to the #SBLeurope Next year !. We need you there ! *puss in boots eyes* 
+predicted_sequence:
+<s> B I O O O O I O O O O O O O O I O O O O O O O O I </s> 
+
+sentence:
+RT @DollarVanDemos : #BROOKLYN ! Stay up late tonight to catch the 1 hr special of Demos @ 3AM on BCAT feat @BlissyCakes @YaGirlNicolette ... 
+predicted_sequence:
+<s> O O O I O O O O O O O O O I I I I I I O I I I I O </s> 
+
+sentence:
+ahhh the disapointment , after all them awkward bait moments . 
+predicted_sequence:
+<s> O O I O O O O O I I O </s> 
+
+sentence:
+CLUB BLU tonite ...... 9. 's music .. oldskool night wiith dj finese 
+predicted_sequence:
+<s> B I I I I O I O I I I I I </s> 
+
+sentence:
+ooo @claireymarsh where are you when i need you .. 
+predicted_sequence:
+<s> B I I O O O O O O O </s> 
+
+sentence:
+@iDame2Please yea u c da pic 1st Presbyterian all day lol 
+predicted_sequence:
+<s> B I O O I I I I O I O </s> 
+
+sentence:
+Time to go , hihi ! Beijinhos , seus viciados : * 
+predicted_sequence:
+<s> O O O O O O I O O I O I </s> 
+
+sentence:
+RT @rocsidiaz : @Wale ill be in DC tonight where u at ?? Ill be at muse 717 6th St Nw Dc to party 
+predicted_sequence:
+<s> O O O I I O O O O O O O O O O O O I I I I I O O </s> 
+
+sentence:
+@LinnySmit Linny Linny Linny . U are something lady ... Well that story has been on hold for weeks now hasn't it ? I want to get on it this &gt; &gt; 
+predicted_sequence:
+<s> B I I I O O O O I O O O O O O O O O O O O O O O O O O O O O O O </s> 
+
+sentence:
+International Observe the Moon Night ( 9/18/2.1. ) | Saturday , Sep 18 , .6:.. PM | http://bit.ly/bVOdBF #cuboulder 
+predicted_sequence:
+<s> B I O I I O I O O O O O I O O I I I I </s> 
+
+sentence:
+waiting one extra day was a STUPID IDEA because now everything is super expensive AAAAAHHH . x_x *freakingoutkhsf* 
+predicted_sequence:
+<s> O O I I O O O I I O I O O I I O I I </s> 
+
+sentence:
+'Was going to stay until Sunday but my " mother " has already made me mad furthermore hair appointment tomrrw and back to Kent !' 
+predicted_sequence:
+<s> B I O O O O O O O O O O O O O O I I I I O O O O I </s> 
+
