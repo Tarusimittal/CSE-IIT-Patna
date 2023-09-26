@@ -1,0 +1,328 @@
++---------------+
+| Tarusi Mittal |
+| 1901Cs65      |
+| ENdSEM TASK B	|
++---------------+
+
+Initial values of tables:
+mysql> select * from orderlab;
++----------+-------------+-------+------------+-------+-----------+------------+
+| order_id | customer_id | db_id | order_date | price | order_tip | order_rate |
++----------+-------------+-------+------------+-------+-----------+------------+
+| or01     | 1001        | Db101 | 2021-05-03 |  2000 |        30 |          5 |
+| or02     | 1001        | Db102 | 2021-07-13 |  2050 |        10 |          3 |
+| or03     | 1021        | Db102 | 2021-09-14 |  9800 |         0 |          2 |
+| or04     | 1031        | Db105 | 2021-11-15 |   890 |        20 |          1 |
+| or05     | 1031        | Db103 | 2021-10-23 | 10000 |       100 |          5 |
+| or06     | 1031        | Db108 | 2021-09-27 |   750 |        30 |          3 |
+| or07     | 1051        | Db104 | 2021-08-22 |   600 |        40 |          4 |
+| or08     | 1061        | Db109 | 2021-11-16 |  3000 |        10 |          4 |
+| or09     | 1091        | Db110 | 2021-07-08 |  2500 |         0 |          2 |
+| or10     | 1101        | Db107 | 2021-05-02 |  1000 |        50 |          1 |
++----------+-------------+-------+------------+-------+-----------+------------+
+
+mysql> select * from delivery_boy;
++-------+---------+------------+
+| db_id | db_name | db_dob     |
++-------+---------+------------+
+| Db101 | Ramu    | 1987-07-08 |
+| Db102 | Shamu   | 1987-07-08 |
+| Db103 | Aayush  | 1997-06-23 |
+| Db104 | Sheetu  | 1993-05-11 |
+| Db105 | Kaka    | 1989-04-18 |
+| Db106 | Radhe   | 1995-03-08 |
+| Db107 | Prem    | 1991-09-28 |
+| Db108 | Aman    | 1992-07-04 |
+| Db109 | Vivan   | 1990-11-02 |
+| Db110 | Aarav   | 1998-02-23 |
++-------+---------+------------+
+
+mysql> select * from customer;
++-------------+---------------+----------------+-------------------+
+| customer_id | customer_name | customer_place | email_id          |
++-------------+---------------+----------------+-------------------+
+| 1001        | Fridie        | Mumbai         | fridie@gmail.com  |
+| 1011        | Edward        | Delhi          | edward@gmail.com  |
+| 1021        | Cullen        | Bangalore      | cullen@gmail.com  |
+| 1031        | Bella         | Pune           | bella@yahoo.com   |
+| 1041        | Alia          | Chandigarh     | alia@hotmail.com  |
+| 1051        | Preeta        | Ranchi         | preeta@gmail.com  |
+| 1061        | Arjun         | Indore         | arjun@hotmail.com |
+| 1071        | Abhi          | Bhopal         | abhi@yahoo.com    |
+| 1081        | Rishi         | Patiala        | rishi@gmail.com   |
+| 1091        | Kriti         | Sangrur        | kriti@gmail.com   |
+| 1101        | Harshad       | Aligarh        | harshad@yahoo.com |
++-------------+---------------+----------------+-------------------+
+
++---------------+
+| NeW Values 	|
++---------------+
++-------------------------------------------------------------------------------+
+| I have inserted values initially only so that no query gives empty set result	|
++-------------------------------------------------------------------------------+
+
+
+mysql> insert into customer values('1201','Greta','Bandra','greta@yahoo.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values('1301','Geeta','Navi Mumbai','geeta@yahoo.com'),('1401','Sheetu','Navi Mumbai','seeta@yahoo.com'),('1501','Reeta','Navi Mumbai','reeta@yahoo.com');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into orderlab values('or11','1301','Db102','2020-05-09',5000,100,2),
+    -> ('or12','1301','Db102','2020-05-19',10000,700,4),
+    -> ('or13','1401','Db104','2020-05-23',4000,10,2),
+    -> ('or14','1501','Db102','2020-03-22',4000,50,2),
+    -> ('or15','1301','Db106','2021-08-12',2000,10,2),
+    -> ('or16','1051','Db102','2021-08-21',6600,40,2),
+    -> ('or17','1041','Db102','2021-07-17',2200,60,2),
+    -> ('or18','1051','Db102','2021-06-10',4300,50,2),
+    -> ('or19','1021','Db102','2021-03-09',5400,70,2),
+    -> ('or20','1001','Db102','2021-04-06',7600,20,2),
+    -> ('or21','1081','Db102','2021-01-11',4500,60,2),
+    -> ('or22','1061','Db102','2021-09-12',9000,70,2),
+    -> ('or23','1031','Db102','2021-11-11',4200,80,2);
+Query OK, 13 rows affected (0.01 sec)
+Records: 13  Duplicates: 0  Warnings: 0
+
+mysql> insert into delivery_boy values('Db111','Vineet Mittal','1982-08-09'),('Db112','Saurabh Jain','1997-04-03');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+
+
++---------------------------------------------+
+| After all the updates New Table Values      |
++---------------------------------------------+
+
+mysql> select * from customer;
++-------------+---------------+----------------+-------------------+
+| customer_id | customer_name | customer_place | email_id          |
++-------------+---------------+----------------+-------------------+
+| 1001        | Fridie        | Mumbai         | fridie@gmail.com  |
+| 1011        | Edward        | Delhi          | edward@gmail.com  |
+| 1021        | Cullen        | Bangalore      | cullen@gmail.com  |
+| 1031        | Bella         | Pune           | bella@yahoo.com   |
+| 1041        | Alia          | Chandigarh     | alia@hotmail.com  |
+| 1051        | Preeta        | Ranchi         | preeta@gmail.com  |
+| 1061        | Arjun         | Indore         | arjun@hotmail.com |
+| 1071        | Abhi          | Bhopal         | abhi@yahoo.com    |
+| 1081        | Rishi         | Patiala        | rishi@gmail.com   |
+| 1091        | Kriti         | Sangrur        | kriti@gmail.com   |
+| 1101        | Harshad       | Aligarh        | harshad@yahoo.com |
+| 1201        | Greta         | Bandra         | greta@yahoo.com   |
+| 1301        | Geeta         | Navi Mumbai    | geeta@yahoo.com   |
+| 1401        | Sheetu        | Navi Mumbai    | seeta@yahoo.com   |
+| 1501        | Reeta         | Navi Mumbai    | reeta@yahoo.com   |
++-------------+---------------+----------------+-------------------+
+15 rows in set (0.00 sec)
+
+mysql> select * from delivery_boy;
++-------+---------------+------------+
+| db_id | db_name       | db_dob     |
++-------+---------------+------------+
+| Db101 | Ramu          | 1987-07-08 |
+| Db102 | Shamu         | 1987-07-08 |
+| Db103 | Aayush        | 1997-06-23 |
+| Db104 | Sheetu        | 1993-05-11 |
+| Db105 | Kaka          | 1989-04-18 |
+| Db106 | Radhe         | 1995-03-08 |
+| Db107 | Prem          | 1991-09-28 |
+| Db108 | Aman          | 1992-07-04 |
+| Db109 | Vivan         | 1990-11-02 |
+| Db110 | Aarav         | 1998-02-23 |
+| Db111 | Vineet Mittal | 1982-08-09 |
+| Db112 | Saurabh Jain  | 1997-04-03 |
++-------+---------------+------------+
+12 rows in set (0.00 sec)
+
++----------+-------------+-------+------------+-------+-----------+------------+
+| order_id | customer_id | db_id | order_date | price | order_tip | order_rate |
++----------+-------------+-------+------------+-------+-----------+------------+
+| or01     | 1001        | Db101 | 2021-05-03 |  2000 |        30 |          5 |
+| or02     | 1001        | Db102 | 2021-07-13 |  2050 |        10 |          3 |
+| or03     | 1021        | Db102 | 2021-09-14 |  9800 |         0 |          2 |
+| or04     | 1031        | Db105 | 2021-11-15 |   890 |        20 |          1 |
+| or05     | 1031        | Db103 | 2021-10-23 | 10000 |       100 |          5 |
+| or06     | 1031        | Db108 | 2021-09-27 |   750 |        30 |          3 |
+| or07     | 1051        | Db104 | 2021-08-22 |   600 |        40 |          4 |
+| or08     | 1061        | Db109 | 2021-11-16 |  3000 |        10 |          4 |
+| or09     | 1091        | Db110 | 2021-07-08 |  2500 |         0 |          2 |
+| or10     | 1101        | Db107 | 2021-05-02 |  1000 |        50 |          1 |
+| or11     | 1301        | Db102 | 2020-05-09 |  5000 |       100 |          2 |
+| or12     | 1301        | Db102 | 2020-05-19 | 10000 |       700 |          4 |
+| or13     | 1401        | Db104 | 2020-05-23 |  4000 |        10 |          2 |
+| or14     | 1501        | Db102 | 2020-03-22 |  4000 |        50 |          2 |
+| or15     | 1301        | Db106 | 2021-08-12 |  2000 |        10 |          2 |
+| or16     | 1051        | Db102 | 2021-08-21 |  6600 |        40 |          2 |
+| or17     | 1041        | Db102 | 2021-07-17 |  2200 |        60 |          2 |
+| or18     | 1051        | Db102 | 2021-06-10 |  4300 |        50 |          2 |
+| or19     | 1021        | Db102 | 2021-03-09 |  5400 |        70 |          2 |
+| or20     | 1001        | Db102 | 2021-04-06 |  7600 |        20 |          2 |
+| or21     | 1081        | Db102 | 2021-01-11 |  4500 |        60 |          2 |
+| or22     | 1061        | Db102 | 2021-09-12 |  9000 |        70 |          2 |
+| or23     | 1031        | Db102 | 2021-11-11 |  4200 |        80 |          2 |
++----------+-------------+-------+------------+-------+-----------+------------+
+23 rows in set (0.00 sec)
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 1------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+mysql> SELECT * FROM Customer WHERE Customer_Place = 'Bandra' AND (SELECT RIGHT(Customer.Email_ID,9)) != 'gmail.com';
++-------------+---------------+----------------+-----------------+
+| customer_id | customer_name | customer_place | email_id        |
++-------------+---------------+----------------+-----------------+
+| 1201        | Greta         | Bandra         | greta@yahoo.com |
++-------------+---------------+----------------+-----------------+
+1 row in set (0.01 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 2------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+mysql> SELECT Customer_Place, COUNT(*) AS Highest_Count FROM orderlab
+    -> INNER JOIN customer ON orderlab.Customer_ID = customer.Customer_ID
+    -> WHERE (SELECT EXTRACT(MONTH FROM order_date)) = 8
+    -> AND (SELECT EXTRACT(YEAR FROM order_date)) = 2021
+    -> GROUP BY Customer_Place
+    -> HAVING Highest_Count = (
+    -> SELECT MAX(Countdb.Place_Count) FROM (SELECT COUNT(*) AS Place_Count FROM orderlab
+    -> INNER JOIN customer ON orderlab.Customer_ID = customer.Customer_ID
+    -> WHERE (SELECT EXTRACT(MONTH FROM order_date)) = 8
+    -> AND (SELECT EXTRACT(YEAR FROM order_date)) = 2021
+    -> GROUP BY Customer_Place) AS Countdb );
++----------------+---------------+
+| Customer_Place | Highest_Count |
++----------------+---------------+
+| Ranchi         |             2 |
++----------------+---------------+
+1 row in set (0.00 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 3------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+mysql> SELECT Customer_Place, COUNT(*) AS Highest_Count FROM orderlab
+    -> INNER JOIN customer ON orderlab.Customer_ID = customer.Customer_ID
+    -> WHERE (SELECT EXTRACT(MONTH FROM order_date)) = 8
+    -> AND (SELECT EXTRACT(YEAR FROM order_date)) = 2021
+    -> GROUP BY Customer_Place
+    -> HAVING Highest_Count = (
+    -> SELECT MAX(Countdb.Place_Count) FROM (SELECT COUNT(*) AS Place_Count FROM orderlab
+    -> INNER JOIN customer ON orderlab.Customer_ID = customer.Customer_ID
+    -> WHERE (SELECT EXTRACT(MONTH FROM order_date)) = 8
+    -> AND (SELECT EXTRACT(YEAR FROM order_date)) = 2021
+    -> GROUP BY Customer_Place) AS Countdb );
++----------------+---------------+
+| Customer_Place | Highest_Count |
++----------------+---------------+
+| Ranchi         |             2 |
++----------------+---------------+
+1 row in set (0.00 sec)
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 4------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+mysql> select db_id, count(*) from orderlab group by db_id having count(*) >= 10;
++-------+----------+
+| db_id | count(*) |
++-------+----------+
+| Db102 |       13 |
++-------+----------+
+1 row in set (0.00 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 5------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+mysql> create view Food_sales as
+    -> select customer_place as Place_name, sum(price) as Total_cost, extract(year from order_date) as Year
+    -> from orderlab, customer
+    -> where customer.customer_id = orderlab.customer_id
+    -> group by customer.customer_id, customer_place;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from Food_sales;
++-------------+------------+------+
+| Place_name  | Total_cost | Year |
++-------------+------------+------+
+| Mumbai      |      11650 | 2021 |
+| Bangalore   |      15200 | 2021 |
+| Pune        |      15840 | 2021 |
+| Ranchi      |      11500 | 2021 |
+| Indore      |      12000 | 2021 |
+| Sangrur     |       2500 | 2021 |
+| Aligarh     |       1000 | 2021 |
+| Navi Mumbai |      17000 | 2020 |
+| Navi Mumbai |       4000 | 2020 |
+| Navi Mumbai |       4000 | 2020 |
+| Chandigarh  |       2200 | 2021 |
+| Patiala     |       4500 | 2021 |
++-------------+------------+------+
+12 rows in set (0.01 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 6------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+mysql> select * from delivery_boy where lower(db_name) regexp '([aeiou].*){2}' and lower(db_name) like '% %';
++-------+---------------+------------+
+| db_id | db_name       | db_dob     |
++-------+---------------+------------+
+| Db111 | Vineet Mittal | 1982-08-09 |
+| Db112 | Saurabh Jain  | 1997-04-03 |
++-------+---------------+------------+
+2 rows in set (0.00 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 7------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+mysql> SELECT COUNT(*) from Orderlab,Customer,Delivery_Boy where Customer.Customer_Name =
+    -> Delivery_Boy.DB_Name and OrderLab.Customer_ID=Customer.Customer_ID and 
+    -> OrderLab.DB_ID=Delivery_Boy.DB_ID;
++----------+
+| COUNT(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 8------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+mysql> select datediff(max(db_dob), min(db_dob)) as absolute_difference_in_days from delivery_boy;
++-----------------------------+
+| absolute_difference_in_days |
++-----------------------------+
+|                        5677 |
++-----------------------------+
+1 row in set (0.00 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 9------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+mysql> select year(Order_Date)
+    -> from Orderlab
+    -> group by year(Order_Date)
+    -> having sum(Order_tip) = (select max(tot_tip) from (select sum(Order_tip) as tot_tip from Orderlab group by year(Order_Date) ) as sub);
++------------------+
+| year(Order_Date) |
++------------------+
+|             2020 |
++------------------+
+1 row in set (0.01 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 10------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+mysql> select datediff(current_date,order_date) from orderlab where order_date = (select max(order_date) from  orderlab where order_date<(select max(order_date) from orderlab));
++-----------------------------------+
+| datediff(current_date,order_date) |
++-----------------------------------+
+|                                 2 |
++-----------------------------------+
+1 row in set (0.00 sec)

@@ -1,0 +1,160 @@
+ASSIGNMENT
+HOME-WORK
+
+TARUSI MITTAL
+1901CS65
+CS321 
+
+
++++++++++++++++++++++++++++++++++++++++
+QUESTION 1:
++++++++++++++++++++++++++++++++++++++++
+
+As the instructions in MIPS are of 32 bits or 4 bytes in size.
+So, size of the code = (4 * Number_of_instructions) bytes
+
+To get the actual count of instructions we need to convert the Pseudo Instruction to the real MIPS Tnstruction
+
+(a) Code: -
+
+    move $s0, $zero
+    move $t0, $zero
+
+  Lp: muli $t1, $t0, 4
+    add $t1, $t1, $s1   # $s1 = &A[0]
+
+    lw $t2, 0($t1)
+    add $s0, $s0, $t2
+
+    add $t0, $t0, 1
+    blt $t0, $s2, Lp    # $s2 = n
+
+Here we have:
+"move" and "blt" -> pseudo-instructions.
+"move" 		 -> single "add" instruction.
+"blt" 		 -> combination of "slt" and "bne" instructions.
+lw is mostly Pseudo Instruction as the assembler may skip one or more than one instruction.
+
+Counting the instructions
+	
+     INSTRUCTION                               NO OF INSTRUCTIONS
+    move $s0, $zero                                  1 
+    move $t0, $zero                                  1  
+
+ Lp: muli $t1, $t0, 4                                1 
+    add $t1, $t1, $s1   # $s1 = &A[0]                1  
+    
+    lw $t2, 0($t1)                                   1 
+    add $s0, $s0, $t2                                1 
+
+    add $t0, $t0, 1                                  1 
+    blt $t0, $s2, Lp    # $s2 = n                    2 
+
+Total number of instructions = 1+1+1+1+1+1+1+2 = 9
+Size of code = 4 * 9 = 36 bytes
+
+(b) Code2: -
+
+    move $s0, $zero
+    la $t1, A
+    addi $s2, $t1, 400
+
+L:  lw $t2, 0($t1)
+    add $s0, $s0, $t2
+
+    addi $t1, $t1, 4
+    blt $t1, $s2, L  
+
+Here we have"
+"move", "la" and "blt" -> pseudo-instructions.
+"move" 		       -> single "add" instruction.
+"la" 		       -> combination of "lui" and "ori" instructions.
+"blt" 		       -> combination of "slt" and "bne" instructions.
+
+Counting the instructions
+	
+     INSTRUCTION                               NO OF INSTRUCTIONS
+    move $s0, $zero                                  1 
+    la $t1, A                                        2 
+    addi $s2, $t1, 400                               1 
+
+L:  lw $t2, 0($t1)                                   1 
+    add $s0, $s0, $t2                                1 
+
+    addi $t1, $t1, 4                                 1 
+    blt $t1, $s2, L                                  2 
+
+Total number of instructions = 1+2+1+1+1+1+2 = 9
+Size of code = 4 * 9 = 36 bytes
+
++++++++++++++++++++++++++++++++++++++++
+QUESTION 2:
++++++++++++++++++++++++++++++++++++++++
+
+(a) Code: -
+
+    move $s0, $zero
+    move $t0, $zero
+
+  Lp: muli $t1, $t0, 4
+    add $t1, $t1, $s1   # $s1 = &A[0]
+
+    lw $t2, 0($t1)
+    add $s0, $s0, $t2
+
+    add $t0, $t0, 1
+    blt $t0, $s2, Lp    # $s2 = n
+
+For the first code we have two parts: The out of the loop and the inside loop code,
+We will count the cycles for both of them separately.
+
+Out of the loop:
+	INSTRUCTION               NUMBER OF CYCLES
+	   move                            4
+	   move                            4
+
+Inside the loop:
+	INSTRUCTION               NUMBER OF CYCLES
+	  muli                            4
+	  add                             4
+	  lw                              5
+	  add                             4
+	  add                             4
+	  blt                             3
+
+Number of cycles required for the full programme = 4 + 4 + ( 4 + 4 + 5 + 4 + 4 + 3 )n
+					         = 8 + 24n cycles, n = Number of loops  / Size of the array
+(b) Code2: -
+
+    move $s0, $zero
+    la $t1, A
+    addi $s2, $t1, 400
+
+L:  lw $t2, 0($t1)
+    add $s0, $s0, $t2
+
+    addi $t1, $t1, 4
+    blt $t1, $s2, L  
+
+
+For this code, we have two parts
+
+Out of the loop:
+	INSTRUCTION               NUMBER OF CYCLES
+	   move                            4
+	   la                              5
+	   addi       			   4
+
+Inside the loop:
+	INSTRUCTION               NUMBER OF CYCLES
+           lw                              5
+	   add                             4
+	   addi                            4
+	   blt                             3
+
+Number of cycles required for the full program = 4 + 5 + 4 + ( 5 + 4 + 4 + 3)n
+					       = 13 + 16n cycles, n = Number of loops / Size of the array
+
++=======================================================================================================+
++++++++++++++++++++++++++++++++++++++++++++++++END+++++++++++++++++++++++++++++++++++++++++++++++++++++++
++=======================================================================================================+

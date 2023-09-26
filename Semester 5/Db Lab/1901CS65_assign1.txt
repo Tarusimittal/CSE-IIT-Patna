@@ -1,0 +1,450 @@
++---------------+
+| Tarusi Mittal |
+| 1901Cs65      |
+| Assignment 01	|
++---------------+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++---------------------------------------------------Setup---------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//login as user scot
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.0.26 MySQL Community Server - GPL
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 1------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//As defined in the cureent assignment modifying the tables of the previous lab;
+
+//updating student
+
+mysql> insert into student values(1901CS01,"Tripti", "Chandigarh"),(1901CS02,"Tarusi","Mohali"),(1901CS03, "Tanishq", "Shivpuri"), (1901CS04, "Sushant", "Patna"), (1901CS05,"Prakhar", "Bhopal"),(1901CS06, "Shreya", "Dehradun"),(1901CS07,"Saurabh","Mumbai"),(1901CS08,"Sakshi","Mumbai"), (1901CS09, "Srajan", "Indore"), (1901CS10,"Shashwat", "Kangra");
+
+mysql> update student
+    -> set gender = 'F'
+    -> where SName = 'Tripti' or SName ='Tarusi' or SName = 'Shreya' or SName = 'Sakshi';
+
+mysql> select * from student;
++----------+----------+------------+--------+
+| Rollno   | SName    | City       | gender |
++----------+----------+------------+--------+
+| 1901CS01 | Tripti   | Chandigarh | F      |
+| 1901CS02 | Tarusi   | Mohali     | F      |
+| 1901CS03 | Tanishq  | Shivpuri   | M      |
+| 1901CS04 | Sushant  | Patna      | M      |
+| 1901CS05 | Prakhar  | Bhopal     | M      |
+| 1901CS06 | Shreya   | Dehradun   | F      |
+| 1901CS07 | Saurabh  | Mumbai     | M      |
+| 1901CS08 | Sakshi   | Mumbai     | F      |
+| 1901CS09 | Srajan   | Indore     | M      |
+| 1901CS10 | Shashwat | Kangra     | M      |
++----------+----------+------------+--------+
+
+
+//updating course
+
+mysql> insert into course values("301", "maths", 8)("302", "science", 7),("303","english",6),("304","physics",8),("305","chemistry", 3),("306","biology",7),("307","history",4),("308","geography",7),("309","civics",2),("310","political",9);
+
+
+mysql> alter table course
+    -> rename column cid to ccode;
+mysql> alter table course modify ccode char(5);
+mysql> alter table course modify cname char(20);
+mysql> select * from course;
++-------+-----------+--------+
+| ccode | CName     | Credit |
++-------+-----------+--------+
+| 301   | maths     |      8 |
+| 302   | science   |      7 |
+| 303   | english   |      6 |
+| 304   | physics   |      8 |
+| 305   | chemistry |      3 |
+| 306   | biology   |      7 |
+| 307   | history   |      4 |
+| 308   | geography |      7 |
+| 309   | civics    |      2 |
+| 310   | political |      9 |
++-------+-----------+--------+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 2------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+//making a new table enrolled
+mysql> create table enrolled (RollNo char(8), CCode char(5));
+
+mysql> insert into enrolled values("1901CS01","301"),("1901CS02","302"),("1901CS03","303"),("1901CS04","304"),("1901CS05","305");
+
+//check if we can enter dupliacte entries
+mysql> insert into enrolled values("1901CS01","301");
+
+//RESULT-> Yes, we can wnter dupliacte entries
+
+mysql> select * from enrolled;
++----------+-------+
+| RollNo   | CCode |
++----------+-------+
+| 1901CS01 | 301   |
+| 1901CS02 | 302   |
+| 1901CS03 | 303   |
+| 1901CS04 | 304   |
+| 1901CS05 | 305   |
+| 1901CS01 | 301   |
++----------+-------+
+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 3------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+
+//taking the entries filtering of the basis of city
+
+mysql> select * from student
+    -> where City = 'Patna' or City ='Mumbai';
++----------+---------+----------+--------+
+| Rollno   | SName   | City     | gender |
++----------+---------+----------+--------+
+| 1901CS04 | Sushant | Patna    | M      |
+| 1901CS05 | Saurabh | Mumbai   | M      |
+| 1901CS08 | Sakshi  | Mumbai   | F      |
++----------+---------+----------+--------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 4------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//Filtering out the male students from the table
+
+mysql> select * from student
+    -> where gender ='M';
++----------+----------+----------+--------+
+| Rollno   | SName    | City     | gender |
++----------+----------+----------+--------+
+| 1901CS03 | Tanishq  | Shivpuri | M      |
+| 1901CS04 | Sushant  | Patna    | M      |
+| 1901CS05 | Prakhar  | Bhopal   | M      |
+| 1901CS07 | Saurabh  | Mumbai   | M      |
+| 1901CS09 | Srajan   | Indore   | M      |
+| 1901CS10 | Shashwat | Kangra   | M      |
++----------+----------+----------+--------+
+
+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 5------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//filerting out the courses with credits less than 6
+// after filtering out renaming all of them to less_credit_course
+
+mysql> select ccode from course
+    -> where Credit<6;
++-------+
+| ccode |
++-------+
+| 307   |
+| 309   |
++-------+
+
+mysql> update course set CName = 'less_credit_course'
+    -> where Credit<6;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from course;
++-------+--------------------+--------+
+| ccode | CName              | Credit |
++-------+--------------------+--------+
+| 301   | maths              |      8 |
+| 302   | science            |      7 |
+| 303   | english            |      6 |
+| 304   | physics            |      8 |
+| 305   | chemistry          |      8 |
+| 306   | biology            |      7 |
+| 307   | less_credit_course |      4 |
+| 308   | geography          |      7 |
+| 309   | less_credit_course |      2 |
+| 310   | political          |      9 |
++-------+--------------------+--------+
+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 6------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//first inserting a course CS354 for needs of the question.
+//after that renaming it as per the question
+
+mysql> insert into course values ('CS354','Database',6);
+mysql> update course
+    -> set cname = 'Database Systems'
+    -> where ccode = 'CS354';
+mysql> select *from course;
++-------+--------------------+--------+
+| ccode | CName              | Credit |
++-------+--------------------+--------+
+| 301   | maths              |      8 |
+| 302   | science            |      7 |
+| 303   | english            |      6 |
+| 304   | physics            |      8 |
+| 305   | chemistry          |      8 |
+| 306   | biology            |      7 |
+| 307   | less_credit_course |      4 |
+| 308   | geography          |      7 |
+| 309   | less_credit_course |      2 |
+| 310   | political          |      9 |
+| CS354 | Database Systems   |      6 |
++-------+--------------------+--------+
+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 7------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//Initialising and setting up the primary keys for student and course
+
+mysql> alter table student
+    -> add primary key(rollno);
+mysql> alter table course
+    -> add primary key(ccode);
+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 8------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//sertting up the primary key for enrolled
+
+mysql> alter table enrolled add primary key(Rollno,ccode);
+ERROR 1062 (23000): Duplicate entry '1901CS01-301' for key 'enrolled.PRIMARY'
+
+// It shows an error because of duplicate entries in the table
+
+//deleting the duplicate entries to set up key for the enrolled table
+
+mysql> delete from enrolled where rollno='1901CS01' and ccode ='301';
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> alter table enrolled
+    -> add primary key(Rollno,ccode);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+//query done
+
+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 9------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//adding the foreign keys for enrolled
+
+mysql> alter table enrolled
+    -> add constraint enrolled_fk1 foreign key(ccode) references course(ccode);
+
+mysql> alter table enrolled
+    -> add constraint enrolled_fk2 foreign key(Rollno) references student(Rollno);
+
+mysql> insert into enrolled values ("1901CS01","301"),
+    -> ("1901CS01","306"),("1901CS02","305"),("1901CS02","309"),("1901CS02","306"),("1901CS03","306"),("1901CS03","309"),("1901CS04","302"),("1901CS05","303"),
+    -> ("1901CS06","308"),("1901CS07","309"),("1901CS08","306"),("1901CS08","310"),("1901CS09","307"),("1901CS010","303");
+
+mysql> insert into enrolled values("1901CS011", "298");
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`dblab`.`enrolled`, CONSTRAINT `enrolled_fk2` FOREIGN KEY (`RollNo`) REFERENCES `student` (`Rollno`))
+
+//while adding a entry for which the Rollno does not exsist earlier we get thi error
+//hence we cant just add any value of the Roll no and ccode
+//The values have to be for the roll no already defined.
+//this is because because our foreign key references to the rollno  in the student table
+
+
+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 10-----------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//selecting the entries for Rollno 1901cs09
+
+mysql> select * from enrolled where Rollno = '1901CS09';
++----------+-------+
+| RollNo   | CCode |
++----------+-------+
+| 1901CS09 | 307   |
++----------+-------+
+
+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 11-----------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+// To suit the needs of the questions taking queries for ccode 306 rather than CS204
+
+// quering the entries who are female and have opted for course with ccode 306
+
+mysql> select distinct SName 
+    -> from student where Rollno = IN(select Rollno from Enrolled 
+    -> where ccode = '306') and 
+    -> gender='F';
++--------+
+| SName  | 
++--------+
+| Tripti | 
+| Tarusi | 
+| Sakshi |
++--------+
+
+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 12-----------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+// for the table enrolled adding a column od year of enrollment(yoe)
+
+mysql> alter table enrolled add yoe int;
+
+mysql> update enrolled set yoe = 2019;
+
+mysql> update enrolled set yoe = 2020 where Rollno = "1901CS04" or Rollno ="1901CS05" or Rollno ="1901CS10";
+Query OK, 5 rows affected (0.01 sec)
+
+
+mysql> update enrolled set yoe = 2021 where RollNo = "1901CS07" or Rollno ="1901CS08" or Rollno="1901CS06" or Rollno="1901CS09";
+
+mysql> select * from enrolled;
++----------+-------+------+
+| RollNo   | CCode | yoe  |
++----------+-------+------+
+| 1901CS01 | 301   | 2019 |
+| 1901CS01 | 306   | 2019 |
+| 1901CS02 | 302   | 2019 |
+| 1901CS02 | 305   | 2019 |
+| 1901CS02 | 306   | 2019 |
+| 1901CS02 | 309   | 2019 |
+| 1901CS03 | 303   | 2019 |
+| 1901CS03 | 306   | 2019 |
+| 1901CS03 | 309   | 2019 |
+| 1901CS04 | 302   | 2020 |
+| 1901CS04 | 304   | 2020 |
+| 1901CS05 | 303   | 2020 |
+| 1901CS05 | 305   | 2020 |
+| 1901CS06 | 308   | 2021 |
+| 1901CS07 | 309   | 2021 |
+| 1901CS08 | 306   | 2021 |
+| 1901CS08 | 310   | 2021 |
+| 1901CS09 | 307   | 2021 |
+| 1901CS10 | 303   | 2020 |
++----------+-------+------+
+
+
+
+
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 13-----------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//As such we cant assign one roll number same course in different year
+
+mysql> insert into enrolled values ("1901CS01", "301", 2020);
+ERROR 1062 (23000): Duplicate entry '190CS01-301' for key 'enrolled.PRIMARY'
+
+//we are getting the error because earlier we have defined the primary key for rollno-ccode, so it prevents any duplication
+
+//If we want to insert it we will have to modify the primary key itself
+
+//altering the primary key to (Rollno, ccode, yoe)
+
+mysql> alter table enrolled drop primary key, add primary key (RollNo,ccode,yoe);
+mysql> insert into enrolled values ("1901CS01", "301", 2020);
+
+mysql> select * from enrolled;
++----------+-------+------+
+| RollNo   | CCode | yoe  |
++----------+-------+------+
+| 1901CS01 | 301   | 2019 | <--
+| 1901CS01 | 301   | 2020 | <--
+| 1901CS02 | 302   | 2019 |
+| 1901CS04 | 302   | 2020 |
+| 1901CS10 | 303   | 2020 |
+| 1901CS03 | 303   | 2019 |
+| 1901CS05 | 303   | 2020 |
+| 1901CS04 | 304   | 2020 |
+| 1901CS02 | 305   | 2019 |
+| 1901CS05 | 305   | 2020 |
+| 1901CS01 | 306   | 2019 |
+| 1901CS02 | 306   | 2019 |
+| 1901CS03 | 306   | 2019 |
+| 1901CS08 | 306   | 2021 |
+| 1901CS09 | 307   | 2021 |
+| 1901CS06 | 308   | 2021 |
+| 1901CS02 | 309   | 2019 |
+| 1901CS03 | 309   | 2019 |
+| 1901CS07 | 309   | 2021 |
+| 1901CS08 | 310   | 2021 |
++----------+-------+------+
+
+
+//hence by updating the primary key we are able to take the same course in two different years for the same student
++-----------------------------------------------------------------------------------------------------------------+
+################################################ END ##############################################################
++-----------------------------------------------------------------------------------------------------------------+
+
+

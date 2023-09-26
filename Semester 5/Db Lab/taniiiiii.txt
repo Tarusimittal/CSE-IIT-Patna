@@ -1,0 +1,1 @@
+CC101,Compilers,6,Core;CC102,Computer Networks,6,Core;CC103,Compilers Lab,3,Core;CB101,Materials,6,Core;CB102,Solid State,6,Core;CB103,Materials Lab,3,Core;FF101,Sociology,3,Elective;FF102,Robotics,6,Elective;FF103,Artificail Intelligence,3,Elective;FF104,Humnities,3,Elective

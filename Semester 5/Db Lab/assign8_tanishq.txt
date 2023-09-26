@@ -1,0 +1,658 @@
++-------------------------+
+|        LAB-08           |
+|     Tanishq Malu        |
+|       1901CS63          |
++-------------------------+
+
+====================================================================================================================================================
+
+Login to mysql server as scot:-
+
+mysql --port = 3307 --host = localhost -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fp                 |
+| dblab              |
+| information_schema |
++--------------------+
+3 rows in set (1.62 sec)
+
+mysql> use dblab;
+Database changed
+
+====================================================================================================================================================
+# TASK1
+  -> For this task, initially create the following tables
+     -- StateCases <StateCode char(2),EntryDate date, NumofCases int> 
+        /*stateCode and EntryDate combination is the primary key, NumofCases is not null type*/
+     -- OverallCases<StateCode char(2), totalCases int>
+
+  ->  Create the required triggers (each for insertion, deletion and updation) so that whenever there is any insertion,
+      deletion and updation in the number of cases in stateCases table then overallCases table will be updated with total the
+      number cases state wise.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> Create table stateCases ( StateCode char(2), EntryDate date, NumofCases int not null,  primary key (StateCode,EntryDate));
+Query OK, 0 rows affected (20.31 sec)
+
+mysql> create table overallCases( StateCode char(2), totalcases int);
+Query OK, 0 rows affected (1.70 sec)
+
+mysql> alter table overallcases add primary key(statecode);
+Query OK, 0 rows affected (5.55 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+/*
+** Insert Trigger
+*/
+
+mysql> DELIMITER $$
+mysql> CREATE TRIGGER before_stateCases_insert
+    -> BEFORE INSERT
+    -> ON statecases FOR EACH ROW
+    -> BEGIN
+    ->  DECLARE rowcount INT;
+    ->
+    ->  SELECT COUNT(*)
+    ->  INTO rowcount
+    ->  FROM overallcases where Upper(statecode) = Upper(new.statecode);
+    ->
+    ->  IF rowcount = 1 THEN
+    ->  UPDATE overallcases
+    ->  SET totalcases = totalcases + new.numofcases where Upper(statecode) = Upper(new.statecode);
+    ->  ELSE
+    ->  INSERT INTO overallcases(statecode,totalcases)
+    ->  VALUES(Upper(new.statecode),new.numofcases);
+    ->  END IF;
+    -> END $$
+Query OK, 0 rows affected (0.36 sec)
+
+mysql> DELIMITER ;
+
+
+/*
+** Inserting different values to see functioning of insert trigger.
+*/
+
+
+mysql> insert into statecases values("MP","2021-05-05",200);
+Query OK, 1 row affected (2.12 sec)
+
+mysql> select * from statecases;
++-----------+------------+------------+
+| StateCode | EntryDate  | NumofCases |
++-----------+------------+------------+
+| MP        | 2021-05-05 |        200 |
++-----------+------------+------------+
+1 row in set (0.00 sec)
+
+// Validating primary key pair 
+mysql> insert into statecases values("MP","2021-05-05",500);
+ERROR 1062 (23000): Duplicate entry 'MP-2021-05-05' for key 'statecases.PRIMARY'
+
+// Case insensitive insertion and adding of num of cases to total cases
+mysql> insert into statecases values("mP","2021-05-06",500);
+Query OK, 1 row affected (0.33 sec)
+
+mysql> select * from overallcases;
++-----------+------------+
+| StateCode | totalcases |
++-----------+------------+
+| MP        |        700 |
++-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into statecases values("UP","2021-05-05",500);
+Query OK, 1 row affected (0.43 sec)
+
+mysql> select * from overallcases;
++-----------+------------+
+| StateCode | totalcases |
++-----------+------------+
+| MP        |        700 |
+| UP        |        500 |
++-----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into statecases values("UP","2021-05-06",700);
+Query OK, 1 row affected (1.56 sec)
+
+mysql> select * from overallcases;
++-----------+------------+
+| StateCode | totalcases |
++-----------+------------+
+| MP        |        700 |
+| UP        |       1200 |
++-----------+------------+
+2 rows in set (0.01 sec)
+
+mysql> select * from statecases;
++-----------+------------+------------+
+| StateCode | EntryDate  | NumofCases |
++-----------+------------+------------+
+| MP        | 2021-05-05 |        200 |
+| mP        | 2021-05-06 |        500 |
+| UP        | 2021-05-05 |        500 |
+| UP        | 2021-05-06 |        700 |
++-----------+------------+------------+
+4 rows in set (0.10 sec)
+
+
+/*
+** UPDATE TRIGGER
+** Apart from invoking update only when numof cases are updated, the following
+** trigger can accomodate updates in entry date and statecode as well.
+*/
+
+
+mysql> DELIMITER $$
+mysql> CREATE TRIGGER after_stateCases_update
+    -> after update
+    -> ON statecases FOR EACH ROW
+    -> BEGIN
+    ->  DECLARE rowcount INT;
+    ->  IF new.statecode = old.statecode THEN
+    ->  UPDATE overallcases
+    ->  SET totalcases = totalcases + new.numofcases - old.numofcases where Upper(statecode) = Upper(new.statecode);
+    ->  ELSE
+    ->   Begin
+    ->    UPDATE overallcases
+    ->    SET totalcases = totalcases - old.numofcases where Upper(statecode) = Upper(old.statecode);
+    ->    delete from overallcases where totalcases = 0;
+    ->    SELECT COUNT(*)
+    ->    INTO rowcount
+    ->    FROM overallcases where Upper(statecode) = Upper(new.statecode);
+    ->
+    ->    IF rowcount = 1 THEN
+    ->     UPDATE overallcases
+    ->     SET totalcases = totalcases + new.numofcases where Upper(statecode) = Upper(new.statecode);
+    ->    ELSE
+    ->     INSERT INTO overallcases(statecode,totalcases)
+    ->     VALUES(Upper(new.statecode),new.numofcases);
+    ->    END IF;
+    ->   End;
+    ->
+    ->  END IF;
+    -> END $$
+Query OK, 0 rows affected (0.67 sec)
+
+mysql> DELIMITER ;
+
+/*
+** Updating different values to see functioning of update trigger.
+*/
+
+mysql> select * from statecases;
++-----------+------------+------------+
+| StateCode | EntryDate  | NumofCases |
++-----------+------------+------------+
+| MP        | 2021-05-05 |        200 |
+| mP        | 2021-05-06 |        500 |
+| UP        | 2021-05-05 |        500 |
+| UP        | 2021-05-06 |        700 |
++-----------+------------+------------+
+4 rows in set (0.51 sec)
+
+mysql> select * from overallcases;
++-----------+------------+
+| StateCode | totalcases |
++-----------+------------+
+| MP        |        700 |
+| UP        |       1200 |
++-----------+------------+
+2 rows in set (0.00 sec)
+
+// Updating num of cases only
+mysql> update statecases set numofcases=650 where statecode="UP" and entrydate="2021-05-06";
+Query OK, 1 row affected (1.16 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from statecases;
++-----------+------------+------------+
+| StateCode | EntryDate  | NumofCases |
++-----------+------------+------------+
+| MP        | 2021-05-05 |        200 |
+| mP        | 2021-05-06 |        500 |
+| UP        | 2021-05-05 |        500 |
+| UP        | 2021-05-06 |        650 |
++-----------+------------+------------+
+4 rows in set (0.51 sec)
+
+mysql> select * from overallcases;
++-----------+------------+
+| StateCode | totalcases |
++-----------+------------+
+| MP        |        700 |
+| UP        |       1150 |
++-----------+------------+
+2 rows in set (0.00 sec)
+
+//Updating state code
+mysql> update statecases set statecode="BH" where statecode="UP" and entrydate="2021-05-06";
+Query OK, 1 row affected (0.72 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from statecases;
++-----------+------------+------------+
+| StateCode | EntryDate  | NumofCases |
++-----------+------------+------------+
+| BH        | 2021-05-06 |        650 |
+| MP        | 2021-05-05 |        200 |
+| mP        | 2021-05-06 |        500 |
+| UP        | 2021-05-05 |        500 |
++-----------+------------+------------+
+4 rows in set (0.07 sec)
+
+mysql> select * from overallcases;
++-----------+------------+
+| StateCode | totalcases |
++-----------+------------+
+| BH        |        650 |
+| MP        |        700 |
+| UP        |        500 |
++-----------+------------+
+3 rows in set (0.10 sec)
+
+// Updating statecode and entry date
+mysql> update statecases set statecode="MP",entrydate="2021-05-07"  where statecode="BH" and entrydate="2021-05-06";
+Query OK, 1 row affected (0.73 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from statecases;
++-----------+------------+------------+
+| StateCode | EntryDate  | NumofCases |
++-----------+------------+------------+
+| MP        | 2021-05-05 |        200 |
+| mP        | 2021-05-06 |        500 |
+| MP        | 2021-05-07 |        650 |
+| UP        | 2021-05-05 |        500 |
++-----------+------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from overallcases;
++-----------+------------+
+| StateCode | totalcases |
++-----------+------------+
+| MP        |       1350 |
+| UP        |        500 |
++-----------+------------+
+2 rows in set (0.00 sec)
+
+/*
+** DELETE Trigger
+*/
+
+mysql> DELIMITER $$
+mysql> create trigger before_stateCases_delete
+    -> before delete
+    -> on stateCases for each row
+    -> Begin
+    -> declare rowcount int;
+    -> select count(*) into rowcount from stateCases where Upper(StateCode) = Upper(old.StateCode);
+    -> if rowcount > 1 then
+    -> update overallCases
+    -> set totalCases = totalCases - old.NumofCases
+    -> where StateCode = Upper(old.StateCode);
+    -> else
+    -> delete from overallCases
+    -> where StateCode = Upper(old.StateCode);
+    -> End if;
+    -> End $$
+Query OK, 0 rows affected (4.55 sec)
+
+mysql> DELIMITER ;
+
+mysql> delete from statecases where statecode="MP" and entrydate="2021-05-05";
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select * from statecases;
++-----------+------------+------------+
+| StateCode | EntryDate  | NumofCases |
++-----------+------------+------------+
+| mP        | 2021-05-06 |        500 |
+| MP        | 2021-05-07 |        650 |
+| UP        | 2021-05-06 |        500 |
++-----------+------------+------------+
+3 rows in set (0.07 sec)
+
+mysql> select * from overallcases;
++-----------+------------+
+| StateCode | totalcases |
++-----------+------------+
+| MP        |       1150 |
+| UP        |        500 |
++-----------+------------+
+2 rows in set (0.58 sec)
+
+mysql> delete from statecases where statecode="UP";
+Query OK, 1 row affected (1.53 sec)
+
+mysql> select * from overallcases;
++-----------+------------+
+| StateCode | totalcases |
++-----------+------------+
+| MP        |       1150 |
++-----------+------------+
+1 row in set (0.00 sec)
+
+
+====================================================================================================================================================
+# TASK2
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+//Creating the required tables
+
+mysql> create table account (anum varchar(10) primary key, name varchar(20) not null, balance int not null);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table accountlog (anum varchar(10), operation varchar(20), dateofoperation date);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> insert into account values
+    -> ('Bank101', 'Person1', 0),
+    -> ('Bank102', 'Person2', 0),
+    -> ('Bank103', 'Person3', 0),
+    -> ('Bank104', 'Person4', 0),
+    -> ('Bank105', 'Person5', 0),
+    -> ('Bank106', 'Person6', 0),
+    -> ('Bank107', 'Person7', 0),
+    -> ('Bank108', 'Person8', 0),
+    -> ('Bank109', 'Person9', 0),
+    -> ('Bank110', 'Person10', 0);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+// Update trigger to keep updating the accountLog table
+// For any given account:
+// if old balance >= new updated vaue, withdrawl of money, and the specified amount withdrawn is shown in operation column
+// if old balance < new updated vaue, deposition of money, and the specified amount deposited is shown in operation column
+
+
+DELIMITER $$
+
+CREATE TRIGGER after_account_update
+AFTER UPDATE
+ON account FOR EACH ROW
+BEGIN
+    IF OLD.balance >= NEW.balance THEN
+        INSERT INTO accountLog VALUES(
+            NEW.anum, CONCAT("WITHDRAWN: " , OLD.balance - NEW.balance), CURDATE()
+        );
+    ELSE
+        INSERT INTO accountLog VALUES(
+            NEW.anum, CONCAT("DEPOSITED: " , NEW.balance - OLD.balance), CURDATE()
+        );
+    END IF;
+END $$
+
+DELIMITER ;
+// Creating the deposit(anum,amount) function
+// Checking if a positive amount of money is deposited or not
+// Checking if the anum exists or not
+// If above cases fails, the fucntion returns -1
+// Otherwise, specified amount is added to person account 
+// Updated account balance is returned by the function
+
+// Deposit function
+mysql> DELIMITER $$
+mysql> create function deposit(anum varchar(10), amount int)
+    -> returns int
+    -> deterministic
+    -> begin
+    -> declare rowcount int;
+    -> if amount < 0 then
+    -> return -1;
+    -> select count(*) into rowcount from account where account.anum = anum;
+    -> if rowcount = 0 then
+    -> return -1;
+    -> end if;
+    -> update account
+    -> set balance = balance + amount where account.anum = anum;
+    -> select balance into answer from account where account.anum=anum;
+    -> return answer;
+    -> end $$
+mysql> DELIMITER ;
+
+mysql> select deposit("Bank101",5000) as UpdatedBalance;
++----------------+
+| UpdatedBalance |
++----------------+
+|           5000 |
++----------------+
+1 row in set (0.17 sec)
+
+mysql> select *from account;
++---------+----------+---------+
+| anum    | name     | balance |
++---------+----------+---------+
+| Bank101 | Person1  |    5000 |
+| Bank102 | Person2  |       0 |
+| Bank103 | Person3  |       0 |
+| Bank104 | Person4  |       0 |
+| Bank105 | Person5  |       0 |
+| Bank106 | Person6  |       0 |
+| Bank107 | Person7  |       0 |
+| Bank108 | Person8  |       0 |
+| Bank109 | Person9  |       0 |
+| Bank110 | Person10 |       0 |
++---------+----------+---------+
+10 rows in set (0.01 sec)
+
+// After all updates
+mysql> select * from account;
++---------+----------+---------+
+| anum    | name     | balance |
++---------+----------+---------+
+| Bank101 | Person1  |   10000 |
+| Bank102 | Person2  |    3000 |
+| Bank103 | Person3  |    3000 |
+| Bank104 | Person4  |       0 |
+| Bank105 | Person5  |    4000 |
+| Bank106 | Person6  |    7000 |
+| Bank107 | Person7  |       0 |
+| Bank108 | Person8  |    2000 |
+| Bank109 | Person9  |       0 |
+| Bank110 | Person10 |    5000 |
++---------+----------+---------+
+10 rows in set (0.00 sec)
+
+
+
+// If negative amount is deposited
+mysql> select deposit("Bank110",-5000) as UpdatedBalance;
++----------------+
+| UpdatedBalance |
++----------------+
+|             -1 |
++----------------+
+1 row in set (0.00 sec)
+
+// If account number doesnt exists
+mysql> select deposit("Bank111",2000) as UpdatedBalance;
++----------------+
+| UpdatedBalance |
++----------------+
+|             -1 |
++----------------+
+1 row in set (0.00 sec)
+
+//Only successful operation are shown
+mysql> select * from accountlog;
++---------+-----------------+-----------------+
+| anum    | operation       | dateofoperation |
++---------+-----------------+-----------------+
+| Bank101 | DEPOSITED: 5000 | 2021-10-21      |
+| Bank102 | DEPOSITED: 3000 | 2021-10-21      |
+| Bank103 | DEPOSITED: 3000 | 2021-10-21      |
+| Bank105 | DEPOSITED: 4000 | 2021-10-21      |
+| Bank106 | DEPOSITED: 7000 | 2021-10-21      |
+| Bank108 | DEPOSITED: 2000 | 2021-10-21      |
+| Bank110 | DEPOSITED: 5000 | 2021-10-21      |
++---------+-----------------+-----------------+
+7 rows in set (0.00 sec)
+
+// Creating the withdraw(anum,amount) function
+// Checking if a Positive amount is withdrawn or not
+// Checking if an account with the given anum exists or not.
+// Checking whether the specified amound can be deducted from the person account or not
+// If above cases fail, the function returns -1
+// Otherwise, specified amount is deducted from person account
+// Remaining account balance is returned by the function
+
+mysql> DELIMITER $$
+mysql> CREATE FUNCTION withdraw(anum VARCHAR(10), amount INT)
+    -> RETURNS INT
+    -> DETERMINISTIC
+    -> BEGIN
+    ->     DECLARE answer INT;
+    ->     DECLARE accountCheck INT;
+    ->     DECLARE currBalance INT;
+    ->     IF amount < 0 THEN
+    ->     RETURN -1;
+    ->     END IF;
+    ->
+    ->     SELECT COUNT(*) INTO accountCheck
+    ->     FROM account
+    ->     WHERE account.anum = anum;
+    ->
+    ->     IF accountCheck < 1 THEN
+    ->     RETURN -1;
+    ->     END IF;
+    ->
+    ->     SELECT balance INTO currBalance
+    ->     FROM account
+    ->     WHERE account.anum = anum;
+    ->
+    ->     IF currBalance < amount THEN
+    ->     RETURN -1;
+    ->     END IF;
+    ->
+    ->     UPDATE account
+    ->     SET balance = balance - amount
+    ->     WHERE account.anum = anum;
+    ->
+    ->     SELECT balance INTO answer
+    ->     FROM account
+    ->     WHERE account.anum = anum;
+    ->
+    ->     RETURN answer;
+    ->
+    -> END $$
+Query OK, 0 rows affected (0.90 sec)
+
+mysql> DELIMITER ;
+
+mysql> select * from account;
++---------+----------+---------+
+| anum    | name     | balance |
++---------+----------+---------+
+| Bank101 | Person1  |    5000 |
+| Bank102 | Person2  |    3000 |
+| Bank103 | Person3  |    3000 |
+| Bank104 | Person4  |       0 |
+| Bank105 | Person5  |    4000 |
+| Bank106 | Person6  |    7000 |
+| Bank107 | Person7  |       0 |
+| Bank108 | Person8  |    2000 |
+| Bank109 | Person9  |       0 |
+| Bank110 | Person10 |    5000 |
++---------+----------+---------+
+10 rows in set (0.00 sec)
+
+//Correct withdrawl
+mysql> select withdraw('Bank101', 3000);
++---------------------------+
+| withdraw('Bank101', 3000) |
++---------------------------+
+|                      2000 |
++---------------------------+
+1 row in set (0.32 sec)
+
+mysql> select withdraw('Bank106', 1500);
++---------------------------+
+| withdraw('Bank106', 1500) |
++---------------------------+
+|                      5500 |
++---------------------------+
+1 row in set (0.52 sec)
+
+mysql> select * from accountlog;
++---------+-----------------+-----------------+
+| anum    | operation       | dateofoperation |
++---------+-----------------+-----------------+
+| Bank101 | DEPOSITED: 5000 | 2021-10-21      |
+| Bank102 | DEPOSITED: 3000 | 2021-10-21      |
+| Bank103 | DEPOSITED: 3000 | 2021-10-21      |
+| Bank105 | DEPOSITED: 4000 | 2021-10-21      |
+| Bank106 | DEPOSITED: 7000 | 2021-10-21      |
+| Bank108 | DEPOSITED: 2000 | 2021-10-21      |
+| Bank110 | DEPOSITED: 5000 | 2021-10-21      |
+| Bank101 | WITHDRAWN: 3000 | 2021-10-21      |
+| Bank106 | WITHDRAWN: 1500 | 2021-10-21      |
++---------+-----------------+-----------------+
+9 rows in set (0.00 sec)
+
+// Amount to be withdrawn is negative
+mysql> select withdraw('Bank101', -3000);
++----------------------------+
+| withdraw('Bank101', -3000) |
++----------------------------+
+|                         -1 |
++----------------------------+
+1 row in set (0.00 sec)
+
+// No bank account exists
+mysql> select withdraw('Bank111', 3000);
++---------------------------+
+| withdraw('Bank111', 3000) |
++---------------------------+
+|                        -1 |
++---------------------------+
+1 row in set (0.00 sec)
+
+//Not enough balance available
+mysql> select withdraw('Bank101', 30000);
++----------------------------+
+| withdraw('Bank101', 30000) |
++----------------------------+
+|                         -1 |
++----------------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from accountlog;
++---------+-----------------+-----------------+
+| anum    | operation       | dateofoperation |
++---------+-----------------+-----------------+
+| Bank101 | DEPOSITED: 5000 | 2021-10-21      |
+| Bank102 | DEPOSITED: 3000 | 2021-10-21      |
+| Bank103 | DEPOSITED: 3000 | 2021-10-21      |
+| Bank105 | DEPOSITED: 4000 | 2021-10-21      |
+| Bank106 | DEPOSITED: 7000 | 2021-10-21      |
+| Bank108 | DEPOSITED: 2000 | 2021-10-21      |
+| Bank110 | DEPOSITED: 5000 | 2021-10-21      |
+| Bank101 | WITHDRAWN: 3000 | 2021-10-21      |
+| Bank106 | WITHDRAWN: 1500 | 2021-10-21      |
++---------+-----------------+-----------------+
+9 rows in set (0.00 sec)
+
+=====================================================================================================================================================
+
++---------+
+| THE END |
++---------+

@@ -1,0 +1,126 @@
+Output
+
+Enter the length of the array: 8
+Enter the numbers in the array:
+0
+5
+9
+-3
+8
+27
+-31
+5
+Final Array after performing Merge Sort:
+
+-31
+-3
+0
+5
+5
+8
+9
+27
+
+
+Final values of registers:
+PC       = 40021c
+EPC      = 0
+Cause    = 0
+BadVAddr = 0
+Status   = 3000ff10
+
+HI       = 0
+LO       = 0
+
+R0  [r0] = 0
+R1  [at] = 1
+R2  [v0] = a
+R3  [v1] = 0
+R4  [a0] = 1b
+R5  [a1] = 100101b4
+R6  [a2] = 100101b0
+R7  [a3] = 100101ac
+R8  [t0] = 100101b4
+R9  [t1] = 1b
+R10 [t2] = 100101b4
+R11 [t3] = 100101a0
+R12 [t4] = 100101b0
+R13 [t5] = 9
+R14 [t6] = 1b
+R15 [t7] = 0
+R16 [s0] = 0
+R17 [s1] = 10010194
+R18 [s2] = 100101b0
+R19 [s3] = 0
+R20 [s4] = 0
+R21 [s5] = 0
+R22 [s6] = 0
+R23 [s7] = 0
+R24 [t8] = 0
+R25 [t9] = 0
+R26 [k0] = 0
+R27 [k1] = 0
+R28 [gp] = 10008000
+R29 [sp] = 7ffff458
+R30 [s8] = 0
+R31 [ra] = 4001d8
+
+Initial values of registers:
+FIR     = 9800
+FCSR    = 0
+FCCR    = 0
+FEXR    = 0
+
+
+Single Precision
+FG0  = 0
+FG1  = 0
+FG2  = 0
+FG3  = 0
+FG4  = 0
+FG5  = 0
+FG6  = 0
+FG7  = 0
+FG8  = 0
+FG9  = 0
+FG10 = 0
+FG11 = 0
+FG12 = 0
+FG13 = 0
+FG14 = 0
+FG15 = 0
+FG16 = 0
+FG17 = 0
+FG18 = 0
+FG19 = 0
+FG20 = 0
+FG21 = 0
+FG22 = 0
+FG23 = 0
+FG24 = 0
+FG25 = 0
+FG26 = 0
+FG27 = 0
+FG28 = 0
+FG29 = 0
+FG30 = 0
+FG31 = 0
+
+
+Double Precision
+FP0  = 0
+FP2  = 0
+FP4  = 0
+FP6  = 0
+FP8  = 0
+FP10 = 0
+FP12 = 0
+FP14 = 0
+FP16 = 0
+FP18 = 0
+FP20 = 0
+FP22 = 0
+FP24 = 0
+FP26 = 0
+FP28 = 0
+FP30 = 0

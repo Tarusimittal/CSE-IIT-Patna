@@ -1,0 +1,454 @@
++-------------------------+
+|        LAB-04           |
+|     Tanishq Malu        |
+|       1901CS63          |
++-------------------------+
+
+====================================================================================================================================================
+
+Login to mysql server as scot:-
+
+mysql --port = 3307 --host = localhost -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dblab              |
+| information_schema |
++--------------------+
+2 rows in set (1.62 sec)
+
+mysql> use dblab;
+Database changed
+
+mysql> SELECT * FROM Student;
++----------+-------------------+--------+------------+---------------------------+
+| RollNo   | SName             | Gender | City       | email                     |
++----------+-------------------+--------+------------+---------------------------+
+| 1901CE01 | Rajni Verma       | F      | Delhi      | 1901CE01rajni@gmail.com   |
+| 1901CE31 | Sneha Roy         | F      | Patna      | 1901CE31sneha@gmail.com   |
+| 1901CS28 | Jenish Monpara    | M      | Surat      | 1901CS28jenish@gmail.com  |
+| 1901CS61 | Srajan Khandelwal | M      | Raipur     | 1901CS61srajan@gmail.com  |
+| 1901CS62 | Sushant Sinha     | M      | Patna      | 1901CS62sushant@yahoo.com |
+| 1901CS65 | Tarusi Mittal     | F      | Chandigarh | 1901CS65tarusi@yahoo.com  |
+| 1901EE32 | Rahul Roy         | M      | Patna      | 1901EE32rahul@iitp.ac.in  |
+| 1901EE51 | Amisha Jain       | F      | Rajasthan  | 1901EE51amisha@iitp.ac.in |
+| 1901EE65 | NamAN             | M      | kanpur     | 1901EE65NamAN@gmail.com   |
+| 1901ME32 | Rahul Raj         | M      | Delhi      | 1901ME32rahul@gmail.com   |
+| 1901ME63 | Pushpak Sharma    | M      | Indore     | 1901ME63pushpak@yahoo.com |
+| 1901ME65 | Bob               | M      | Indore     | 1901ME65Bob@iitp.ac.in    |
++----------+-------------------+--------+------------+---------------------------+
+12 rows in set (0.10 sec)
+
+mysql> SELECT * FROM Course;
++-------+----------------------+--------+---------------+
+| CCode | CName                | Credit | CType         |
++-------+----------------------+--------+---------------+
+| CE301 | Mechanics            |      8 | Core          |
+| CE501 | Mechanics Lab        |      3 | Elective      |
+| CS303 | Automata Theory      |      8 | Core          |
+| CS354 | Database Theory      |      8 | Core          |
+| CS355 | Database Lab         |      3 | Elective      |
+| CS555 | Operating System     |      6 | Elective      |
+| CS561 | Discrete Maths       |      6 | Elective      |
+| CS599 | Compilers            |      6 | Elective      |
+| EE301 | Semiconductors       |      6 | Open Elective |
+| EE302 | Communication system |      6 | Core          |
+| EE501 | Electornics Lab      |      6 | Core          |
+| HS301 | Financial Economics  |      6 | Open Elective |
+| HS303 | Macroeconomics       |      6 | Open Elective |
+| ME301 | Fluids               |      8 | Core          |
+| ME502 | Laser Lab            |      3 | Core          |
++-------+----------------------+--------+---------------+
+15 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Enrolled;
++----------+-------+------+
+| RollNo   | CCode | YoE  |
++----------+-------+------+
+| 1901CE01 | CE301 | 2019 |
+| 1901CE01 | CE501 | 2019 |
+| 1901CE31 | CE301 | 2018 |
+| 1901CE31 | CE501 | 2019 |
+| 1901CS28 | CS354 | 2018 |
+| 1901CS28 | CS355 | 2018 |
+| 1901CS28 | CS303 | 2020 |
+| 1901CS61 | HS301 | 2020 |
+| 1901EE32 | EE301 | 2019 |
+| 1901EE32 | EE302 | 2018 |
+| 1901EE32 | EE501 | 2020 |
+| 1901ME63 | ME502 | 2019 |
+| 1901ME63 | ME301 | 2020 |
+| 1901CS28 | EE301 | 2019 |
+| 1901CS28 | EE302 | 2019 |
+| 1901EE51 | EE301 | 2017 |
+| 1901EE51 | ME502 | 2017 |
+| 1901EE51 | CE501 | 2017 |
+| 1901EE51 | CE301 | 2017 |
+| 1901EE51 | EE302 | 2018 |
+| 1901CS61 | CS555 | 2021 |
+| 1901CS61 | CS561 | 2021 |
+| 1901CS65 | CS561 | 2021 |
+| 1901CS62 | CS303 | 2020 |
+| 1901CS62 | CS354 | 2020 |
+| 1901CS62 | CS561 | 2020 |
+| 1901CS62 | CS355 | 2020 |
+| 1901CS62 | CS599 | 2020 |
+| 1901CS28 | CS599 | 2019 |
+| 1901CS65 | CS599 | 2018 |
++----------+-------+------+
+30 rows in set (0.01 sec)
+
+====================================================================================================================================================
+# Question 1
+
+For each RollNo of Students table, extract only the last four characters.
+Thus, IF the RollNo is 1901CS99 then extract number “CS99” FROM it.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> SELECT SUBSTR(RollNo,5,4)
+    -> AS 2019Batch FROM Student;
++-----------+
+| 2019Batch |
++-----------+
+| CE01      |
+| CE31      |
+| CS28      |
+| CS61      |
+| CS62      |
+| CS65      |
+| EE32      |
+| EE51      |
+| EE65      |
+| ME32      |
+| ME63      |
+| ME65      |
++-----------+
+12 rows in set (0.00 sec)
+
+=====================================================================================================================================================
+# Question 2
+
+For each entry of Enorlled table, display RollNo, CCode, YoE and Combination.
+Here, Combination needs to be derived FROM RollNo, CCode and YoE. Let's say
+RollNo is "1901CS99",CCode is "CS354", YoE is "2021" then Combination will be
+"1901@354#2021"
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> SELECT RollNo,CCode,YoE,CONCAT(SUBSTR(RollNo,1,4),"@",SUBSTR(CCode,3,3),"#",yoe)AS combination FROM Enrolled;
++----------+-------+------+---------------+
+| RollNo   | CCode | yoe  | combination   |
++----------+-------+------+---------------+
+| 1901CE01 | CE301 | 2019 | 1901@301#2019 |
+| 1901CE01 | CE501 | 2019 | 1901@501#2019 |
+| 1901CE31 | CE301 | 2018 | 1901@301#2018 |
+| 1901CE31 | CE501 | 2019 | 1901@501#2019 |
+| 1901CS28 | CS354 | 2018 | 1901@354#2018 |
+| 1901CS28 | CS355 | 2018 | 1901@355#2018 |
+| 1901CS28 | CS303 | 2020 | 1901@303#2020 |
+| 1901CS61 | HS301 | 2020 | 1901@301#2020 |
+| 1901EE32 | EE301 | 2019 | 1901@301#2019 |
+| 1901EE32 | EE302 | 2018 | 1901@302#2018 |
+| 1901EE32 | EE501 | 2020 | 1901@501#2020 |
+| 1901ME63 | ME502 | 2019 | 1901@502#2019 |
+| 1901ME63 | ME301 | 2020 | 1901@301#2020 |
+| 1901CS28 | EE301 | 2019 | 1901@301#2019 |
+| 1901CS28 | EE302 | 2019 | 1901@302#2019 |
+| 1901EE51 | EE301 | 2017 | 1901@301#2017 |
+| 1901EE51 | ME502 | 2017 | 1901@502#2017 |
+| 1901EE51 | CE501 | 2017 | 1901@501#2017 |
+| 1901EE51 | CE301 | 2017 | 1901@301#2017 |
+| 1901EE51 | EE302 | 2018 | 1901@302#2018 |
+| 1901CS61 | CS555 | 2021 | 1901@555#2021 |
+| 1901CS61 | CS561 | 2021 | 1901@561#2021 |
+| 1901CS65 | CS561 | 2021 | 1901@561#2021 |
+| 1901CS62 | CS303 | 2020 | 1901@303#2020 |
+| 1901CS62 | CS354 | 2020 | 1901@354#2020 |
+| 1901CS62 | CS561 | 2020 | 1901@561#2020 |
+| 1901CS62 | CS355 | 2020 | 1901@355#2020 |
+| 1901CS62 | CS599 | 2020 | 1901@599#2020 |
+| 1901CS28 | CS599 | 2019 | 1901@599#2019 |
+| 1901CS65 | CS599 | 2018 | 1901@599#2018 |
++----------+-------+------+---------------+
+30 rows in set (0.00 sec)
+
+=====================================================================================================================================================
+# Question 3
+
+For each entry of Students table, display the RollNo by replacing the 
+"CS" string of RollNo with "CSE" string. 
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+/*
+* Using replace function to replace CS with CSE
+*/
+
+mysql> SELECT replace(RollNo,"CS","CSE")
+    -> AS Modified_RollNo FROM Student;
++-----------------+
+| Modified_RollNo |
++-----------------+
+| 1901CE01        |
+| 1901CE31        |
+| 1901CSE28       |  <----
+| 1901CSE61       |  <----
+| 1901CSE62       |  <----
+| 1901CSE65       |  <----
+| 1901EE32        |
+| 1901EE51        |
+| 1901EE65        |
+| 1901ME32        |
+| 1901ME63        |
+| 1901ME65        |
++-----------------+
+12 rows in set (0.00 sec)
+
+=====================================================================================================================================================
+# Question 4  
+
+While showing the domain of email id of Students table, replace the ".com" with ".co.in".
+Domain name refers to the string after "@" of email value.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> SELECT SUBSTR(email,instr(email,"@")+1)
+    -> AS Domain FROM Student;
++------------+
+| Domain     |
++------------+
+| gmail.com  |   
+| gmail.com  | 
+| gmail.com  |  
+| gmail.com  |  
+| yahoo.com  | 
+| yahoo.com  |
+| iitp.ac.in |
+| iitp.ac.in |
+| gmail.com  |
+| gmail.com  |
+| yahoo.com  |
+| iitp.ac.in |
++------------+
+12 rows in set (0.00 sec)
+
+
+mysql> SELECT replace(SUBSTR(email,instr(email,"@")+1),".com",".co.in")
+    -> AS Modified_Domain FROM Student;
++-----------------+
+| Modified_Domain |
++-----------------+
+| gmail.co.in     |  <----
+| gmail.co.in     |  <----
+| gmail.co.in     |  <----
+| gmail.co.in     |  <----
+| yahoo.co.in     |  <----
+| yahoo.co.in     |  <----
+| iitp.ac.in      |
+| iitp.ac.in      |
+| gmail.co.in     |  <----
+| gmail.co.in     |  <----
+| yahoo.co.in     |  <----
+| iitp.ac.in      |
++-----------------+
+12 rows in set (0.00 sec)
+
+
+
+=====================================================================================================================================================
+# Question 5
+For each CCode of Course table, display the CCode, Credit and the Credit_in_star. If the Credit
+of a Course is 4 then Credit_in_star will print “****” i.e. same no stars.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> SELECT CCode,Credit,repeat("*",Credit)
+    -> AS Credit_In_Star FROM Course;
++-------+--------+----------------+
+| CCode | Credit | Credit_In_Star |
++-------+--------+----------------+
+| CE301 |      8 | ********       |
+| CE501 |      3 | ***            |
+| CS303 |      8 | ********       |
+| CS354 |      8 | ********       |
+| CS355 |      3 | ***            |
+| CS555 |      6 | ******         |
+| CS561 |      6 | ******         |
+| CS599 |      6 | ******         |
+| EE301 |      6 | ******         |
+| EE302 |      6 | ******         |
+| EE501 |      6 | ******         |
+| HS301 |      6 | ******         |
+| HS303 |      6 | ******         |
+| ME301 |      8 | ********       |
+| ME502 |      3 | ***            |
++-------+--------+----------------+
+15 rows in set (0.00 sec)
+
+=====================================================================================================================================================
+# Question 6
+
+For each Student name, find the name which is a palindrome. E.g. Bob is a palindrome name in
+case insensitive manner
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> SELECT SName,IF(REVERSE(SName)=SName,"YES","NO")
+    -> AS ispalindrome FROM Student;
++-------------------+--------------+
+| Sname             | ispalindrome |
++-------------------+--------------+
+| Rajni Verma       | NO           |
+| Sneha Roy         | NO           |
+| Jenish Monpara    | NO           |
+| Srajan Khandelwal | NO           |
+| Sushant Sinha     | NO           |
+| Tarusi Mittal     | NO           |
+| Rahul Roy         | NO           |
+| Amisha Jain       | NO           |
+| NamAN             | YES          |
+| Rahul Raj         | NO           |
+| Pushpak Sharma    | NO           |
+| Bob               | YES          |
++-------------------+--------------+
+12 rows in set (0.00 sec)
+
+=====================================================================================================================================================
+# Question 7
+
+Create a CS354EnrolledList table with same set of attribute as available in Student table and
+insert all Students‟ details into it who have Enrolled to CS354 Course. 
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+mysql> CREATE TABLE CS354EnrolledList AS
+    -> SELECT * FROM Student WHERE RollNo 
+    -> IN(SELECT RollNo FROM Enrolled WHERE CCode="CS354");
+
+Query OK, 2 rows affected (2.77 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CS354EnrolledList;
++----------+----------------+--------+-------+---------------------------+
+| RollNo   | SName          | Gender | City  | email                     |
++----------+----------------+--------+-------+---------------------------+
+| 1901CS28 | Jenish Monpara | M      | Surat | 1901CS28jenish@gmail.com  |
+| 1901CS62 | Sushant Sinha  | M      | Patna | 1901CS62sushant@yahoo.com |
++----------+----------------+--------+-------+---------------------------+
+2 rows in set (0.00 sec)
+
+/*
+* We can cross check our result by checking Students 
+* Enrolled in cs354 Course FROM Enrolled table
+*/
+
+mysql> SELECT * FROM Enrolled WHERE CCode="CS354";
++----------+-------+------+
+| RollNo   | CCode | YoE  |
++----------+-------+------+
+| 1901CS28 | CS354 | 2018 |
+| 1901CS62 | CS354 | 2020 |
++----------+-------+------+
+2 rows in set (0.00 sec)
+
+
+=====================================================================================================================================================
+# Question 8
+
+Find the RollNo of the Students who have Enrolled to all Courses available in Course table
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> SELECT RollNo,COUNT(RollNo) FROM Enrolled
+    -> GROUP BY(RollNo)
+    -> HAVING COUNT(RollNo) = (SELECT COUNT(*) FROM Course);
+
+Empty set (0.00 sec)
+
+=====================================================================================================================================================
+# Question 9
+
+Create a view to list the Courses which have not been Enrolled by any Students so far.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> CREATE VIEW Notused AS SELECT * FROM Course WHERE CCode NOT IN (SELECT distinct CCode FROM Enrolled);
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> SELECT * FROM notused;
++-------+----------------+--------+---------------+
+| CCode | CName          | Credit | CType         |
++-------+----------------+--------+---------------+
+| HS303 | Macroeconomics |      6 | Open Elective |
++-------+----------------+--------+---------------+
+1 row in set (0.00 sec)
+
+=====================================================================================================================================================
+# Question 10
+
+Create a view to show the list of Students who have Enrolled to atleast 5 Courses in a year.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+//let us first see in how many courses have student enrolled in a particular year
+
+
+mysql> select rollno,yoe,count(*)
+    -> from enrolled
+    -> group by rollno,yoe;
++----------+------+----------+
+| rollno   | yoe  | count(*) |
++----------+------+----------+
+| 1901CE01 | 2019 |        2 |
+| 1901CE31 | 2018 |        1 |
+| 1901CE31 | 2019 |        1 |
+| 1901CS28 | 2018 |        2 |
+| 1901CS28 | 2020 |        1 |
+| 1901CS61 | 2020 |        1 |
+| 1901EE32 | 2019 |        1 |
+| 1901EE32 | 2018 |        1 |
+| 1901EE32 | 2020 |        1 |
+| 1901ME63 | 2019 |        1 |
+| 1901ME63 | 2020 |        1 |
+| 1901CS28 | 2019 |        3 |
+| 1901EE51 | 2017 |        4 |
+| 1901EE51 | 2018 |        1 |
+| 1901CS61 | 2021 |        2 |
+| 1901CS65 | 2021 |        1 |
+| 1901CS62 | 2020 |        5 |  <---- 1901CS62 enrolled in 5 different course in 2020
+| 1901CS65 | 2018 |        1 |
++----------+------+----------+
+18 rows in set (0.00 sec)
+
+//Creating a view containing details of student 
+//Having count of enrolled courses in year >=5
+
+
+mysql> create view MoreThan5CourseInAYear as
+    -> select * from student where rollno in
+    -> ( select rollno from enrolled
+    -> group by rollno,yoe having count(*)>4);
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> select * from MoreThan5CourseInAYear;
++----------+---------------+--------+-------+---------------------------+
+| RollNo   | SName         | Gender | City  | email                     |
++----------+---------------+--------+-------+---------------------------+
+| 1901CS62 | Sushant Sinha | M      | Patna | 1901CS62sushant@yahoo.com |
++----------+---------------+--------+-------+---------------------------+
+
+1 row in set (0.03 sec)
+=====================================================================================================================================================
+
++---------+
+| THE END |
++---------+

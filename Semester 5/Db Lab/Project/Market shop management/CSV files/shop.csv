@@ -1,0 +1,7 @@
+"sid","skid","sname","address","contact","licensestart","licenseend","licensecharge","charges","pendingcharges","approval"
+"3","1","Tanishq Malu","Block-9, near nescafe, IIT Patna","9098858227",NULL,NULL,"0","0","0","pending"
+"4","2","Tanmay Malu","Block-6, near nescafe, IIT Patna","9098858228","2021-09-15","2021-12-30","0","0","0","approved"
+"5","10","Tanmay Malu","Block-7, near nescafe, IIT Patna","9565610106",NULL,NULL,"0","0","0","approved"
+"6","14","jenish juice shop","Block-7, near nescafe, IIT Patna","1111111111","2021-11-30","2021-12-30","1000","2000","3000","approved"
+"7","14","jenish snacks","CV Raman gate","7285056295","2021-11-10","2021-11-18","1000","9000","10000","approved"
+"8","9","Malu shop","fruit shp, residential","9898943426","2021-11-02","2021-12-17","200","1500","1700","approved"

@@ -1,0 +1,202 @@
++---------------+
+| Tarusi Mittal |
+| 1901Cs65      |
+| EndSEM TASK C	|
++---------------+
+
+
+I HAD TAKEN SOME OTHER CITIES INSTEAD OF THOSE THAT WERE MENTIONED SO FOR TASK 2 I WILL BE ASSUMING THESE TIPS:
+So I AM CHANGING MY TABLE:
+INITIAL TABLE:
+mysql> select * from customer;
++-------------+---------------+----------------+-------------------+
+| customer_id | customer_name | customer_place | email_id          |
++-------------+---------------+----------------+-------------------+
+| 1001        | Fridie        | Mumbai         | fridie@gmail.com  |
+| 1011        | Edward        | Delhi          | edward@gmail.com  |
+| 1021        | Cullen        | Bangalore      | cullen@gmail.com  |
+| 1031        | Bella         | Pune           | bella@yahoo.com   |
+| 1041        | Alia          | Chandigarh     | alia@hotmail.com  |
+| 1051        | Preeta        | Ranchi         | preeta@gmail.com  |
+| 1061        | Arjun         | Indore         | arjun@hotmail.com |
+| 1071        | Abhi          | Bhopal         | abhi@yahoo.com    |
+| 1081        | Rishi         | Patiala        | rishi@gmail.com   |
+| 1091        | Kriti         | Sangrur        | kriti@gmail.com   |
+| 1101        | Harshad       | Aligarh        | harshad@yahoo.com |
+| 1201        | Greta         | Bandra         | greta@yahoo.com   |
+| 1301        | Geeta         | Navi Mumbai    | geeta@yahoo.com   |
+| 1401        | Sheetu        | Navi Mumbai    | seeta@yahoo.com   |
+| 1501        | Reeta         | Navi Mumbai    | reeta@yahoo.com   |
++-------------+---------------+----------------+-------------------+
+
+mysql> update customer set customer_place='Andheri' where customer_id=1021;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='Andheri' where customer_id=1031;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='South Mumbai' where customer_id=1041;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='South Mumbai' where customer_id=1051;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+#INSERTING SOME VALUES THAT ARE REQUIRED
+
+FINAL VALUE OF TABLE 
+
+mysql> select * from customer;
++-------------+---------------+----------------+-------------------+
+| customer_id | customer_name | customer_place | email_id          |
++-------------+---------------+----------------+-------------------+
+| 1001        | Fridie        | Andheri        | fridie@gmail.com  |
+| 1011        | Edward        | Goregaon       | edward@gmail.com  |
+| 1021        | Cullen        | Andheri        | cullen@gmail.com  |
+| 1031        | Bella         | Andheri        | bella@yahoo.com   |
+| 1041        | Alia          | South Mumbai   | alia@hotmail.com  |
+| 1051        | Preeta        | South Mumbai   | preeta@gmail.com  |
+| 1061        | Arjun         | Juhu           | arjun@hotmail.com |
+| 1071        | Abhi          | Juhu           | abhi@yahoo.com    |
+| 1081        | Rishi         | Juhu           | rishi@gmail.com   |
+| 1091        | Kriti         | Goregaon       | kriti@gmail.com   |
+| 1101        | Harshad       | Goregaon       | harshad@yahoo.com |
+| 1201        | Greta         | Bandra         | greta@yahoo.com   |
+| 1301        | Geeta         | Navi Mumbai    | geeta@yahoo.com   |
+| 1401        | Sheetu        | Navi Mumbai    | seeta@yahoo.com   |
+| 1501        | Reeta         | Navi Mumbai    | reeta@yahoo.com   |
++-------------+---------------+----------------+-------------------+
+15 rows in set (0.00 sec)
+
+
+mysql> insert into orderlab values('or24','1101','Db102','2021-09-08',3000,40,3),('or25','1091','Db102','2021-09-08',500,40,3),('or26','1071','Db102','2021-09-08',2300,30,3),('or27','1011','Db102','2021-09-08',3000,70,3);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 1------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+AS THE PROCEDURE WAS NOT RETURNING ANYTHING I MADE AN OUTPUT VARIABKE AND THEN FOR PRINTING I WILL USE THAT AS ANSWER.
+
+mysql> DELIMITER $$
+mysql> create procedure proc1(in dbid varchar(20),in dbname varchar(20),out res varchar(20))
+    -> begin
+    -> declare cnt int;
+    -> select count(*) into cnt from customer where customer_id in(select customer_id from orderlab where db_id = dbid);
+    -> if (cnt>=6) then
+    -> set res='yes';
+    -> else
+    -> set res='no';
+    -> end if;
+    -> end$$
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DELIMITER ;
+mysql> call proc1('Db102','Shamu',@out_value);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select @out_value;
++------------+
+| @out_value |
++------------+
+| yes        |
++------------+
+1 row in set (0.00 sec)
+
+
+mysql> call proc1('Db101','Ramu',@out_value);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select @out_value;
++------------+
+| @out_value |
++------------+
+| no         |
++------------+
+1 row in set (0.00 sec)
+
+mysql>
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 2------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+mysql> delimiter $$
+mysql> create function calprice( order_id1 varchar(10),  customer_id1 varchar(10))
+    -> returns int
+    -> deterministic
+    -> begin
+    -> declare temp int;
+    -> declare place1 varchar(10);
+    -> select price into temp from orderlab where order_id=order_id1;
+    -> select customer_place into place1 from customer where customer_id=customer_id1;
+    -> if( temp<500 and place1="Bandra") then
+    -> update orderlab set price=temp+50 where order_id=order_id1;
+    -> elseif (temp<500 and place1="Andheri") then
+    -> update orderlab set price=temp+60 where order_id=order_id1;
+    -> elseif (temp<500 and place1="South Mumbai") then
+    -> update orderlab set price=temp+70 where order_id=order_id1;
+    -> elseif (temp<500 and place1="Juhu") then
+    -> update orderlab set price=temp+80 where order_id=order_id1;
+    -> elseif (temp<500 and place1="Navi Mumbai") then
+    -> update orderlab set price=temp+90 where order_id=order_id1;
+    -> elseif (temp<500 and place1="Goregaon") then
+    -> update orderlab set price=temp+100 where order_id=order_id1;
+    -> else
+    -> return 1;
+    -> endif;
+    -> return 0;
+    -> end$$
+mysql> DELIMITER ;
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 3------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 4------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+mysql> delimiter $$
+mysql> create trigger compute_avg_rating
+    -> after insert on orderlab
+    -> for each row
+    -> begin
+    ->     update delivery_boy
+    ->     set average_rating = (select avg(order_rate) from orderlab where orderlab.db_id = delivery_boy.db_id)
+    ->     where deliver_boy.db_id = new.db_id;
+    -> end ; $$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 5------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+mysql> alter table delivery_boy
+    -> add average_tip FLOAT DEFAULT 0.0;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER $$
+mysql> CREATE TRIGGER AFTER_orderlab_insert
+    -> AFTER INSERT
+    -> ON Orderlab FOR EACH ROW
+    -> BEGIN
+    -> DECLARE numorder INT;
+    -> DECLARE sumtip INT;
+    -> SELECT COUNT(*) INTO numorder FROM Orderlab
+    -> WHERE Orderlab.DB_ID = new.DB_ID;
+    -> SELECT SUM(Order_tip) INTO sumtip FROM Orderlab
+    -> WHERE Orderlab.DB_ID = new.DB_ID;
+    -> UPDATE Delivery_boy
+    -> SET Average_Tip = sumtip/numorder
+    -> WHERE Delivery_boy.DB_ID = new.DB_ID;
+    -> END $$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DELIMITER ;

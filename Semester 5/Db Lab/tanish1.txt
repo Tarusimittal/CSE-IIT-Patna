@@ -1,0 +1,580 @@
++-------------------------+
+|        LAB-04           |
+|     Tanishq Malu        |
+|       1901CS63          |
++-------------------------+
+
+====================================================================================================================================================
+
+Login to mysql server as scot:-
+
+mysql --port = 3307 --host = localhost -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dblab              |
+| information_schema |
++--------------------+
+2 rows in set (1.62 sec)
+
+mysql> use dblab;
+Database changed
+
++----------------------------+
+| Initial Student Table      |
++----------------------------+
+
+mysql> select * from student;
++----------+-------------------+--------+------------+---------------------------+------------+
+| RollNo   | SName             | Gender | City       | email                     | Dob        |
++----------+-------------------+--------+------------+---------------------------+------------+
+| 1901CE01 | Rajni Verma       | F      | Delhi      | 1901CE01rajni@gmail.com   | 2001-01-01 |
+| 1901CE31 | Sneha Roy         | F      | Patna      | 1901CE31sneha@gmail.com   | 2000-02-14 |
+| 1901CS28 | Jenish Monpara    | M      | Surat      | 1901CS28jenish@gmail.com  | 2001-01-03 |
+| 1901CS61 | Srajan Khandelwal | M      | Raipur     | 1901CS61srajan@gmail.com  | 2001-05-03 |
+| 1901CS62 | Sushant Sinha     | M      | Patna      | 1901CS62sushant@yahoo.com | 2001-05-03 |
+| 1901CS65 | Tarusi Mittal     | F      | Chandigarh | 1901CS65tarusi@yahoo.com  | 2000-12-22 |
+| 1901EE32 | Rahul Roy         | M      | Patna      | 1901EE32rahul@iitp.ac.in  | 2001-04-22 |
+| 1901EE51 | Amisha Jain       | F      | Rajasthan  | 1901EE51amisha@iitp.ac.in | 2001-07-29 |
+| 1901EE65 | NamAN             | M      | kanpur     | 1901EE65NamAN@gmail.com   | 2001-01-29 |
+| 1901ME32 | Rahul Raj         | M      | Delhi      | 1901ME32rahul@gmail.com   | 2000-02-14 |
+| 1901ME63 | Pushpak Sharma    | M      | Indore     | 1901ME63pushpak@yahoo.com | 2000-08-14 |
+| 1901ME65 | Bob               | M      | Indore     | 1901ME65Bob@iitp.ac.in    | 2000-08-14 |
++----------+-------------------+--------+------------+---------------------------+------------+
+12 rows in set (0.00 sec)
+
++----------------------------+
+| Initial Course Table       |
++----------------------------+
+
+mysql> select * from course;
++-------+----------------------+--------+---------------+
+| CCode | CName                | Credit | CType         |
++-------+----------------------+--------+---------------+
+| CE301 | Mechanics            |      8 | Core          |
+| CE501 | Mechanics Lab        |      3 | Elective      |
+| CS303 | Automata Theory      |      8 | Core          |
+| CS354 | Database Theory      |      8 | Core          |
+| CS355 | Database Lab         |      3 | Elective      |
+| CS555 | Operating System     |      6 | Elective      |
+| CS561 | Discrete Maths       |      6 | Elective      |
+| CS599 | Compilers            |      6 | Elective      |
+| EE301 | Semiconductors       |      6 | Open Elective |
+| EE302 | Communication system |      6 | Core          |
+| EE501 | Electornics Lab      |      6 | Core          |
+| HS301 | Financial Economics  |      6 | Open Elective |
+| HS303 | Macroeconomics       |      6 | Open Elective |
+| ME301 | Fluids               |      8 | Core          |
+| ME502 | Laser Lab            |      3 | Core          |
++-------+----------------------+--------+---------------+
+15 rows in set (0.00 sec)
+
++----------------------------+
+| Initial Enrolled Table     |
++----------------------------+
+
+mysql> select * from enrolled;
++----------+-------+------------+
+| RollNo   | CCode | doe        |
++----------+-------+------------+
+| 1901CE01 | CE301 | 2020-01-01 |
+| 1901CE01 | CE501 | 2020-01-02 |
+| 1901CE31 | CE301 | 2021-01-02 |
+| 1901CE31 | CE501 | 2021-06-02 |
+| 1901CS28 | CS354 | 2021-02-01 |
+| 1901CS28 | CS355 | 2021-02-01 |
+| 1901CS28 | CS303 | 2021-06-09 |
+| 1901CS61 | HS301 | 2020-02-01 |
+| 1901EE32 | EE301 | 2020-02-02 |
+| 1901EE32 | EE302 | 2020-02-03 |
+| 1901EE32 | EE501 | 2020-02-03 |
+| 1901ME63 | ME502 | 2020-02-03 |
+| 1901ME63 | ME301 | 2021-01-01 |
+| 1901CS28 | EE301 | 2021-02-15 |
+| 1901CS28 | EE302 | 2021-02-15 |
+| 1901EE51 | EE301 | 2020-07-01 |
+| 1901EE51 | ME502 | 2020-01-02 |
+| 1901EE51 | CE501 | 2020-01-02 |
+| 1901EE51 | CE301 | 2020-02-02 |
+| 1901EE51 | EE302 | 2021-06-09 |
+| 1901CS61 | CS555 | 2021-02-01 |
+| 1901CS61 | CS561 | 2021-02-02 |
+| 1901CS65 | CS561 | 2021-01-01 |
+| 1901CS62 | CS303 | 2020-02-02 |
+| 1901CS62 | CS354 | 2020-02-02 |
+| 1901CS62 | CS561 | 2020-02-02 |
+| 1901CS62 | CS355 | 2020-03-02 |
+| 1901CS62 | CS599 | 2020-02-02 |
+| 1901CS28 | CS599 | 2021-06-09 |
+| 1901CS65 | CS599 | 2021-01-01 |
+| 1901CS65 | HS303 | 2020-07-01 |
+| 1901CS65 | CS354 | 2021-02-01 |
+| 1901EE32 | CS354 | 2020-03-03 |
+| 1901EE32 | CS355 | 2021-01-01 |
++----------+-------+------------+
+34 rows in set (0.00 sec)
+
+
+
+
++----------------------------+
+|          TASK A            |
++----------------------------+
+
+====================================================================================================================================================
+# Question 1
+
+Create a new GradeWeight table. It will contain two attributes - GradeChar of char(1) type and
+Weight smallint type. GradeChar is primary key of the table. The possible GradeChar are A,B,C,D,E,
+and F and the corresponding weights are 5,4,3,2,1 and 0 respectively.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> Create Table Gradeweight( Gradechar char(1) Primary Key, Weight smallint);
+Query OK, 0 rows affected (3.24 sec)
+
+mysql> insert into gradeweight values("A",5),("B",4),("C",3),("D",2),("E",1),("F",0);
+Query OK, 6 rows affected (0.23 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from gradeweight;
++-----------+--------+
+| Gradechar | Weight |
++-----------+--------+
+| A         |      5 |
+| B         |      4 |
+| C         |      3 |
+| D         |      2 |
+| E         |      1 |
+| F         |      0 |
++-----------+--------+
+6 rows in set (0.00 sec)
+
+=====================================================================================================================================================
+# Question 2
+
+Also, add a grade char(1) column to Enrolled table. Update it with some relevant random
+values except for CS355 course. 
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+mysql> alter table enrolled
+    -> add GradeChar char(1);
+Query OK, 0 rows affected (1.83 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from enrolled;
++----------+-------+------------+-----------+
+| RollNo   | CCode | doe        | GradeChar |
++----------+-------+------------+-----------+
+| 1901CE01 | CE301 | 2020-01-01 | NULL      |
+| 1901CE01 | CE501 | 2020-01-02 | NULL      |
+| 1901CE31 | CE301 | 2021-01-02 | NULL      |
+| 1901CE31 | CE501 | 2021-06-02 | NULL      |
+| 1901CS28 | CS354 | 2021-02-01 | NULL      |
+| 1901CS28 | CS355 | 2021-02-01 | NULL      |
+| 1901CS28 | CS303 | 2021-06-09 | NULL      |
+| 1901CS61 | HS301 | 2020-02-01 | NULL      |
+| 1901EE32 | EE301 | 2020-02-02 | NULL      |
+| 1901EE32 | EE302 | 2020-02-03 | NULL      |
+| 1901EE32 | EE501 | 2020-02-03 | NULL      |
+| 1901ME63 | ME502 | 2020-02-03 | NULL      |
+| 1901ME63 | ME301 | 2021-01-01 | NULL      |
+| 1901CS28 | EE301 | 2021-02-15 | NULL      |
+| 1901CS28 | EE302 | 2021-02-15 | NULL      |
+| 1901EE51 | EE301 | 2020-07-01 | NULL      |
+| 1901EE51 | ME502 | 2020-01-02 | NULL      |
+| 1901EE51 | CE501 | 2020-01-02 | NULL      |
+| 1901EE51 | CE301 | 2020-02-02 | NULL      |
+| 1901EE51 | EE302 | 2021-06-09 | NULL      |
+| 1901CS61 | CS555 | 2021-02-01 | NULL      |
+| 1901CS61 | CS561 | 2021-02-02 | NULL      |
+| 1901CS65 | CS561 | 2021-01-01 | NULL      |
+| 1901CS62 | CS303 | 2020-02-02 | NULL      |
+| 1901CS62 | CS354 | 2020-02-02 | NULL      |
+| 1901CS62 | CS561 | 2020-02-02 | NULL      |
+| 1901CS62 | CS355 | 2020-03-02 | NULL      |
+| 1901CS62 | CS599 | 2020-02-02 | NULL      |
+| 1901CS28 | CS599 | 2021-06-09 | NULL      |
+| 1901CS65 | CS599 | 2021-01-01 | NULL      |
+| 1901CS65 | HS303 | 2020-07-01 | NULL      |
+| 1901CS65 | CS354 | 2021-02-01 | NULL      |
+| 1901EE32 | CS354 | 2020-03-03 | NULL      |
+| 1901EE32 | CS355 | 2021-01-01 | NULL      |
++----------+-------+------------+-----------+
+34 rows in set (0.00 sec)
+
+/*
+* After updating gradechar with relevant random grades except for cs355
+*/
+
+mysql> select * from enrolled;
++----------+-------+------------+-----------+
+| RollNo   | CCode | doe        | GradeChar |
++----------+-------+------------+-----------+
+| 1901CE01 | CE301 | 2020-01-01 | A         |
+| 1901CE01 | CE501 | 2020-01-02 | B         |
+| 1901CE31 | CE301 | 2021-01-02 | B         |
+| 1901CE31 | CE501 | 2021-06-02 | B         |
+| 1901CS28 | CS354 | 2021-02-01 | A         |
+| 1901CS28 | CS355 | 2021-02-01 | NULL      |
+| 1901CS28 | CS303 | 2021-06-09 | A         |
+| 1901CS61 | HS301 | 2020-02-01 | C         |
+| 1901EE32 | EE301 | 2020-02-02 | A         |
+| 1901EE32 | EE302 | 2020-02-03 | B         |
+| 1901EE32 | EE501 | 2020-02-03 | A         |
+| 1901ME63 | ME502 | 2020-02-03 | B         |
+| 1901ME63 | ME301 | 2021-01-01 | A         |
+| 1901CS28 | EE301 | 2021-02-15 | A         |
+| 1901CS28 | EE302 | 2021-02-15 | A         |
+| 1901EE51 | EE301 | 2020-07-01 | B         |
+| 1901EE51 | ME502 | 2020-01-02 | B         |
+| 1901EE51 | CE501 | 2020-01-02 | C         |
+| 1901EE51 | CE301 | 2020-02-02 | C         |
+| 1901EE51 | EE302 | 2021-06-09 | A         |
+| 1901CS61 | CS555 | 2021-02-01 | A         |
+| 1901CS61 | CS561 | 2021-02-02 | A         |
+| 1901CS65 | CS561 | 2021-01-01 | B         |
+| 1901CS62 | CS303 | 2020-02-02 | A         |
+| 1901CS62 | CS354 | 2020-02-02 | A         |
+| 1901CS62 | CS561 | 2020-02-02 | A         |
+| 1901CS62 | CS355 | 2020-03-02 | NULL      |
+| 1901CS62 | CS599 | 2020-02-02 | A         |
+| 1901CS28 | CS599 | 2021-06-09 | A         |
+| 1901CS65 | CS599 | 2021-01-01 | B         |
+| 1901CS65 | HS303 | 2020-07-01 | A         |
+| 1901CS65 | CS354 | 2021-02-01 | A         |
+| 1901EE32 | CS354 | 2020-03-03 | A         |
+| 1901EE32 | CS355 | 2021-01-01 | NULL      |
++----------+-------+------------+-----------+
+34 rows in set (0.00 sec)
+
+=====================================================================================================================================================
+# Question 3
+
+:-For2021 enrolled CS355 students, create a CS355_Marks table. 
+  It will contain two fields RollNo char(8) and Marks smallint. RollNo is the key attribute.
+
+:-Add all the 2021 CS355 enrolled students RollNo from enrolled table to this table.
+
+:-Then update the Marks column using a random function and the value to be updated should lie
+  between 0 and 5. 
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select * from enrolled where ccode="CS355";
++----------+-------+------------+-----------+
+| RollNo   | CCode | doe        | GradeChar |
++----------+-------+------------+-----------+
+| 1901CS28 | CS355 | 2021-02-01 | NULL      |  <-- 2021 enrolled 
+| 1901CS62 | CS355 | 2020-03-02 | NULL      |
+| 1901EE32 | CS355 | 2021-01-01 | NULL      |  <-- 2021 enrolled
++----------+-------+------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> create table CS355_MARKS AS(
+    -> select rollno from enrolled where ccode="CS355" and doe like '2021%');
+Query OK, 2 rows affected (4.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from cs355_marks;
++----------+
+| rollno   |
++----------+
+| 1901CS28 |
+| 1901EE32 |
++----------+
+2 rows in set (0.00 sec)
+
+mysql> alter table cs355_marks
+    -> add marks smallint;
+Query OK, 0 rows affected (1.61 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from cs355_marks;
++----------+-------+
+| rollno   | marks |
++----------+-------+
+| 1901CS28 |  NULL |
+| 1901EE32 |  NULL |
++----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> update cs355_marks set marks=floor(RAND()*(5));
+Query OK, 2 rows affected (0.12 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from cs355_marks;
++----------+-------+
+| rollno   | marks |
++----------+-------+
+| 1901CS28 |     4 |
+| 1901EE32 |     3 |
++----------+-------+
+2 rows in set (0.01 sec)
+
+
+=====================================================================================================================================================
+# Question 4
+
+:-Add one more column GradeChar char(1) type to the CS355_Marks table after the Marks
+  column. 
+
+:-Now based on the GradeWeight table, update this new column. Thus, if the mark of
+  1901CS99 is 4 then the GradeChar should be updated with ‘B’.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+mysql> alter table cs355_marks
+    -> add gradechar char(1);
+Query OK, 0 rows affected (1.93 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from cs355_marks;
++----------+-------+-----------+
+| rollno   | marks | gradechar |
++----------+-------+-----------+
+| 1901CS28 |     4 | NULL      |
+| 1901EE32 |     3 | NULL      |
++----------+-------+-----------+
+2 rows in set (0.04 sec)
+
+mysql> update cs355_marks set gradechar=char(118-ASCII(marks));
+Query OK, 1 row affected (0.19 sec)
+Rows matched: 2  Changed: 1  Warnings: 0
+
+mysql> select * from cs355_marks;
++----------+-------+-----------+
+| rollno   | marks | gradechar |
++----------+-------+-----------+
+| 1901CS28 |     4 | B         |
+| 1901EE32 |     3 | C         |
++----------+-------+-----------+
+2 rows in set (0.00 sec)
+
+=====================================================================================================================================================
+# Question 5
+
+:-Now create std_data.txt file with some comma separated values in the current folder from
+  where you are invoking MySQL utility.
+  Here, the columns indicate RollNo, SName, Gender, City,Email and DoB respectively.
+
+:-Similarly, create course_data.txt file with comma separated values in the current folder 
+  from where you are invoking MySQL utility. Here the columns indicate CCode,CName, Credit,
+  CType and CCode. Each of the file should contain atleast 10 new relevant entries.
+
+:-Load the entries of txt file in the student and course tables respectively.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+* User scot did not have rights for loading local data
+* Also local_infile variable is off 
+*/
+
+mysql> LOAD DATA LOCAL INFILE "E:\\Tanishq\\3rd year\\5th sem\\Database lab\\lab6\\std_data.txt" INTO TABLE student FIELDS TERMINATED BY "," LINES TERMINATED BY "\n";
+ERROR 3948 (42000): Loading local data is disabled; this must be enabled on both the client and server sides
+
+mysql> show global variables like 'local_infile';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| local_infile  | OFF   |
++---------------+-------+
+1 row in set (0.41 sec)
+
+mysql> set global local_infile=true;
+ERROR 1227 (42000): Access denied; you need (at least one of) the SUPER or SYSTEM_VARIABLES_ADMIN privilege(s) for this operation
+
+/*
+* So i entered as root user and gave user scot the required rights.
+*/
+
+mysql> GRANT SUPER ON *.* TO scot@localhost;
+Query OK, 0 rows affected, 1 warning (0.10 sec)
+
+/*
+* Then i logged in user scot using the command
+* mysql --local_infile=1 --port=3307 --host=localhost -u scot -p
+* this sets my "local_infile variable = true" allowing user to load a local file
+*/
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+mysql> select * from student;
++----------+-------------------+--------+------------+---------------------------+------------+
+| RollNo   | SName             | Gender | City       | email                     | Dob        |
++----------+-------------------+--------+------------+---------------------------+------------+
+| 1901CE01 | Rajni Verma       | F      | Delhi      | 1901CE01rajni@gmail.com   | 2001-01-01 |
+| 1901CE31 | Sneha Roy         | F      | Patna      | 1901CE31sneha@gmail.com   | 2000-02-14 |
+| 1901CS28 | Jenish Monpara    | M      | Surat      | 1901CS28jenish@gmail.com  | 2001-01-03 |
+| 1901CS61 | Srajan Khandelwal | M      | Raipur     | 1901CS61srajan@gmail.com  | 2001-05-03 |
+| 1901CS62 | Sushant Sinha     | M      | Patna      | 1901CS62sushant@yahoo.com | 2001-05-03 |
+| 1901CS65 | Tarusi Mittal     | F      | Chandigarh | 1901CS65tarusi@yahoo.com  | 2000-12-22 |
+| 1901EE32 | Rahul Roy         | M      | Patna      | 1901EE32rahul@iitp.ac.in  | 2001-04-22 |
+| 1901EE51 | Amisha Jain       | F      | Rajasthan  | 1901EE51amisha@iitp.ac.in | 2001-07-29 |
+| 1901EE65 | NamAN             | M      | kanpur     | 1901EE65NamAN@gmail.com   | 2001-01-29 |
+| 1901ME32 | Rahul Raj         | M      | Delhi      | 1901ME32rahul@gmail.com   | 2000-02-14 |
+| 1901ME63 | Pushpak Sharma    | M      | Indore     | 1901ME63pushpak@yahoo.com | 2000-08-14 |
+| 1901ME65 | Bob               | M      | Indore     | 1901ME65Bob@iitp.ac.in    | 2000-08-14 |
++----------+-------------------+--------+------------+---------------------------+------------+
+12 rows in set (0.10 sec)
+
+9 rows in set (0.00 sec)
+mysql> LOAD DATA LOCAL INFILE "E:\\Tanishq\\3rd year\\5th sem\\Database lab\\lab6\\std_data.txt" INTO TABLE student FIELDS TERMINATED BY "," LINES TERMINATED BY "\n";
+Query OK, 10 rows affected (0.32 sec)
+Records: 10  Deleted: 0  Skipped: 0  Warnings: 0
+LOAD DATA LOCAL INFILE "E:\\Tanishq\\3rd year\\5th sem\\Database lab\\lab6\\std_data.txt" INTO TABLE student FIELDS TERMINATED BY "," LINES TERMINATED BY "\n";
+
+mysql> select * from student;
++----------+-------------------+--------+------------+---------------------------+------------+
+| RollNo   | SName             | Gender | City       | email                     | Dob        |
++----------+-------------------+--------+------------+---------------------------+------------+
+| 1901CB01 | Virat Kohli       | M      | Delhi      | kingkohli@gmail.com       | 2001-08-03 |
+| 1901CB09 | Yuvi Singh        | M      | Delhi      | yuvi@gmail.com            | 2001-10-03 |
+| 1901CB20 | Jasprit Bumrah    | M      | Chennai    | jassi@gmail.com           | 2002-08-03 |
+| 1901CB46 | James Anderson    | M      | Indore     | james@gmail.com           | 2002-07-10 |
+| 1901CB88 | Andrew Flintoff   | M      | Mumbai     | andy@gmail.com            | 2001-11-25 |
+| 1901CC01 | Rohit Sharma      | M      | Kolkata    | Rohit@gmail.com           | 2001-06-12 |
+| 1901CC13 | Ravi Ashwin       | M      | Patna      | ravi@gmail.com            | 2002-08-30 |
+| 1901CE01 | Rajni Verma       | F      | Delhi      | 1901CE01rajni@gmail.com   | 2001-01-01 |
+| 1901CE31 | Sneha Roy         | F      | Patna      | 1901CE31sneha@gmail.com   | 2000-02-14 |
+| 1901CS28 | Jenish Monpara    | M      | Surat      | 1901CS28jenish@gmail.com  | 2001-01-03 |
+| 1901CS61 | Srajan Khandelwal | M      | Raipur     | 1901CS61srajan@gmail.com  | 2001-05-03 |
+| 1901CS62 | Sushant Sinha     | M      | Patna      | 1901CS62sushant@yahoo.com | 2001-05-03 |
+| 1901CS65 | Tarusi Mittal     | F      | Chandigarh | 1901CS65tarusi@yahoo.com  | 2000-12-22 |
+| 1901EB05 | Joe Root          | M      | Mumbai     | Joe@gmail.com             | 2002-05-20 |
+| 1901EE32 | Rahul Roy         | M      | Patna      | 1901EE32rahul@iitp.ac.in  | 2001-04-22 |
+| 1901EE51 | Amisha Jain       | F      | Rajasthan  | 1901EE51amisha@iitp.ac.in | 2001-07-29 |
+| 1901EE65 | NamAN             | M      | kanpur     | 1901EE65NamAN@gmail.com   | 2001-01-29 |
+| 1901FF07 | Jofra Archer      | M      | Agra       | jofra@gmail.com           | 2001-04-06 |
+| 1901FF19 | Stuart Broad      | M      | Bokaro     | stuart@gmail.com          | 2001-06-24 |
+| 1901ME32 | Rahul Raj         | M      | Delhi      | 1901ME32rahul@gmail.com   | 2000-02-14 |
+| 1901ME63 | Pushpak Sharma    | M      | Indore     | 1901ME63pushpak@yahoo.com | 2000-08-14 |
+| 1901ME65 | Bob               | M      | Indore     | 1901ME65Bob@iitp.ac.in    | 2000-08-14 |
++----------+-------------------+--------+------------+---------------------------+------------+
+22 rows in set (0.01 sec)
+
+mysql> select * from course;
++-------+----------------------+--------+---------------+
+| CCode | CName                | Credit | CType         |
++-------+----------------------+--------+---------------+
+| CE301 | Mechanics            |      8 | Core          |
+| CE501 | Mechanics Lab        |      3 | Elective      |
+| CS303 | Automata Theory      |      8 | Core          |
+| CS354 | Database Theory      |      8 | Core          |
+| CS355 | Database Lab         |      3 | Elective      |
+| CS555 | Operating System     |      6 | Elective      |
+| CS561 | Discrete Maths       |      6 | Elective      |
+| CS599 | Compilers            |      6 | Elective      |
+| EE301 | Semiconductors       |      6 | Open Elective |
+| EE302 | Communication system |      6 | Core          |
+| EE501 | Electornics Lab      |      6 | Core          |
+| HS301 | Financial Economics  |      6 | Open Elective |
+| HS303 | Macroeconomics       |      6 | Open Elective |
+| ME301 | Fluids               |      8 | Core          |
+| ME502 | Laser Lab            |      3 | Core          |
++-------+----------------------+--------+---------------+
+15 rows in set (0.10 sec)
+
+mysql> LOAD DATA LOCAL INFILE "E:\\Tanishq\\3rd year\\5th sem\\Database lab\\lab6\\course_data.txt" INTO TABLE course FIELDS TERMINATED BY "," LINES TERMINATED BY ';';
+Query OK, 10 rows affected, 1 warning (0.21 sec)
+Records: 10  Deleted: 0  Skipped: 0  Warnings: 1
+
+mysql> select * from course;
++-------+----------------------+--------+---------------+
+| CCode | CName                | Credit | CType         |
++-------+----------------------+--------+---------------+
+| CB101 | Materials            |      6 | Core          |
+| CB102 | Solid State          |      6 | Core          |
+| CB103 | Materials Lab        |      3 | Core          |
+| CC101 | Compilers            |      6 | Core          |
+| CC102 | Computer Networks    |      6 | Core          |
+| CC103 | Compilers Lab        |      3 | Core          |
+| CE301 | Mechanics            |      8 | Core          |
+| CE501 | Mechanics Lab        |      3 | Elective      |
+| CS303 | Automata Theory      |      8 | Core          |
+| CS354 | Database Theory      |      8 | Core          |
+| CS355 | Database Lab         |      3 | Elective      |
+| CS555 | Operating System     |      6 | Elective      |
+| CS561 | Discrete Maths       |      6 | Elective      |
+| CS599 | Compilers            |      6 | Elective      |
+| EE301 | Semiconductors       |      6 | Open Elective |
+| EE302 | Communication system |      6 | Core          |
+| EE501 | Electornics Lab      |      6 | Core          |
+| FF101 | Sociology            |      3 | Elective      |
+| FF102 | Robotics             |      6 | Elective      |
+| FF103 | Artificail Intellige |      3 | Elective      |
+| FF104 | Humnities            |      3 | Elective      |
+| HS301 | Financial Economics  |      6 | Open Elective |
+| HS303 | Macroeconomics       |      6 | Open Elective |
+| ME301 | Fluids               |      8 | Core          |
+| ME502 | Laser Lab            |      3 | Core          |
++-------+----------------------+--------+---------------+
+25 rows in set (0.00 sec)
+=====================================================================================================================================================
+
++----------------------------+
+|          TASK B            |
++----------------------------+
+
+:-For each of the following questions, write a MySQL query. You need to insert required tuples in
+  the tables to check whether your queries are working or not.
+
+:-Save the result of each of the following query in some appropriate file.
+=====================================================================================================================================================
+# Question 1
+
+Show the course details with credit in binary from course table.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+SELECT *
+INTO OUTFILE " C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\Result1.txt"
+FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
+FROM (select *,conv(credit,10,2) as credit_in_binary from course)as t1;
+=====================================================================================================================================================
+# Question 2
+
+Create a view with name std_age and show the RollNo, Age_Year, Age_Months and Age_Day
+after calculating the age of each student.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+=====================================================================================================================================================
+# Question 3
+
+For student with RollNo 1901CS99, obtain the CPI. This can be calculated by considering all the
+grades each course obtained by the student, multiplying them with the corresponding credit of
+the course, then taking the sum and divide it by the total credits done by the student.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+=====================================================================================================================================================
+# Question 4
+
+Create a view with name std_cpi and show the RollNo and CPI details of all students
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+=====================================================================================================================================================
+# Question 5
+
+Find out the students who have obtained 5 or more number of ‘A’ grade
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+=====================================================================================================================================================
+
++----------------------------+
+|          TASK C            |
++----------------------------+
+
+After performing task A and task B, create a dump file in sql format.
+=====================================================================================================================================================
+
+
+=====================================================================================================================================================
+
++---------+
+| THE END |
++---------+

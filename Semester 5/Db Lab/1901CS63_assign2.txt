@@ -1,0 +1,265 @@
+mysql> create table Student(RollNo varchar(8) Primary Key, SName varchar(20), Gender char(1), City varchar(20));
+Query OK, 0 rows affected (1.35 sec)
+
+mysql> insert into Student values ("1901CS65","Tarusi Mittal", "F","Chandigarh"),("1901CS62","Sushant Sinha", "M","Patna"),
+("1901CS61","Srajan Khandelwal", "M","Raipur"),("1901CS28","Jenish Monpara", "M","Surat"),("1901CE31","Sneha Roy", "F","Patna"),
+("1901CE01","Rajni Verma", "F","Delhi"),("1901EE51","Amisha Jain", "F","Rajasthan"),("1901ME63","Pushpak Sharma", "M","Indore"),
+("1901EE32","Rahul Roy", "M","Patna"),("1901ME32","Rahul Raj", "M","Delhi");
+
+Query OK, 10 rows affected (0.28 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++----------+-------------------+--------+------------+
+| RollNo   | SName             | Gender | City       |
++----------+-------------------+--------+------------+
+| 1901CE01 | Rajni Verma       | F      | Delhi      |
+| 1901CE31 | Sneha Roy         | F      | Patna      |
+| 1901CS28 | Jenish Monpara    | M      | Surat      |
+| 1901CS61 | Srajan Khandelwal | M      | Raipur     |
+| 1901CS62 | Sushant Sinha     | M      | Patna      |
+| 1901CS65 | Tarusi Mittal     | F      | Chandigarh |
+| 1901EE32 | Rahul Roy         | M      | Patna      |
+| 1901EE51 | Amisha Jain       | F      | Rajasthan  |
+| 1901ME32 | Rahul Raj         | M      | Delhi      |
+| 1901ME63 | Pushpak Sharma    | M      | Indore     |
++----------+-------------------+--------+------------+
+10 rows in set (0.00 sec)
+
+mysql> create table Course(CCode char(5) Primary Key, CName varchar(20), Credit smallint);
+Query OK, 0 rows affected (2.13 sec)
+
+mysql> insert into Course values("CS354", "Database Theory", 8),("CS303", "Automata Theory", 8),("CS355", "Database Lab", 3),
+("EE301", "Semiconductors", 6),("EE302", "Communication system", 6),("EE501", "Electornics Lab", 6),("ME301", "Fluids", 8),
+("ME502", "Laser Lab", 3),("CE301", "Mechanics", 8),("CE501", "Mechanics Lab", 3),("HS301", "Financial Economics", 6);
+
+Query OK, 11 rows affected (0.33 sec)
+Records: 11  Duplicates: 0  Warnings: 0
+
+mysql> select * from Course;
++-------+----------------------+--------+
+| CCode | CName                | Credit |
++-------+----------------------+--------+
+| CE301 | Mechanics            |      8 |
+| CE501 | Mechanics Lab        |      3 |
+| CS303 | Automata Theory      |      8 |
+| CS354 | Database Theory      |      8 |
+| CS355 | Database Lab         |      3 |
+| EE301 | Semiconductors       |      6 |
+| EE302 | Communication system |      6 |
+| EE501 | Electornics Lab      |      6 |
+| HS301 | Financial Economics  |      6 |
+| ME301 | Fluids               |      8 |
+| ME502 | Laser Lab            |      3 |
++-------+----------------------+--------+
+11 rows in set (0.00 sec)
+
+mysql> create table Enrolled(RollNo varchar(8),CCode char(5), YoE int);
+Query OK, 0 rows affected (2.11 sec)
+
+mysql> alter table Enrolled add foreign key (RollNo) references Student(RollNo);
+Query OK, 0 rows affected (2.87 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Enrolled add foreign key (CCode) references Course(CCode);
+Query OK, 0 rows affected (2.89 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+insert into Enrolled values("1901CE01","CE301", 2019),("1901CE01","CE501", 2019),
+("1901CE31","CE301", 2018),("1901CE31","CE501", 2019),("1901CS28","CS354", 2018),
+("1901CS28","CS355", 2018),("1901CS28","CS303", 2020),("1901CS61","HS301", 2020),
+("1901EE32","EE301", 2019),("1901EE32","EE302", 2018),("1901EE32","EE501", 2020),
+("1901ME63","ME502", 2019),("1901ME63","ME301", 2020);
+
+mysql> select * from Enrolled;
++----------+-------+------+
+| RollNo   | CCode | YoE  |
++----------+-------+------+
+| 1901CE01 | CE301 | 2019 |
+| 1901CE01 | CE501 | 2019 |
+| 1901CE31 | CE301 | 2018 |
+| 1901CE31 | CE501 | 2019 |
+| 1901CS28 | CS354 | 2018 |
+| 1901CS28 | CS355 | 2018 |
+| 1901CS28 | CS303 | 2020 |
+| 1901CS61 | HS301 | 2020 |
+| 1901EE32 | EE301 | 2019 |
+| 1901EE32 | EE302 | 2018 |
+| 1901EE32 | EE501 | 2020 |
+| 1901ME63 | ME502 | 2019 |
+| 1901ME63 | ME301 | 2020 |
++----------+-------+------+
+13 rows in set (0.00 sec)
+
+==============================================================================================================================================
+Question 1: -
+#1) Find the name of all the courses which start with "CS" code
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> SELECT CCode FROM Course WHERE CCode REGEXP '^CS';
++-------+
+| CCode |
++-------+
+| CS303 |
+| CS354 |
+| CS355 |
++-------+
+3 rows in set (0.15 sec)
+
+==============================================================================================================================================
+Question 2: -
+#2) Find the name of the male students who have atleast two "a‟s in their names
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select SName from student where Gender="M" and SName LIKE '%a%a%';
++-------------------+
+| SName             |
++-------------------+
+| Jenish Monpara    |
+| Srajan Khandelwal |
+| Sushant Sinha     |
+| Rahul Raj         |
+| Pushpak Sharma    |
++-------------------+
+5 rows in set (0.00 sec)
+
+==============================================================================================================================================
+Question 3: -
+#3) Find the students who have not enrolled in between 2018 and 2019
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select SName from student where RollNo IN(select RollNo from Enrolled where YoE !=2018 and YoE!=2019);
++-------------------+
+| SName             |
++-------------------+
+| Jenish Monpara    |
+| Srajan Khandelwal |
+| Rahul Roy         |
+| Pushpak Sharma    |
++-------------------+
+4 rows in set (0.01 sec)
+
+==============================================================================================================================================
+Question 4: -
+#4) Find the course with least credit.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select * from course where credit = (select min(Credit) from course);
++-------+---------------+--------+
+| CCode | CName         | Credit |
++-------+---------------+--------+
+| CE501 | Mechanics Lab |      3 |
+| CS355 | Database Lab  |      3 |
+| ME502 | Laser Lab     |      3 |
++-------+---------------+--------+
+3 rows in set (0.03 sec)
+
+==============================================================================================================================================
+Question 5: -
+#5) Find the name of the Course which is not enrolled by any students in the year 2020
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select CName from course where CCode NOT IN( select CCode from Enrolled where YoE=2020);
++----------------------+
+| CName                |
++----------------------+
+| Mechanics            |
+| Mechanics Lab        |
+| Database Theory      |
+| Database Lab         |
+| Semiconductors       |
+| Communication system |
+| Laser Lab            |
++----------------------+
+7 rows in set (0.18 sec)
+
+==============================================================================================================================================
+Question 6: -
+#6) Find the total number of students city wise.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select City,count(City) from student group by City;
++------------+-------------+
+| City       | count(City) |
++------------+-------------+
+| Delhi      |           2 |
+| Patna      |           3 |
+| Surat      |           1 |
+| Raipur     |           1 |
+| Chandigarh |           1 |
+| Rajasthan  |           1 |
+| Indore     |           1 |
++------------+-------------+
+7 rows in set (0.02 sec)
+
+==============================================================================================================================================
+Question 7: -
+#7) Find the rollno of the students who have enrolled to 5 number of courses.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select RollNo,count(RollNo)
+    -> from Enrolled group by RollNo having count(RollNo)=5;
++----------+---------------+
+| RollNo   | count(RollNo) |
++----------+---------------+
+| 1901CS28 |             5 |
++----------+---------------+
+1 row in set (0.00 sec)
+
+==============================================================================================================================================
+Question 8: -
+#8) Find the total number of courses enrolled by student with roll no "1901CS99"
+
+NOTE: - USing 1901EE32 inplace of 1901CS99
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select count(RollNO) from Enrolled where RollNo="1901EE32";
++---------------+
+| count(RollNO) |
++---------------+
+|             3 |
++---------------+
+1 row in set (0.00 sec)
+
+==============================================================================================================================================
+Question 9: -
+#9) Find all the 5 level courses (the digits parts of the course code should start with 5)
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select * from course where CCode REGEXP '^..5';
++-------+-----------------+--------+
+| CCode | CName           | Credit |
++-------+-----------------+--------+
+| CE501 | Mechanics Lab   |      3 |
+| EE501 | Electornics Lab |      6 |
+| ME502 | Laser Lab       |      3 |
++-------+-----------------+--------+
+3 rows in set (0.11 sec)
+
+==============================================================================================================================================
+
+Question 10: -
+#10) Count the number of students containing “CS” as part of the RollNo
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select count(RollNo) from student where RollNo like '%CS%';
++---------------+
+| count(RollNo) |
++---------------+
+|             4 |
++---------------+
+1 row in set (0.00 sec)
+
+
+==============================================================================================================================================
+
+----------------------------------------------------------------------------------------------------------------------------------------------

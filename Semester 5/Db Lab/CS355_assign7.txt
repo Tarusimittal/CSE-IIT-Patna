@@ -1,0 +1,483 @@
++---------------+
+| Tarusi Mittal |
+| 1901Cs65      |
+| Assignment 07	|
++---------------+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++---------------------------------------------------Setup---------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//login as user scot
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.0.26 MySQL Community Server - GPL
+
+#Initial values of Tables
+
+mysql> select * from student;
++----------+-------------------+--------+------------+----------------------------+------------+
+| RollNo   | SName             | Gender | City       | email                      | Dob        |
++----------+-------------------+--------+------------+----------------------------+------------+
+| 1901AB07 | Gyan Chand        | M      | Bangalore  | chandgyan@gmail.com        | 1988-11-12 | 
+| 1901CB02 | Sahil Jindal      | M      | Bathinda   | jindalsahil@gmail.com      | 2002-01-12 | 
+| 1901CB40 | Sakshi Singh      | F      | Mumbai     | 1901CB40sakshi@gmail.com   | 2001-10-28 | 
+| 1901CB48 | Shreya Dimri      | F      | Dehradun   | 1901CB48shreya@gmail.com   | 1998-10-22 | 
+| 1901CS61 | Srajan Khandelwal | M      | Raipur     | 1901CS61srajan@gmail.com   | 2001-09-11 | 
+| 1901CS62 | Sushant Sinha     | M      | Patna      | 1901CS62sushant@iitp.ac.in | 2000-03-07 | 
+| 1901CS63 | Tanishq Malu      | M      | Shivpuri   | 1901CS63tanishq@yahoo.com  | 2001-04-18 | 
+| 1901CS65 | Tarusi Mittal     | F      | Chandigarh | 1901CS65tarusi@yahoo.com   | 2000-12-22 | 
+| 1901DJ59 | Narsi Ram         | M      | Mount Abu  | ramnarsi@gmail.com         | 1999-01-16 | 
+| 1901EE01 | Ashish Kapoor     | M      | Patna      | 1901EE01ashish@iitp.ac.in  | 2001-01-08 | 
+| 1901EE11 | Karuna Singla     | F      | Delhi      | 1901EE11karuna@gmail.com   | 1996-12-23 | 
+| 1901GH08 | Dharika Rajput    | F      | Delhi      | rajputdharika@gmail.com    | 2002-06-11 |
+| 1901GJ10 | Kartik Narayan    | M      | Mizram     | narayan@gmail.com          | 1992-06-17 |
+| 1901GS53 | Ankita Gupta      | F      | Gurgaon    | guptaankita@gmail.com      | 2001-05-04 |
+| 1901ME09 | Rajat Mehra       | M      | Indore     | 1901ME09rajat@yahoo.com    | 2000-11-11 |
+| 1901ME11 | Divya Sharma      | F      | Patna      | 1901ME11divya@iitp.ac.in   | 2001-06-05 |
+| 1901ME55 | Naman             | M      | Jaipur     | 1901ME55naman@gmail.com    | 1993-04-05 |
+| 1901MM34 | Sanchit Bansal    | M      | Manali     | sanchit@gmail.com          | 2001-08-23 |
+| 1901QW38 | Mohit Sharma      | M      | Chennai    | sharmamohit@gmail.com      | 1995-09-14 |
+| 1901SG49 | Samarth Kansal    | M      | Shimla     | sammykansal@gmail.com      | 2001-12-10 |
+| 1901SJ19 | Saurabh Goyal     | M      | Hyderabad  | saurabh@gmail.com          | 1991-03-08 |
+| 1901TB19 | Rashi Gombher     | F      | Nagpur     | rashi@gmail.com            | 1997-08-28 |
++----------+-------------------+--------+------------+----------------------------+------------+
+22 rows in set (0.04 sec)
+
+mysql> select * from course;
++-------+----------------------+--------+---------------+
+| CCode | CName                | Credit | ctype         |
++-------+----------------------+--------+---------------+
+| CB301 | Chemistry            |      6 | Open Elective |
+| CB503 | Fluid Mechanics      |      8 | Core          |
+| CD342 | Microprocessors      |      6 | Core          |
+| CH132 | Architecture Design  |      3 | Core          |
+| CL987 | Vernacular           |      3 | Core          |
+| CO134 | Structural Engineeri |      3 | Elective      |
+| CP098 | Macro Economics      |      3 | Elective      |
+| CP105 | Mathematics          |      6 | Core          |
+| CP987 | Robo Mechanics       |      6 | Core          |
+| CR567 | Physical Geometry    |      6 | Core          |
+| CS303 | Automata Theory      |      8 | Core          |
+| CS354 | Database Theory      |      6 | Core          |
+| CS355 | Database Lab         |      3 | Core          |
+| CS555 | Processors           |      6 | Elective      |
+| CS561 | Managing Operators   |      8 | Elective      |
+| CS599 | System Design        |      5 | Elective      |
+| CT564 | Accountancy          |      8 | Core          |
+| CV768 | Environmental Scienc |      3 | Elective      |
+| EE301 | Electronics System   |      6 | Core          |
+| EE302 | Conductions          |      6 | Core          |
+| EE501 | Semiconductors       |      6 | Core          |
+| HS301 | Financial Economics  |      6 | Open Elective |
+| ME302 | Mechanical Ops       |      8 | Core          |
+| ME501 | Mechanical Lab       |      3 | Core          |
+| PH546 | Optics               |      8 | Core          |
++-------+----------------------+--------+---------------+
+25 rows in set (0.02 sec)
+
+mysql> select * from enrolled;
++----------+-------+------------+-----------+
+| RollNo   | CCode | Doe        | GradeChar |
++----------+-------+------------+-----------+
+| 1901CB40 | CB301 | 2020-07-01 | A         |
+| 1901CB40 | CB503 | 2020-01-02 | C         |
+| 1901CB48 | CB301 | 2021-01-02 | A         |
+| 1901CB48 | CB503 | 2021-01-02 | B         |
+| 1901CS61 | CS354 | 2021-02-02 | B         |
+| 1901CS62 | CS355 | 2021-02-01 | NULL      |
+| 1901CS62 | CS303 | 2021-02-01 | B         |
+| 1901CS63 | HS301 | 2021-02-09 | A         |
+| 1901CS63 | CS355 | 2020-02-01 | NULL      |
+| 1901CS61 | CS303 | 2020-02-02 | B         |
+| 1901CS65 | HS301 | 2020-02-03 | A         |
+| 1901EE01 | EE301 | 2020-02-03 | B         |
+| 1901EE01 | EE302 | 2020-02-05 | B         |
+| 1901EE11 | EE501 | 2020-02-03 | C         |
+| 1901ME11 | ME302 | 2021-01-01 | B         |
+| 1901ME11 | ME501 | 2021-01-01 | B         |
+| 1901ME09 | ME501 | 2021-02-15 | C         |
+| 1901CS63 | CS303 | 2021-02-15 | A         |
+| 1901CS63 | ME501 | 2020-01-02 | A         |
+| 1901CS63 | EE302 | 2020-01-01 | A         |
+| 1901CS62 | CS599 | 2020-01-02 | A         |
+| 1901CB48 | CS599 | 2021-07-01 | C         |
+| 1901ME11 | CS599 | 2021-01-01 | B         |
+| 1901CS63 | CS599 | 2020-02-02 | A         |
+| 1901CS61 | CS599 | 2020-01-01 | C         |
+| 1901CS65 | CS561 | 2020-01-01 | A         |
+| 1901CS63 | CS561 | 2021-02-25 | A         |
+| 1901CS61 | CS561 | 2020-02-02 | A         |
+| 1901CS61 | CS555 | 2021-02-01 | B         |
+| 1901ME09 | HS301 | 2021-02-02 | C         |
+| 1901ME11 | ME501 | 2021-01-01 | B         |
+| 1901EE11 | CB301 | 2021-06-01 | C         |
+| 1901CS63 | CS354 | 2020-01-01 | A         |
++----------+-------+------------+-----------+
+33 rows in set (0.01 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 1------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+QUESTION 1:  Add a column Status (datatype varchar(20)) to the Students table. Create a procedure [name procStdStatus] that
+will take one RollNo value as input parameter and calculate the age of the corresponding student in years. If the
+age is more than 21 years then it will be treated as senior otherwise it will be treated as junior. Now update the
+students’ status of Student table either with senior or junior using this procedure.
+
+
+mysql> Alter table Student ass column Status VARCHAR(20);
+Query OK, 0 rows affected (3.38 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+# Creating the procedure
+
+mysql> DELIMITER $$
+mysql> create PROCEDURE procStdStatus(IN RollNo_proced char(8))
+    -> BEGIN
+    -> DECLARE status_proced varchar(20);
+    -> IF TIMESTAMPDIFF(year,(select DoB from student where RollNo = RollNo_proced),
+    -> CURDATE())>21 THEN
+    -> SET status_proced = "Senior";
+    -> ELSE
+    -> SET status_proced = "Junior";
+    -> END IF;
+    -> Update Student SET
+    -> Status = status_proced WHERE
+    -> RollNo = RollNo_proced;
+    -> END$$
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DELIMITER ;
+
+# HERE WE ARE MAKING A NEW PROCEDURE WHICH IS KIND OF A LOOP SO THAT IT RUNS OVER ALL DATA
+# AND WE DONT HAVE TO DO IT INDIVIDUALLY FOR ALL ROWS
+
+mysql> DELIMITER $$
+mysql> create PROCEDURE status_update()
+    -> BEGIN
+    -> DECLARE count_total, loopi int DEFAULT 0;
+    -> Declare RollNo_proced char(8);
+    -> select count(*) into count_total from student;
+    -> WHILE
+    -> loopi < count_total
+    -> DO
+    -> select RollNO INTO RollNo_proced from student LIMIT loopi,1;
+    -> CALL procStdStatus(RollNo_proced);
+    -> SET loopi=loopi+1;
+    -> END WHILE;
+    -> END$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+
+mysql> CALL status_update();
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from student;
++----------+-------------------+--------+------------+----------------------------+------------+--------+
+| RollNo   | SName             | Gender | City       | email                      | Dob        | Status |
++----------+-------------------+--------+------------+----------------------------+------------+--------+
+| 1901AB07 | Gyan Chand        | M      | Bangalore  | chandgyan@gmail.com        | 1988-11-12 | Senior |
+| 1901CB02 | Sahil Jindal      | M      | Bathinda   | jindalsahil@gmail.com      | 2002-01-12 | Junior |
+| 1901CB40 | Sakshi Singh      | F      | Mumbai     | 1901CB40sakshi@gmail.com   | 2001-10-28 | Junior |
+| 1901CB48 | Shreya Dimri      | F      | Dehradun   | 1901CB48shreya@gmail.com   | 1998-10-22 | Senior |
+| 1901CS61 | Srajan Khandelwal | M      | Raipur     | 1901CS61srajan@gmail.com   | 2001-09-11 | Junior |
+| 1901CS62 | Sushant Sinha     | M      | Patna      | 1901CS62sushant@iitp.ac.in | 2000-03-07 | Junior |
+| 1901CS63 | Tanishq Malu      | M      | Shivpuri   | 1901CS63tanishq@yahoo.com  | 2001-04-18 | Junior |
+| 1901CS65 | Tarusi Mittal     | F      | Chandigarh | 1901CS65tarusi@yahoo.com   | 2000-12-22 | Junior |
+| 1901DJ59 | Narsi Ram         | M      | Mount Abu  | ramnarsi@gmail.com         | 1999-01-16 | Senior |
+| 1901EE01 | Ashish Kapoor     | M      | Patna      | 1901EE01ashish@iitp.ac.in  | 2001-01-08 | Junior |
+| 1901EE11 | Karuna Singla     | F      | Delhi      | 1901EE11karuna@gmail.com   | 1996-12-23 | Senior |
+| 1901GH08 | Dharika Rajput    | F      | Delhi      | rajputdharika@gmail.com    | 2002-06-11 | Junior |
+| 1901GJ10 | Kartik Narayan    | M      | Mizram     | narayan@gmail.com          | 1992-06-17 | Senior |
+| 1901GS53 | Ankita Gupta      | F      | Gurgaon    | guptaankita@gmail.com      | 2001-05-04 | Junior |
+| 1901ME09 | Rajat Mehra       | M      | Indore     | 1901ME09rajat@yahoo.com    | 2000-11-11 | Junior |
+| 1901ME11 | Divya Sharma      | F      | Patna      | 1901ME11divya@iitp.ac.in   | 2001-06-05 | Junior |
+| 1901ME55 | Naman             | M      | Jaipur     | 1901ME55naman@gmail.com    | 1993-04-05 | Senior |
+| 1901MM34 | Sanchit Bansal    | M      | Manali     | sanchit@gmail.com          | 2001-08-23 | Junior |
+| 1901QW38 | Mohit Sharma      | M      | Chennai    | sharmamohit@gmail.com      | 1995-09-14 | Senior |
+| 1901SG49 | Samarth Kansal    | M      | Shimla     | sammykansal@gmail.com      | 2001-12-10 | Junior |
+| 1901SJ19 | Saurabh Goyal     | M      | Hyderabad  | saurabh@gmail.com          | 1991-03-08 | Senior |
+| 1901TB19 | Rashi Gombher     | F      | Nagpur     | rashi@gmail.com            | 1997-08-28 | Senior |
++----------+-------------------+--------+------------+----------------------------+------------+--------+
+22 rows in set (0.00 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 2------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+
+QUESTION 2: Create a procedure [name procCourseInsert] to insert a new row as per the following-
+• The procedure will take values corresponding to CCode, Cname, Credit, CType.
+• If the new CCode does not conflict with the existing CCodes then insert a new row corresponding to this new
+parameter values in the Course table.
+
+
+# INITIAL COURSE TABLE
+mysql> select * from course;
++-------+----------------------+--------+---------------+
+| CCode | CName                | Credit | ctype         |
++-------+----------------------+--------+---------------+
+| CB301 | Chemistry            |      6 | Open Elective |
+| CB503 | Fluid Mechanics      |      8 | Core          |
+| CD342 | Microprocessors      |      6 | Core          |
+| CH132 | Architecture Design  |      3 | Core          |
+| CL987 | Vernacular           |      3 | Core          |
+| CO134 | Structural Engineeri |      3 | Elective      |
+| CP098 | Macro Economics      |      3 | Elective      |
+| CP105 | Mathematics          |      6 | Core          |
+| CP987 | Robo Mechanics       |      6 | Core          |
+| CR567 | Physical Geometry    |      6 | Core          |
+| CS303 | Automata Theory      |      8 | Core          |
+| CS354 | Database Theory      |      6 | Core          |
+| CS355 | Database Lab         |      3 | Core          |
+| CS555 | Processors           |      6 | Elective      |
+| CS561 | Managing Operators   |      8 | Elective      |
+| CS599 | System Design        |      5 | Elective      |
+| CT564 | Accountancy          |      8 | Core          |
+| CV768 | Environmental Scienc |      3 | Elective      |
+| EE301 | Electronics System   |      6 | Core          |
+| EE302 | Conductions          |      6 | Core          |
+| EE501 | Semiconductors       |      6 | Core          |
+| HS301 | Financial Economics  |      6 | Open Elective |
+| ME302 | Mechanical Ops       |      8 | Core          |
+| ME501 | Mechanical Lab       |      3 | Core          |
+| PH546 | Optics               |      8 | Core          |
++-------+----------------------+--------+---------------+
+25 rows in set (0.02 sec)
+
+mysql> DELIMITER $$
+mysql> CREATE PROCEDURE procCourseInsert(
+    -> IN CCode char(5), IN CName varchar(20), IN Credit smallint, IN CType varchar(20))
+    -> BEGIN
+    -> INSERT IGNORE INTO Course VALUES (CCode, CName, Credit, CType);
+    -> END$$
+Query OK, 0 rows affected (0.01 sec)
+
+
++++++++++++++++++++++++++++++++
+|   INSERTING UNIQUE VALUES   |
++++++++++++++++++++++++++++++++
+
+mysql> DELIMITER ;
+mysql> CALL procCourseInsert("CS322", "Architecture Lab", 4, "Core");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> CALL procCourseInsert("HS305", "Communication Skills", 3, "Open Elective");
+Query OK, 1 row affected (0.01 sec)
+
+
+# HERE WE CAN SEE THE VALUES GOT INSERTED IN TEH TABLE AS THE ROWS HAS ALSO INCREASED
+
+mysql> select * from course;
++-------+----------------------+--------+---------------+
+| CCode | CName                | Credit | ctype         |
++-------+----------------------+--------+---------------+
+| CB301 | Chemistry            |      6 | Open Elective |
+| CB503 | Fluid Mechanics      |      8 | Core          |
+| CD342 | Microprocessors      |      6 | Core          |
+| CH132 | Architecture Design  |      3 | Core          |
+| CL987 | Vernacular           |      3 | Core          |
+| CO134 | Structural Engineeri |      3 | Elective      |
+| CP098 | Macro Economics      |      3 | Elective      |
+| CP105 | Mathematics          |      6 | Core          |
+| CP987 | Robo Mechanics       |      6 | Core          |
+| CR567 | Physical Geometry    |      6 | Core          |
+| CS303 | Automata Theory      |      8 | Core          |
+| CS322 | Architecture Lab     |      4 | Core          |
+| CS354 | Database Theory      |      6 | Core          |
+| CS355 | Database Lab         |      3 | Core          |
+| CS555 | Processors           |      6 | Elective      |
+| CS561 | Managing Operators   |      8 | Elective      |
+| CS599 | System Design        |      5 | Elective      |
+| CT564 | Accountancy          |      8 | Core          |
+| CV768 | Environmental Scienc |      3 | Elective      |
+| EE301 | Electronics System   |      6 | Core          |
+| EE302 | Conductions          |      6 | Core          |
+| EE501 | Semiconductors       |      6 | Core          |
+| HS301 | Financial Economics  |      6 | Open Elective |
+| HS305 | Communication Skills |      3 | Open Elective |
+| ME302 | Mechanical Ops       |      8 | Core          |
+| ME501 | Mechanical Lab       |      3 | Core          |
+| PH546 | Optics               |      8 | Core          |
++-------+----------------------+--------+---------------+
+27 rows in set (0.00 sec)
+
+
++++++++++++++++++++++++++++++++++++
+|  INSERTING CONFLICTING VALUES   |
++++++++++++++++++++++++++++++++++++
+
+
+mysql> CALL procCourseInsert("HS301", "Speaking Proficiency", 3, "Elective");
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+# VALUES ARE NOT INSERTED IN THE TABLE AS THEY WERE CONFLICTING AND THE ROWS COUNT REMAIN THE SAME
+
+mysql> select * from course;
++-------+----------------------+--------+---------------+
+| CCode | CName                | Credit | ctype         |
++-------+----------------------+--------+---------------+
+| CB301 | Chemistry            |      6 | Open Elective |
+| CB503 | Fluid Mechanics      |      8 | Core          |
+| CD342 | Microprocessors      |      6 | Core          |
+| CH132 | Architecture Design  |      3 | Core          |
+| CL987 | Vernacular           |      3 | Core          |
+| CO134 | Structural Engineeri |      3 | Elective      |
+| CP098 | Macro Economics      |      3 | Elective      |
+| CP105 | Mathematics          |      6 | Core          |
+| CP987 | Robo Mechanics       |      6 | Core          |
+| CR567 | Physical Geometry    |      6 | Core          |
+| CS303 | Automata Theory      |      8 | Core          |
+| CS322 | Architecture Lab     |      4 | Core          |
+| CS354 | Database Theory      |      6 | Core          |
+| CS355 | Database Lab         |      3 | Core          |
+| CS555 | Processors           |      6 | Elective      |
+| CS561 | Managing Operators   |      8 | Elective      |
+| CS599 | System Design        |      5 | Elective      |
+| CT564 | Accountancy          |      8 | Core          |
+| CV768 | Environmental Scienc |      3 | Elective      |
+| EE301 | Electronics System   |      6 | Core          |
+| EE302 | Conductions          |      6 | Core          |
+| EE501 | Semiconductors       |      6 | Core          |
+| HS301 | Financial Economics  |      6 | Open Elective |
+| HS305 | Communication Skills |      3 | Open Elective |
+| ME302 | Mechanical Ops       |      8 | Core          |
+| ME501 | Mechanical Lab       |      3 | Core          |
+| PH546 | Optics               |      8 | Core          |
++-------+----------------------+--------+---------------+
+27 rows in set (0.00 sec)
+	
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 3------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+QUESTION 3: . Create a procedure [name procEnrolledCourseDate] which takes one date (dt) and course code (ccode) as input
+parameters and finds the list of the unique students who have enrolled that particular course ccode on or before that
+date dt
+
+mysql> DELIMITER $$
+mysql> create procedure procEnrolledCourseDate(
+    -> IN date_temp Date, IN CCode_temp char(5))
+    -> BEGIN
+    -> select * from Student where RollNo IN(
+    -> select distinct RollNo from Enrolled where
+    -> CCode=CCode_temp
+    -> AND
+    -> DoE <= date_temp);
+    -> END$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+
+
+mysql> select * from enrolled where CCode="CS599"; 
++----------+-------+------------+-----------+
+| RollNo   | CCode | Doe        | GradeChar |
++----------+-------+------------+-----------+
+| 1901CS62 | CS599 | 2020-01-02 | A         | <-ans
+| 1901CB48 | CS599 | 2021-07-01 | C         | 
+| 1901ME11 | CS599 | 2021-01-01 | B         | <-ans
+| 1901CS63 | CS599 | 2020-02-02 | A         | <-ans
+| 1901CS61 | CS599 | 2020-01-01 | C         | <-ans
++----------+-------+------------+-----------+
+5 rows in set (0.00 sec)
+
+
+mysql> CALL procEnrolledCourseDate("2021-01-01", "CS599");
++----------+-------------------+--------+----------+----------------------------+------------+--------+
+| RollNo   | SName             | Gender | City     | email                      | Dob        | Status |
++----------+-------------------+--------+----------+----------------------------+------------+--------+
+| 1901CS62 | Sushant Sinha     | M      | Patna    | 1901CS62sushant@iitp.ac.in | 2000-03-07 | Junior |
+| 1901ME11 | Divya Sharma      | F      | Patna    | 1901ME11divya@iitp.ac.in   | 2001-06-05 | Junior |
+| 1901CS63 | Tanishq Malu      | M      | Shivpuri | 1901CS63tanishq@yahoo.com  | 2001-04-18 | Junior |
+| 1901CS61 | Srajan Khandelwal | M      | Raipur   | 1901CS61srajan@gmail.com   | 2001-09-11 | Junior |
++----------+-------------------+--------+----------+----------------------------+------------+--------+
+4 rows in set (0.02 sec)
+
+Query OK, 0 rows affected (0.03 sec)
+
+
+mysql> select * from enrolled where CCode="CS561";
++----------+-------+------------+-----------+
+| RollNo   | CCode | Doe        | GradeChar |
++----------+-------+------------+-----------+
+| 1901CS65 | CS561 | 2020-01-01 | A         | <-ans
+| 1901CS63 | CS561 | 2021-02-25 | A         |
+| 1901CS61 | CS561 | 2020-02-02 | A         | <-ans
++----------+-------+------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> CALL procEnrolledCourseDate("2020-08-04", "CS561");
++----------+-------------------+--------+------------+--------------------------+------------+--------+
+| RollNo   | SName             | Gender | City       | email                    | Dob        | Status |
++----------+-------------------+--------+------------+--------------------------+------------+--------+
+| 1901CS65 | Tarusi Mittal     | F      | Chandigarh | 1901CS65tarusi@yahoo.com | 2000-12-22 | Junior |
+| 1901CS61 | Srajan Khandelwal | M      | Raipur     | 1901CS61srajan@gmail.com | 2001-09-11 | Junior |
++----------+-------------------+--------+------------+--------------------------+------------+--------+
+2 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 4------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+QUESTION 4: Create a function [name funEnrolledGenString] that takes a RollNo and CCode as input parameters and returns a
+number with 11 character string which satisfies the following rules-
+• first 4 characters are obtained from the 5th to 8th characters of RollNo
+• next 3 characters are obtained from the last three characters of CCode
+• 8th, 9th, 10th and 11th characters are from the extracted days and months of the corresponding DoB value
+
+# THE FUNCTION USED IS THE CONCAT FUNCTION ALONG WITH
+# SUBDTR FUNCTION, RIGHT FUNCTION, DATE_FORMAT 
+
+mysql> DELIMITER $$
+mysql> create FUNCTION funEnrolledGenString(RollNo_proced char(8), CCode_proced char(5))
+    -> RETURNS char(11)
+    -> READS SQL DATA
+    -> DETERMINISTIC
+    -> BEGIN
+    -> DECLARE concatedString char(11);
+    -> select CONCAT(substr(RollNo_proced,5,4), Right(CCode_proced,3), Date_Format(
+    -> (select DoB from Student where RollNo = RollNo_proced),"%d%m"))
+    -> into concatedString;
+    -> RETURN concatedString;
+    -> END$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT funEnrolledGenString("1901CB48","CB503") AS ConcatedString;
++----------------+
+| ConcatedString |
++----------------+
+| CB485032210    |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT funEnrolledGenString("1901CS62","CS303") AS ConcatedString;
++----------------+
+| ConcatedString |
++----------------+
+| CS623030703    |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT funEnrolledGenString("1901CS63","HS301") AS ConcatedString;
++----------------+
+| ConcatedString |
++----------------+
+| CS633011804    |
++----------------+
+1 row in set (0.00 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
+################################################ END ##############################################################
++-----------------------------------------------------------------------------------------------------------------+

@@ -1,0 +1,6 @@
+"id","username","name","email","designation","employeeid","phone","department","password"
+"1","tanishq","Tanishq Malu","tanishq_1901cs63@iitp.ac.in","CEO","1","9098858227","Computer Science and Engineering","e10adc3949ba59abbe56e057f20f883e"
+"2","tanmay","Tanmay Malu","tanmay.malu@gmail.com","hod","2","9565610206","Computer Science and Engineering","e10adc3949ba59abbe56e057f20f883e"
+"3","sanjay","Sanjay Malu","sanjay.malu@gmail.com","Professor","3","5544332211","Computer Science and Engineering","e10adc3949ba59abbe56e057f20f883e"
+"4","Madhur","madhur","madur@yahoo.com","Professor","4","2233441155","Civil Engineering","e10adc3949ba59abbe56e057f20f883e"
+"5","Ramesh","Ramesh Babu","ramesh@gmail.com","Assisstant. Professor","5","3344552211","Mechanical Engineering","e10adc3949ba59abbe56e057f20f883e"

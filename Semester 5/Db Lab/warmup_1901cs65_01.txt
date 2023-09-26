@@ -1,0 +1,50 @@
+Name- Tarusi Mittal
+Roll No: 1901cs65
+Date: 29/07/2021
+
+Commands Used:
+1-> mysql –u root –p; 		//to connect to the MYSQL server as root user after entering the password
+2-> show databases; 		//to see all the exsisting databases
+
+3-> create database dblab;	//creates a new database by the name dblab
+
+4-> use dblab;			//uses the database with the name dblab
+
+5-> CREATE table Student( Rollno varchar (10), SName varchar (10), City varchar (10); //creates a table
+6-> INSERT into Student values (1,'tejas','chandigarh');// inserts values in the table
+7-> INSERT into Student values (2,'tripati','sunam');
+8-> INSERT into Student values (3,'tarusi','patna');
+9-> INSERT into Student values (4,'puja','mohali');
+10-> INSERT into Student values (5,'ashwani','sangrur');
+11-> SELECT * from Student; 	//displays all entries of the table
+
+12-> CREATE table Course (CID varchar(10), CName varchar(10), Credit int);
+13-> INSERT into Course values (365,'course 1',3);
+14-> INSERT into Course values (366,'course 2',4);
+15-> INSERT into Course values (367,'course 3',6);
+16-> INSERT into Course values (368,'course 4',8);
+17-> INSERT into Course values (369,'course 5',3);
+18-> SELECT * from Course;
+
+19-> CREATE user scot@localhost identified by 'tiger';	//creates a new user scot woth password- tiger
+
+20-> grant all privileges on dblab.* to scot@localhost; //Grants all permission to user scot for all tables of database dblab
+
+21->exit; //sign out from mysql server
+
+21-> mysql -u scot -p; //enter as new user scot and password tiger
+22-> show databases; 
+23-> use dblab;
+
+24-> SELECT * from Student;
+
+25-> update Student set Sname = "Tarusi Mittal" where Rollno=3; //updates the name for rollno =3
+
+26-> update Course set ID = "370" where Cname = "course 5"; //updates teh CID for Course 5
+
+27-> SELECT * from Student; //see the updates table
+28-> SELECT * from Course; //see the updates table
+
+29-> exit; 	//sign out as user scot;
+
+________________________________END_______________________________________________________________

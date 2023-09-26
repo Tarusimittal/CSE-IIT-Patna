@@ -1,0 +1,207 @@
++---------------+
+| Tarusi Mittal |
+| 1901Cs65      |
+| ENdSEM TASK A	|
++---------------+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++---------------------------------------------------Setup---------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//login as user scot
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.0.26 MySQL Community Server - GPL
+
++-----------------------------------------------------------------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
++-----------------+
+| CREATING TABLES |
++-----------------+
+
+
+mysql> create table customer(customer_id varchar(10) primary key, customer_name varchar(30), customer_place varchar(20), email_id varchar(30));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql>  create table delivery_boy(db_id varchar(10) primary key, db_name varchar(30), db_dob date);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table orderlab(order_id varchar(10) primary key, customer_id varchar(10), db_id varchar(10),order_date date, price int, order_tip int, order_rate int,FOREIGN KEY (customer_id) references customer(customer_id),FOREIGN KEY (db_id) references delivery_boy(db_id));
+Query OK, 0 rows affected (0.07 sec)
+
++-----------------+
+| CUSTOMER TABLE  |
++-----------------+
+
+mysql> insert into customer values(1001,'Fridie','Mumbai','fridie@gmail.com');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into customer values(1011,'Edward','Delhi','edward@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values(1021,'Cullen','Bangalore','cullen@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values(1041,'Alia','Chandigarh','alia@hotmail.com');
+Query OK, 1 row affected (0.01 sec)
+mysql> insert into customer values(1051,'Preeta','Ranchi','preeta@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values(1061,'Arjun','Indore','arjun@hotmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values(1071,'Abhi','Bhopal','abhi@yahoo.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values(1081,'Rishi','Patiala','rishi@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(1091,'Kriti','Sangrur','kriti@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(1101,'Harshad','Aligarh','harshad@yahoo.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values(1031,'Bella','Pune','bella@yahoo.com');
+Query OK, 1 row affected (0.01 sec)
+
+
+###CHANGEDD LATERRRRR
+mysql> select * from customer;
++-------------+---------------+----------------+-------------------+
+| customer_id | customer_name | customer_place | email_id          |
++-------------+---------------+----------------+-------------------+
+| 1001        | Fridie        | Mumbai         | fridie@gmail.com  |
+| 1011        | Edward        | Delhi          | edward@gmail.com  |
+| 1021        | Cullen        | Bangalore      | cullen@gmail.com  |
+| 1031        | Bella         | Pune           | bella@yahoo.com   |
+| 1041        | Alia          | Chandigarh     | alia@hotmail.com  |
+| 1051        | Preeta        | Ranchi         | preeta@gmail.com  |
+| 1061        | Arjun         | Indore         | arjun@hotmail.com |
+| 1071        | Abhi          | Bhopal         | abhi@yahoo.com    |
+| 1081        | Rishi         | Patiala        | rishi@gmail.com   |
+| 1091        | Kriti         | Sangrur        | kriti@gmail.com   |
+| 1101        | Harshad       | Aligarh        | harshad@yahoo.com |
++-------------+---------------+----------------+-------------------+
+11 rows in set (0.00 sec)
+
+
+mysql> update customer set customer_place='Andheri' where customer_id=1001;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='Andheri' where customer_id=1021;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='Andheri' where customer_id=1031;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='South Mumbai' where customer_id=1041;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='South Mumbai' where customer_id=1051;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='Juhu' where customer_id=1061;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='Juhu' where customer_id=1071;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='Juhu' where customer_id=1081;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='Goregaon' where customer_id=1091;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set customer_place='Goregaon' where customer_id=1101;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+##IN TASK A EARLIER I HAD TAKEN WRONG CITY NAMES BUT IT DIDNT EFFECT ANY TASK B QUERY SO I HAVE CHANGED ONLY TASK A LATER.
+
+mysql> select * from customer;
++-------------+---------------+----------------+-------------------+
+| customer_id | customer_name | customer_place | email_id          |
++-------------+---------------+----------------+-------------------+
+| 1001        | Fridie        | Andheri        | fridie@gmail.com  |
+| 1011        | Edward        | Goregaon       | edward@gmail.com  |
+| 1021        | Cullen        | Andheri        | cullen@gmail.com  |
+| 1031        | Bella         | Andheri        | bella@yahoo.com   |
+| 1041        | Alia          | South Mumbai   | alia@hotmail.com  |
+| 1051        | Preeta        | South Mumbai   | preeta@gmail.com  |
+| 1061        | Arjun         | Juhu           | arjun@hotmail.com |
+| 1071        | Abhi          | Juhu           | abhi@yahoo.com    |
+| 1081        | Rishi         | Juhu           | rishi@gmail.com   |
+| 1091        | Kriti         | Goregaon       | kriti@gmail.com   |
+| 1101        | Harshad       | Goregaon       | harshad@yahoo.com |
++-------------+---------------+----------------+-------------------+
+
+
+
+
++---------------------+
+| DELIVERY_BOY TABLE  |
++---------------------+
+
+mysql> insert into delivery_boy values('Db101','Ramu','1987-07-08'),('Db102','Shamu','1987-07-08'),('Db103','Aayush','1997-06-23'),('Db104','Sheetu','1993-05-11'),('Db105','Kaka','1989-04-18'),('Db106','Radhe','1995-03-08'),('Db107','Prem','1991-09-28'),('Db108','Aman','1992-07-04'),('Db109','Vivan','1990-11-02'),('Db110','Aarav','1998-02-23');
+Query OK, 10 rows affected (0.02 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from delivery_boy;
++-------+---------+------------+
+| db_id | db_name | db_dob     |
++-------+---------+------------+
+| Db101 | Ramu    | 1987-07-08 |
+| Db102 | Shamu   | 1987-07-08 |
+| Db103 | Aayush  | 1997-06-23 |
+| Db104 | Sheetu  | 1993-05-11 |
+| Db105 | Kaka    | 1989-04-18 |
+| Db106 | Radhe   | 1995-03-08 |
+| Db107 | Prem    | 1991-09-28 |
+| Db108 | Aman    | 1992-07-04 |
+| Db109 | Vivan   | 1990-11-02 |
+| Db110 | Aarav   | 1998-02-23 |
++-------+---------+------------+
+10 rows in set (0.00 sec)
+
+
+
++-----------------+
+| ORDERLAB TABLE  |
++-----------------+
+
+mysql> insert into orderlab values('or01','1001','Db101','2021-05-03',2000,30,5),('or02','1001','Db102','2021-07-13',2050,10,3),('or03','1021','Db102','2021-09-14',9800,0,2),('or04','1031','Db105','2021-11-15',890,20,1),('or05','1031','Db103','2021-10-23',10000,100,5),('or06','1031','Db108','2021-09-27',750,30,3),('or07','1051','Db104','2021-08-22',600,40,4),('or08','1061','Db109','2021-11-16',3000,10,4),('or09','1091','Db110','2021-07-08',2500,0,2),('or10','1101','Db107','2021-05-02',1000,50,1);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from orderlab;
++----------+-------------+-------+------------+-------+-----------+------------+
+| order_id | customer_id | db_id | order_date | price | order_tip | order_rate |
++----------+-------------+-------+------------+-------+-----------+------------+
+| or01     | 1001        | Db101 | 2021-05-03 |  2000 |        30 |          5 |
+| or02     | 1001        | Db102 | 2021-07-13 |  2050 |        10 |          3 |
+| or03     | 1021        | Db102 | 2021-09-14 |  9800 |         0 |          2 |
+| or04     | 1031        | Db105 | 2021-11-15 |   890 |        20 |          1 |
+| or05     | 1031        | Db103 | 2021-10-23 | 10000 |       100 |          5 |
+| or06     | 1031        | Db108 | 2021-09-27 |   750 |        30 |          3 |
+| or07     | 1051        | Db104 | 2021-08-22 |   600 |        40 |          4 |
+| or08     | 1061        | Db109 | 2021-11-16 |  3000 |        10 |          4 |
+| or09     | 1091        | Db110 | 2021-07-08 |  2500 |         0 |          2 |
+| or10     | 1101        | Db107 | 2021-05-02 |  1000 |        50 |          1 |
++----------+-------------+-------+------------+-------+-----------+------------+
+10 rows in set (0.00 sec)

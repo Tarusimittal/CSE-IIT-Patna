@@ -1,0 +1,1 @@
+CC101,Architecture Design,3,Core;CC102,Mathematics,6,Core;CC103,Vernacular,3,Core;CB101,Macro Economics,3,Elective;CB102,Physical Geometry,6,Core;CB103,Structural Engineering,3,Elective;FF101,Microprocessors,6,Core;FF102,Environmental Science,3,Elective;FF103,Accountancy,8,Core;FF145,Robo Mechanics,6,Core

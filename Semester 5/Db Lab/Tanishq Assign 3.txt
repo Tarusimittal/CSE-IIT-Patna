@@ -1,0 +1,512 @@
++-------------------------+
+|        LAB-03           |
+|     Tanishq Malu        |
+|       1901CS63          |
++-------------------------+
+
+====================================================================================================================================================
+
+Login to mysql server as scot:-
+
+mysql --port=3307 --host=localhost -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dblab              |
+| information_schema |
++--------------------+
+2 rows in set (1.62 sec)
+
+mysql> use dblab;
+Database changed
+==============================================================================================================================================
+TASK 1a: -
+In the Course table add a column course type (CType varchar(20)).
+This CType will take a value from Core, Elective, or Open Elective.
+In the Student table add a column Email of varchar(30).
+This column should be unique and only one email value is to be inserted.
+Insert email values in "username@domain-name" format.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+mysql> alter table course add ctype varchar(30)
+Query OK, 0 rows affected (1.37 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table student add email varchar(30);
+Query OK, 0 rows affected (1.37 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table student
+    -> add constraint unique_email unique(email);
+Query OK, 0 rows affected (1.43 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
++-----------------------------------------------------------------------------------------+
+|AFTER FILLING APPROPRIATE VALUES IN THE CTYPE IN COURSE TABLE AND EMAIL IN STUDENT TABLE.|
++-----------------------------------------------------------------------------------------+
+
+mysql> select * from course;
++-------+----------------------+--------+---------------+
+| CCode | CName                | Credit | CType         |
++-------+----------------------+--------+---------------+
+| CE301 | Mechanics            |      8 | Core          |
+| CE501 | Mechanics Lab        |      3 | Elective      |
+| CS303 | Automata Theory      |      8 | Core          |
+| CS354 | Database Theory      |      8 | Core          |
+| CS355 | Database Lab         |      3 | Elective      |
+| CS555 | Operating System     |      6 | Elective      |
+| CS561 | Discrete Maths       |      6 | Elective      |
+| CS599 | Compilers            |      6 | Elective      |
+| EE301 | Semiconductors       |      6 | Open Elective |
+| EE302 | Communication system |      6 | Core          |
+| EE501 | Electornics Lab      |      6 | Core          |
+| HS301 | Financial Economics  |      6 | Open Elective |
+| ME301 | Fluids               |      8 | Open Elective |
+| ME502 | Laser Lab            |      3 | Core          |
++-------+----------------------+--------+---------------+
+14 rows in set (0.00 sec)
+
+mysql> select * from student;
++----------+-------------------+--------+------------+---------------------+
+| RollNo   | SName             | Gender | City       | email               |
++----------+-------------------+--------+------------+---------------------+
+| 1901CE01 | Rajni Verma       | F      | Delhi      | rajni@gmail.com     |
+| 1901CE31 | Sneha Roy         | F      | Patna      | sneha@gmail.com     |
+| 1901CS28 | Jenish Monpara    | M      | Surat      | jenish@gmail.com    |
+| 1901CS61 | Srajan Khandelwal | M      | Raipur     | srajan@gmail.com    |
+| 1901CS62 | Sushant Sinha     | M      | Patna      | sushant@yahoo.com   |
+| 1901CS65 | Tarusi Mittal     | F      | Chandigarh | tarusi@yahoo.com    |
+| 1901EE32 | Rahul Roy         | M      | Patna      | rahul@iitp.ac.in    |
+| 1901EE51 | Amisha Jain       | F      | Rajasthan  | amisha@iitp.ac.in   |
+| 1901ME32 | Rahul Raj         | M      | Delhi      | rahul@gmail.com     |
+| 1901ME63 | Pushpak Sharma    | M      | Indore     | pushpak@yahoo.com   |
++----------+-------------------+--------+------------+---------------------+
+10 rows in set (0.09 sec)
+==============================================================================================================================================
+TASK 1b: -
+Update the CType of Course table and Email of Student table with some relevant values.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+mysql>  update student set email = concat(RollNo,email);
+Query OK, 10 rows affected (0.29 sec)
+Rows matched: 10  Changed: 10  Warnings: 0
+
+mysql> select * from student;
++----------+-------------------+--------+------------+---------------------------+
+| RollNo   | SName             | Gender | City       | email                     |
++----------+-------------------+--------+------------+---------------------------+
+| 1901CE01 | Rajni Verma       | F      | Delhi      | 1901CE01rajni@gmail.com   |
+| 1901CE31 | Sneha Roy         | F      | Patna      | 1901CE31sneha@gmail.com   |
+| 1901CS28 | Jenish Monpara    | M      | Surat      | 1901CS28jenish@gmail.com  |
+| 1901CS61 | Srajan Khandelwal | M      | Raipur     | 1901CS61srajan@gmail.com  |
+| 1901CS62 | Sushant Sinha     | M      | Patna      | 1901CS62sushant@yahoo.com |
+| 1901CS65 | Tarusi Mittal     | F      | Chandigarh | 1901CS65tarusi@yahoo.com  |
+| 1901EE32 | Rahul Roy         | M      | Patna      | 1901EE32rahul@iitp.ac.in  |
+| 1901EE51 | Amisha Jain       | F      | Rajasthan  | 1901EE51amisha@iitp.ac.in |
+| 1901ME32 | Rahul Raj         | M      | Delhi      | 1901ME32rahul@gmail.com   |
+| 1901ME63 | Pushpak Sharma    | M      | Indore     | 1901ME63pushpak@yahoo.com |
++----------+-------------------+--------+------------+---------------------------+
+10 rows in set (0.00 sec)
+
+mysql> update course set CType="Core" where Credit=8;
+Query OK, 1 row affected (0.16 sec)
+Rows matched: 4  Changed: 1  Warnings: 0
+
+mysql> select * from course;
++-------+----------------------+--------+---------------+
+| CCode | CName                | Credit | CType         |
++-------+----------------------+--------+---------------+
+| CE301 | Mechanics            |      8 | Core          |
+| CE501 | Mechanics Lab        |      3 | Elective      |
+| CS303 | Automata Theory      |      8 | Core          |
+| CS354 | Database Theory      |      8 | Core          |
+| CS355 | Database Lab         |      3 | Elective      |
+| CS555 | Operating System     |      6 | Elective      |
+| CS561 | Discrete Maths       |      6 | Elective      |
+| CS599 | Compilers            |      6 | Elective      |
+| EE301 | Semiconductors       |      6 | Open Elective |
+| EE302 | Communication system |      6 | Core          |
+| EE501 | Electornics Lab      |      6 | Core          |
+| HS301 | Financial Economics  |      6 | Open Elective |
+| ME301 | Fluids               |      8 | Core          |
+| ME502 | Laser Lab            |      3 | Core          |
++-------+----------------------+--------+---------------+
+14 rows in set (0.00 sec)
+
+
++----------------------------------------------------------------------------------------------------------+
+|                                                                                                          |
+|   Now for each of the following questions, write a MySQL query.                                          |
+|   You need to insert required values in the tables to check whether the MySQL queries are working or not.|
+|                                                                                                          |
++----------------------------------------------------------------------------------------------------------+
+
+
+
+==============================================================================================================================================
+TASK 2a: -
+Find the name of all the students whose email ids have “gmail.com” or “yahoo.com” as the domain name.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select * from student;
++----------+-------------------+--------+------------+---------------------------+
+| RollNo   | SName             | Gender | City       | email                     |
++----------+-------------------+--------+------------+---------------------------+
+| 1901CE01 | Rajni Verma       | F      | Delhi      | 1901CE01rajni@gmail.com   | <----
+| 1901CE31 | Sneha Roy         | F      | Patna      | 1901CE31sneha@gmail.com   | <---- 
+| 1901CS28 | Jenish Monpara    | M      | Surat      | 1901CS28jenish@gmail.com  | <----
+| 1901CS61 | Srajan Khandelwal | M      | Raipur     | 1901CS61srajan@gmail.com  | <----
+| 1901CS62 | Sushant Sinha     | M      | Patna      | 1901CS62sushant@yahoo.com | <----
+| 1901CS65 | Tarusi Mittal     | F      | Chandigarh | 1901CS65tarusi@yahoo.com  | <----
+| 1901EE32 | Rahul Roy         | M      | Patna      | 1901EE32rahul@iitp.ac.in  |
+| 1901EE51 | Amisha Jain       | F      | Rajasthan  | 1901EE51amisha@iitp.ac.in |
+| 1901ME32 | Rahul Raj         | M      | Delhi      | 1901ME32rahul@gmail.com   | <----
+| 1901ME63 | Pushpak Sharma    | M      | Indore     | 1901ME63pushpak@yahoo.com | <----
++----------+-------------------+--------+------------+---------------------------+
+10 rows in set (0.00 sec)
+
+mysql> select sname from student where email like '%gmail.com' or email like '%yahoo.com';
++-------------------+
+| sname             |
++-------------------+
+| Rajni Verma       |
+| Sneha Roy         |
+| Jenish Monpara    |
+| Srajan Khandelwal |
+| Sushant Sinha     |
+| Tarusi Mittal     |
+| Rahul Raj         |
+| Pushpak Sharma    |
++-------------------+
+8 rows in set (0.13 sec)
+
+==============================================================================================================================================
+TASK 2b: -
+Find the students who have taken CS561as elective but have not taken CS555 as an elective so far.
+----------------------------------------------------------------------------------------------------------------------------------------------
+mysql> select * from enrolled;
++----------+-------+------+
+| RollNo   | CCode | YoE  |
++----------+-------+------+
+| 1901CE01 | CE301 | 2019 |
+| 1901CE01 | CE501 | 2019 |
+| 1901CE31 | CE301 | 2018 |
+| 1901CE31 | CE501 | 2019 |
+| 1901CS28 | CS354 | 2018 |
+| 1901CS28 | CS355 | 2018 |
+| 1901CS28 | CS303 | 2020 |
+| 1901CS61 | HS301 | 2020 |
+| 1901EE32 | EE301 | 2019 |
+| 1901EE32 | EE302 | 2018 |
+| 1901EE32 | EE501 | 2020 |
+| 1901ME63 | ME502 | 2019 |
+| 1901ME63 | ME301 | 2020 |
+| 1901CS28 | EE301 | 2019 |
+| 1901CS28 | EE302 | 2019 |
+| 1901EE51 | EE301 | 2017 |
+| 1901EE51 | ME502 | 2017 |
+| 1901EE51 | CE501 | 2017 |
+| 1901EE51 | CE301 | 2017 |
+| 1901EE51 | EE302 | 2018 |
+| 1901CS61 | CS555 | 2021 | 
+| 1901CS61 | CS561 | 2021 |
+| 1901CS65 | CS561 | 2021 | <----- Enrolled in CS561 but not in CS555(Answer for our query)
+| 1901CS62 | CS303 | 2020 |
+| 1901CS62 | CS354 | 2020 |
+| 1901CS62 | CS561 | 2020 | <----- Enrolled in CS561 but not in CS555(Answer for our query)
+| 1901CS62 | CS355 | 2020 |
+| 1901CS62 | CS599 | 2020 |
+| 1901CS28 | CS599 | 2019 |
+| 1901CS65 | CS599 | 2018 |
++----------+-------+------+
+
+mysql> select sname from student, (select rollno from enrolled where ccode = 'CS561' and rollno not in  
+    -> (select rollno from enrolled where ccode = 'CS555'))table1 where student.rollno = table1.rollno;
++---------------+
+| sname         |
++---------------+
+| Tarusi Mittal |
+| Sushant Sinha |
++---------------+
+2 row in set (0.10 sec)
+
+==============================================================================================================================================
+TASK 2c: -
+Find the rollno of students who have enrolled in more than 4 courses in the year 2020.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+mysql> select * from enrolled;
++----------+-------+------+
+| RollNo   | CCode | YoE  |
++----------+-------+------+
+| 1901CE01 | CE301 | 2019 |
+| 1901CE01 | CE501 | 2019 |
+| 1901CE31 | CE301 | 2018 |
+| 1901CE31 | CE501 | 2019 |
+| 1901CS28 | CS354 | 2018 |
+| 1901CS28 | CS355 | 2018 |
+| 1901CS28 | CS303 | 2020 |
+| 1901CS61 | HS301 | 2020 |
+| 1901EE32 | EE301 | 2019 |
+| 1901EE32 | EE302 | 2018 |
+| 1901EE32 | EE501 | 2020 |
+| 1901ME63 | ME502 | 2019 |
+| 1901ME63 | ME301 | 2020 |
+| 1901CS28 | EE301 | 2019 |
+| 1901CS28 | EE302 | 2019 |
+| 1901EE51 | EE301 | 2017 |
+| 1901EE51 | ME502 | 2017 |
+| 1901EE51 | CE501 | 2017 |
+| 1901EE51 | CE301 | 2017 |
+| 1901EE51 | EE302 | 2018 |
+| 1901CS61 | CS555 | 2021 | 
+| 1901CS61 | CS561 | 2021 |
+| 1901CS65 | CS561 | 2021 | 
+| 1901CS62 | CS303 | 2020 | <--
+| 1901CS62 | CS354 | 2020 | <--
+| 1901CS62 | CS561 | 2020 | <--
+| 1901CS62 | CS355 | 2020 | <--
+| 1901CS62 | CS599 | 2020 | <--
+| 1901CS28 | CS599 | 2019 |
+| 1901CS65 | CS599 | 2018 |
++----------+-------+------+
+
+mysql> select rollno from (select * from enrolled where YoE=2020)temp group by rollno having count(*)>4;
+
++----------+
+| RollNo   |
++----------+
+| 1901CS62 |
++----------+
+1 row in set (0.00 sec)
+
+==============================================================================================================================================
+TASK 2d: -
+Find the number of enrolled students in course CS599 in the year 2021, 2020 and 2019.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+mysql> select * from enrolled;
++----------+-------+------+
+| RollNo   | CCode | YoE  |
++----------+-------+------+
+| 1901CE01 | CE301 | 2019 |
+| 1901CE01 | CE501 | 2019 |
+| 1901CE31 | CE301 | 2018 |
+| 1901CE31 | CE501 | 2019 |
+| 1901CS28 | CS354 | 2018 |
+| 1901CS28 | CS355 | 2018 |
+| 1901CS28 | CS303 | 2020 |
+| 1901CS61 | HS301 | 2020 |
+| 1901EE32 | EE301 | 2019 |
+| 1901EE32 | EE302 | 2018 |
+| 1901EE32 | EE501 | 2020 |
+| 1901ME63 | ME502 | 2019 |
+| 1901ME63 | ME301 | 2020 |
+| 1901CS28 | EE301 | 2019 |
+| 1901CS28 | EE302 | 2019 |
+| 1901EE51 | EE301 | 2017 |
+| 1901EE51 | ME502 | 2017 |
+| 1901EE51 | CE501 | 2017 |
+| 1901EE51 | CE301 | 2017 |
+| 1901EE51 | EE302 | 2018 |
+| 1901CS61 | CS555 | 2021 | 
+| 1901CS61 | CS561 | 2021 |
+| 1901CS65 | CS561 | 2021 | 
+| 1901CS62 | CS303 | 2020 | 
+| 1901CS62 | CS354 | 2020 | 
+| 1901CS62 | CS561 | 2020 | 
+| 1901CS62 | CS355 | 2020 | 
+| 1901CS62 | CS599 | 2020 | <-- Between 2019 to 2021 (Answer)
+| 1901CS28 | CS599 | 2019 | <-- Between 2019 to 2021 (Answer)
+| 1901CS65 | CS599 | 2018 | <-- Not in Between 2019 to 2021
++----------+-------+------+
+
+mysql> select count(RollNo) from  (select distinct rollno from enrolled where YoE between 2019 and 2021 and CCode = 'CS599')table1;
++---------------+
+| count(RollNo) |
++---------------+
+|             2 |
++---------------+
+
+==============================================================================================================================================
+TASK 2e: -
+Find the CCode of the elective courses and the number of enrolled students in the year of enrolment of 2021 only.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select ccode,count(RollNo) from enrolled where
+    -> ccode in(select ccode from course where ctype="Elective") and YoE=2021 group by ccode;
++-------+---------------+
+| ccode | count(RollNo) |
++-------+---------------+
+| CS555 |             1 |
+| CS561 |             2 |
++-------+---------------+
+2 rows in set (0.00 sec)
+
+
+
+==============================================================================================================================================
+TASK 2f: -
+Find the city with maximum number of students
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> SELECT City
+    -> FROM Student
+    -> GROUP BY City
+    -> HAVING COUNT(City) =
+    -> (SELECT MAX(cnt)
+    -> FROM (SELECT COUNT(City) AS cnt
+    -> FROM Student
+    -> GROUP BY City)
+    -> AS temp);
+
++-------+
+| city  |
++-------+
+| Patna |
++-------+
+1 row in set (0.00 sec)
+
+==============================================================================================================================================
+TASK 2g: -
+Find the rollno of the students who have enrolled to 20 credits so far
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+mysql> select RollNo from
+    -> ( select RollNo,sum(Credit) as net_credit from
+    -> enrolled inner join course on course.CCode = enrolled.CCode
+    -> group by RollNo
+    -> having net_credit > 19)table1;
++----------+
+| RollNo   |
++----------+
+| 1901EE51 |
+| 1901CS28 |
+| 1901CS62 |
++----------+
+3 rows in set (0.00 sec)
+
+==============================================================================================================================================
+TASK 2h: -
+Find the course code which is taken by most number of female students who are from Delhi city.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+mysql> select CCode,count(enrolled.RollNo) from enrolled,student where student.RollNo = enrolled.RollNo and Gender="F" and City="Delhi"
+    -> group by CCode having count(enrolled.RollNo) =
+    -> ( select max(cnt) from
+    -> ( select CCode,count(enrolled.RollNo) as cnt from enrolled,student
+    -> where student.RollNo=enrolled.RollNo and Gender="F" and City="Delhi" group by CCode) as t1);
++-------+------------------------+
+| CCode | count(enrolled.RollNo) |
++-------+------------------------+
+| CE301 |                      1 |
+| CE501 |                      1 |
++-------+------------------------+
+
+
+==============================================================================================================================================
+TASK 2i: -
+Find the elective course code with maximum credit
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+mysql> select * from course;
++-------+----------------------+--------+---------------+
+| CCode | CName                | Credit | CType         |
++-------+----------------------+--------+---------------+
+| CE301 | Mechanics            |      8 | Core          |
+| CE501 | Mechanics Lab        |      3 | Elective      |
+| CS303 | Automata Theory      |      8 | Core          |
+| CS354 | Database Theory      |      8 | Core          |
+| CS355 | Database Lab         |      3 | Elective      |
+| CS555 | Operating System     |      6 | Elective      | <----
+| CS561 | Discrete Maths       |      6 | Elective      | <----
+| CS599 | Compilers            |      6 | Elective      | <----
+| EE301 | Semiconductors       |      6 | Open Elective |
+| EE302 | Communication system |      6 | Core          |
+| EE501 | Electornics Lab      |      6 | Core          |
+| HS301 | Financial Economics  |      6 | Open Elective |
+| ME301 | Fluids               |      8 | Core          |
+| ME502 | Laser Lab            |      3 | Core          |
++-------+----------------------+--------+---------------+
+14 rows in set (0.00 sec)
+
+mysql> select * from (select * from course where CType="Elective")table1
+    -> having Credit=
+    -> (select max(cnt) from (select Credit as cnt from course where CType="Elective")temp);
++-------+------------------+--------+----------+
+| CCode | CName            | Credit | CType    |
++-------+------------------+--------+----------+
+| CS555 | Operating System |      6 | Elective |
+| CS561 | Discrete Maths   |      6 | Elective |
+| CS599 | Compilers        |      6 | Elective |
++-------+------------------+--------+----------+
+3 rows in set (0.00 sec)
+
+==============================================================================================================================================
+TASK 2j: -
+Find the course details for the courses which are enrolled by least number of students so far.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select CCode,Count(CCode) from enrolled group by CCode;
++-------+--------------+
+| CCode | Count(CCode) |
++-------+--------------+
+| CE301 |            3 |
+| CE501 |            3 |
+| CS303 |            2 |
+| CS354 |            2 |
+| CS355 |            2 |
+| CS555 |            1 | <---- Least number of students enrolled
+| CS561 |            3 |
+| CS599 |            3 |
+| EE301 |            3 |
+| EE302 |            3 |
+| EE501 |            1 | <---- Least number of students enrolled
+| HS301 |            1 | <---- Least number of students enrolled
+| ME301 |            1 | <---- Least number of students enrolled
+| ME502 |            2 |
++-------+--------------+
+14 rows in set (0.00 sec)
+
+mysql> select * from course where CCode in
+    -> ( select CCode from enrolled Group by CCode having count(*) =
+    -> ( select min(cnt) from
+    -> ( select count(*) as cnt from enrolled group by CCode) as table1));
++-------+---------------------+--------+---------------+
+| CCode | CName               | Credit | CType         |
++-------+---------------------+--------+---------------+
+| CS555 | Operating System    |      6 | Elective      |
+| EE501 | Electornics Lab     |      6 | Core          |
+| HS301 | Financial Economics |      6 | Open Elective |
+| ME301 | Fluids              |      8 | Core          |
++-------+---------------------+--------+---------------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+
+

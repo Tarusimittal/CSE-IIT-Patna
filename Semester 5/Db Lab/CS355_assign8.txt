@@ -1,0 +1,631 @@
++---------------+
+| Tarusi Mittal |
+| 1901Cs65      |
+| Assignment 08	|
++---------------+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++---------------------------------------------------Setup---------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//login as user scot
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.0.26 MySQL Community Server - GPL
+
+
++-----------------------------------------------------------------------------------------------------------------+
++----------------------------------------------------TASK A-------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+For this task, initially create the following tables. The stateCases table captures the state codes and the number of Covid
+cases date wise. stateCode refers to states of India such as BH for Bihar, MP for Madhya Pradesh, WB for West Bengal
+and so on. EntryDate refers to the date of entry of Covid cases. NumofCases refer to the number of Covid cases recorded.
+• stateCases <StateCode char(2),EntryDate date, NumofCases int> /*stateCode and EntryDate combination is the
+primary key, NumofCases is not null type*/
+• overallCases<StateCode char(2), totalCases int>
+Now create the required triggers (each for insertion, deletion and updation) so that whenever there is any insertion,
+deletion and updation in the number of cases in stateCases table then overallCases table will be updated with total the
+number cases state wise.
+
++----------------------------------------------------------------------------------------------------------------+
+
+
++----------------+
+| INSERT TRIGGER |
++----------------+
+mysql> delimiter $$
+mysql> create trigger before_stateCases_insert before
+    -> insert on stateCases for each row
+    -> begin declare cnt int;
+    -> select count(*) into cnt from overallCases
+    -> where statecode=new.statecode;
+    -> if cnt>0 then update overallcases
+    -> set totalcases=totalcases + new.numofcases
+    -> where statecode=new.statecode;
+    -> else insert into overallcases values (new.statecode, new.numofcases);
+    -> end if;
+    -> end $$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+
+
+
++----------------+
+| DELETE TRIGGER |
++----------------+
+mysql> delimiter $$
+mysql> create trigger after_stateCases_delete after
+    -> delete on stateCases for each row
+    -> begin update overallcases
+    -> set totalcases=totalcases - old.numofcases
+    -> where statecode=old.statecode;
+    -> end $$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+
+
+
++----------------+
+| UPDATE TRIGGER |
++----------------+
+mysql> delimiter $$
+mysql> create trigger after_stateCases_update after
+    -> update on stateCases for each row
+    -> begin update overallcases
+    -> set totalcases=totalcases - old.numofcases + new.numofcases
+    -> where statecode=new.statecode;
+    -> end $$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+
+
+
++----------------+
+| INSERT TRIGGER |
++----------------+
+mysql> insert into stateCases value
+    -> ('PB',curdate(),1000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from stateCases;
++-----------+------------+------------+
+| StateCode | EntryDate  | NumofCases |
++-----------+------------+------------+
+| PB        | 2021-10-21 |       1000 |
++-----------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from overallCases;
++-----------+------------+
+| StateCode | totalCases |
++-----------+------------+
+| PB        |       1000 |
++-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into stateCases value
+    -> ('MP','2021-10-20',1050);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stateCases value
+    -> ('HR','2021-10-19',980);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stateCases value
+    -> ('MP','2021-10-17',990);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from stateCases;
++-----------+------------+------------+
+| StateCode | EntryDate  | NumofCases |
++-----------+------------+------------+
+| MP        | 2021-10-17 |        990 |
+| HR        | 2021-10-19 |        980 |
+| MP        | 2021-10-20 |       1050 |
+| PB        | 2021-10-21 |       1000 |
++-----------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from overallCases;
++-----------+------------+
+| StateCode | totalCases |
++-----------+------------+
+| PB        |       1000 |
+| MP        |       2040 |
+| HR        |        980 |
++-----------+------------+
+3 rows in set (0.00 sec)
+
+
+
++----------------+
+| DELETE TRIGGER |
++----------------+
+mysql> delete from stateCases where StateCode='HR';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from stateCases;
++-----------+------------+------------+
+| StateCode | EntryDate  | NumofCases |
++-----------+------------+------------+
+| MP        | 2021-10-17 |        990 |
+| MP        | 2021-10-20 |       1050 |
+| PB        | 2021-10-21 |       1000 |
++-----------+------------+------------+
+3 rows in set (0.01 sec)
+
+mysql> select * from overallCases;
++-----------+------------+
+| StateCode | totalCases |
++-----------+------------+
+| PB        |       1000 |
+| MP        |       2040 |
+| HR        |          0 |
++-----------+------------+
+3 rows in set (0.00 sec)
+
+
++----------------+
+| UPDATE TRIGGER |
++----------------+
+mysql> update statecases set NumofCases=1005 where StateCode='MP' and EntryDate='2021-10-17';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from stateCases;
++-----------+------------+------------+
+| StateCode | EntryDate  | NumofCases |
++-----------+------------+------------+
+| MP        | 2021-10-17 |       1005 |
+| MP        | 2021-10-20 |       1050 |
+| PB        | 2021-10-21 |       1000 |
++-----------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from overallCases;
++-----------+------------+
+| StateCode | totalCases |
++-----------+------------+
+| PB        |       1000 |
+| MP        |       2055 |
+| HR        |          0 |
++-----------+------------+
+3 rows in set (0.00 sec)
+
++-----------------------------------------------------------------------------------------------------------------+
++-----------------------------------------------------TASK B------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+Create tables as follows-
+• account <anum varchar(10),name varchar(20), balance int> /*anum is the primary key, name is the name of account
+holder and it is not null type, balance is not null type*/
+• accountLog<anum varchar(10), operation varchar(20), dateofoperation date>
+For account table, make atleast 10 valid entries.
+Now perform the followings.
+1. Write two functions as follows-
+• withdraw (anum, amount): Takes anum and amount as input parameters. It is used to deduct certain amount
+from the account. If the amount can be deducted then withdraw function returns the amount otherwise it
+returns -1.
+• deposit (anum, amount): Takes anum and amount as input parameters. It is used to add certain amount in
+the account. If the amount is added then deposit function returns the amount otherwise it returns -1.
+2. Create a trigger that keeps updating the accountLog table for every withdraw and deposit functions that are
+successfully carried out.
++-----------------------------------------------------------------------------------------------------------------+
+
+
+mysql> create table account (anum varchar(10) primary key, name varchar(20) not null, balance int not null);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table accountlog (anum varchar(10), operation varchar(20), dateofoperation date);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into account values
+    -> ('an101','vinay',0),
+    -> ('an102','jauhar',0),
+    -> ('an103','verma',0),
+    -> ('an104','tewani',0),
+    -> ('an105','dhanpat',0),
+    -> ('an106','rashi',0),
+    -> ('an107','cengage',0),
+    -> ('an108','krotov',0),
+    -> ('an109','irodov',0),
+    -> ('an110','kapil',0);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+
+
++----------------+
+| UPDATE TRIGGER |
++----------------+
+Creating a trigger that keeps updating the accountLog table for every withdraw and deposit functions that are successfully carried out.
+
+mysql> DELIMITER $$
+mysql> create trigger after_account_update
+    -> after update
+    -> on account for each row
+    -> begin
+    -> if
+    -> old.balance >= new.balance then
+    -> insert into accountlog values(
+    -> new.anum, CONCAT("WITHDRAWN: ",old.balance-new.balance),curdate());
+    -> else
+    -> insert into accountlog values(
+    -> new.anum, CONCAT("DEPOSITED: ",new.balance-old.balance),curdate());
+    -> end if;
+    -> end $$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DELIMITER ;
+
++------------------+
+| DEPOSIT FUNCTION |
++------------------+
+//FOR CREATING THE DEPOSIT FUNCTION WE WILL KEEP IN MIND THAT ANUM EXSITS AND THE AMOUNT IS POSITIVE
+//OTHERWISE WE WILL RETURN -1
+
+mysql> delimiter ;
+mysql> DELIMITER $$
+mysql> create function deposit(anum varchar(10), amount int)
+    -> returns int
+    -> deterministic begin
+    -> declare rowcount int;
+    -> declare answer int;
+    -> if amount < 0 then return -1;
+    -> end if;
+    -> select count(*) into rowcount from account where account.anum = anum;
+    -> if rowcount = 0 then return -1;
+    -> end if;
+    -> update account
+    -> set balance = balance + amount where account.anum = anum;
+    -> select balance into answer from account where account.anum=anum;
+    -> return answer;
+    -> end $$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+
+mysql> select deposit("an101",1000) as newEntry;
++----------+
+| newEntry |
++----------+
+|     1000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select deposit("an101",1000) as newEntry;
++----------+
+| newEntry |
++----------+
+|     2000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select * from account;
++-------+---------+---------+
+| anum  | name    | balance |
++-------+---------+---------+
+| an101 | vinay   |    2000 |
+| an102 | jauhar  |       0 |
+| an103 | verma   |       0 |
+| an104 | tewani  |       0 |
+| an105 | dhanpat |       0 |
+| an106 | rashi   |       0 |
+| an107 | cengage |       0 |
+| an108 | krotov  |       0 |
+| an109 | irodov  |       0 |
+| an110 | kapil   |       0 |
++-------+---------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select deposit("an102",5000) as newEntry;
++----------+
+| newEntry |
++----------+
+|     5000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select deposit("an103",4000) as newEntry;
++----------+
+| newEntry |
++----------+
+|     4000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select deposit("an104",4000) as newEntry;
++----------+
+| newEntry |
++----------+
+|     4000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select deposit("an105",4600) as newEntry;
++----------+
+| newEntry |
++----------+
+|     4600 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select deposit("an106",6000) as newEntry;
++----------+
+| newEntry |
++----------+
+|     6000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select deposit("an107",1000) as newEntry;
++----------+
+| newEntry |
++----------+
+|     1000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select deposit("an108",9000) as newEntry;
++----------+
+| newEntry |
++----------+
+|     9000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select deposit("an109",6534) as newEntry;
++----------+
+| newEntry |
++----------+
+|     6534 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select * from account;
++-------+---------+---------+
+| anum  | name    | balance |
++-------+---------+---------+
+| an101 | vinay   |    2000 |
+| an102 | jauhar  |    5000 |
+| an103 | verma   |    4000 |
+| an104 | tewani  |    4000 |
+| an105 | dhanpat |    4600 |
+| an106 | rashi   |    6000 |
+| an107 | cengage |    1000 |
+| an108 | krotov  |    9000 |
+| an109 | irodov  |    6534 |
+| an110 | kapil   |       0 |
++-------+---------+---------+
+10 rows in set (0.00 sec)
+
+
+//DEPOSITING IN A NO EXSITING ACCOUNT NO
+mysql> select deposit("an190",1000) as newEntry;
++----------+
+| newEntry |
++----------+
+|       -1 |
++----------+
+1 row in set (0.00 sec)
+
+
+//DEPOSITING A NEGATIVE VALUE
+mysql> select deposit("an101",-6000) as newEntry;
++----------+
+| newEntry |
++----------+
+|       -1 |
++----------+
+1 row in set (0.00 sec)
+
+//NOTHING CHANGES IN THE ACCOUNT TABLE
+mysql> select * from account;
++-------+---------+---------+
+| anum  | name    | balance |
++-------+---------+---------+
+| an101 | vinay   |    2000 |
+| an102 | jauhar  |    5000 |
+| an103 | verma   |    4000 |
+| an104 | tewani  |    4000 |
+| an105 | dhanpat |    4600 |
+| an106 | rashi   |    6000 |
+| an107 | cengage |    1000 |
+| an108 | krotov  |    9000 |
+| an109 | irodov  |    6534 |
+| an110 | kapil   |       0 |
++-------+---------+---------+
+10 rows in set (0.00 sec)
+
+//FINAL ACCOUNT LOG
+mysql> select * from accountLog;
++-------+-----------------+-----------------+
+| anum  | operation       | dateofoperation |
++-------+-----------------+-----------------+
+| an101 | DEPOSITED: 1000 | 2021-10-21      |
+| an101 | DEPOSITED: 1000 | 2021-10-21      |
+| an102 | DEPOSITED: 5000 | 2021-10-21      |
+| an103 | DEPOSITED: 4000 | 2021-10-21      |
+| an104 | DEPOSITED: 4000 | 2021-10-21      |
+| an105 | DEPOSITED: 4600 | 2021-10-21      |
+| an106 | DEPOSITED: 6000 | 2021-10-21      |
+| an107 | DEPOSITED: 1000 | 2021-10-21      |
+| an108 | DEPOSITED: 9000 | 2021-10-21      |
+| an109 | DEPOSITED: 6534 | 2021-10-21      |
++-------+-----------------+-----------------+
+10 rows in set (0.00 sec)
+
++-------------------+
+| WITHDRAW FUNCTION |
++-------------------+
+
+//FOR CREATING THE WITHDRAW FUNCTION WE WILL KEEP IN MIND THAT ANUM EXSITS, POSITIVE AMOUNT IS
+//WITHDRAWNED AND THE AMOUNT TO BE WITHDRAWNED IS LESS THAN EQUAL TO THE CURRENT BALANCE IN THE ACCOUNT
+//OTHERWISE THE FUNCTION WILL RETURN -1;
+
+mysql> DELIMITER $$
+mysql> CREATE FUNCTION withdraw(anum VARCHAR(10), amount INT)
+    -> returns int
+    -> deterministic
+    -> begin
+    -> declare answer int;
+    -> declare accountCheck int;
+    -> declare currBalance int;
+    -> if amount<0 then return -1;
+    -> end if;
+    -> select count(*) into accountCheck from account where
+    -> account.anum=anum;
+    -> if accountCheck<1 then return -1;
+    -> end if;
+    -> select balance into currBalance from account
+    -> where account.anum = anum;
+    -> if currBalance <amount then return -1;
+    -> end if;
+    -> update account
+    -> set balance = balance - amount
+    -> where account.anum=anum;
+    -> select balance into answer from account
+    -> where account.anum=anum;
+    -> return answer;
+    -> end $$
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> delimiter ;
+
+mysql> select withdraw("an101",1000) as newEntry;
++----------+
+| newEntry |
++----------+
+|     1000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select withdraw("an104",1500) as newEntry;
++----------+
+| newEntry |
++----------+
+|     2500 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select withdraw("an109",1534) as newEntry;
++----------+
+| newEntry |
++----------+
+|     5000 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select * from account;
++-------+---------+---------+
+| anum  | name    | balance |
++-------+---------+---------+
+| an101 | vinay   |    1000 |
+| an102 | jauhar  |    5000 |
+| an103 | verma   |    4000 |
+| an104 | tewani  |    2500 |
+| an105 | dhanpat |    4600 |
+| an106 | rashi   |    6000 |
+| an107 | cengage |    1000 |
+| an108 | krotov  |    9000 |
+| an109 | irodov  |    5000 |
+| an110 | kapil   |       0 |
++-------+---------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select * from accountLog;
++-------+-----------------+-----------------+
+| anum  | operation       | dateofoperation |
++-------+-----------------+-----------------+
+| an101 | DEPOSITED: 1000 | 2021-10-21      |
+| an101 | DEPOSITED: 1000 | 2021-10-21      |
+| an102 | DEPOSITED: 5000 | 2021-10-21      |
+| an103 | DEPOSITED: 4000 | 2021-10-21      |
+| an104 | DEPOSITED: 4000 | 2021-10-21      |
+| an105 | DEPOSITED: 4600 | 2021-10-21      |
+| an106 | DEPOSITED: 6000 | 2021-10-21      |
+| an107 | DEPOSITED: 1000 | 2021-10-21      |
+| an108 | DEPOSITED: 9000 | 2021-10-21      |
+| an109 | DEPOSITED: 6534 | 2021-10-21      |
+| an101 | WITHDRAWN: 1000 | 2021-10-21      |
+| an104 | WITHDRAWN: 1500 | 2021-10-21      |
+| an109 | WITHDRAWN: 1534 | 2021-10-21      |
++-------+-----------------+-----------------+
+13 rows in set (0.00 sec)
+
+//WITHDRAWING FROM AN ACCOUNT WHICH DOESNOT EXSITS
+mysql> select withdraw("an190",1400) as newEntry;
++----------+
+| newEntry |
++----------+
+|       -1 |
++----------+
+1 row in set (0.00 sec)
+
+//WITHDRAWING MORE THAN THE AVAILABLE AMOUNT
+mysql> select withdraw("an107",1500) as newEntry;
++----------+
+| newEntry |
++----------+
+|       -1 |
++----------+
+1 row in set (0.00 sec)
+
+//WITHDRAWING A NEGATIVE AMOUNT
+mysql> select withdraw("an108",-1500) as newEntry;
++----------+
+| newEntry |
++----------+
+|       -1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select * from account;
++-------+---------+---------+
+| anum  | name    | balance |
++-------+---------+---------+
+| an101 | vinay   |    1000 |
+| an102 | jauhar  |    5000 |
+| an103 | verma   |    4000 |
+| an104 | tewani  |    2500 |
+| an105 | dhanpat |    4600 |
+| an106 | rashi   |    6000 |
+| an107 | cengage |    1000 |
+| an108 | krotov  |    9000 |
+| an109 | irodov  |    5000 |
+| an110 | kapil   |       0 |
++-------+---------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select * from accountLog;
++-------+-----------------+-----------------+
+| anum  | operation       | dateofoperation |
++-------+-----------------+-----------------+
+| an101 | DEPOSITED: 1000 | 2021-10-21      |
+| an101 | DEPOSITED: 1000 | 2021-10-21      |
+| an102 | DEPOSITED: 5000 | 2021-10-21      |
+| an103 | DEPOSITED: 4000 | 2021-10-21      |
+| an104 | DEPOSITED: 4000 | 2021-10-21      |
+| an105 | DEPOSITED: 4600 | 2021-10-21      |
+| an106 | DEPOSITED: 6000 | 2021-10-21      |
+| an107 | DEPOSITED: 1000 | 2021-10-21      |
+| an108 | DEPOSITED: 9000 | 2021-10-21      |
+| an109 | DEPOSITED: 6534 | 2021-10-21      |
+| an101 | WITHDRAWN: 1000 | 2021-10-21      |
+| an104 | WITHDRAWN: 1500 | 2021-10-21      |
+| an109 | WITHDRAWN: 1534 | 2021-10-21      |
++-------+-----------------+-----------------+
+13 rows in set (0.00 sec)
+
+
++-----------------------------------------------------------------------------------------------------------------+
+################################################ END ##############################################################
++-----------------------------------------------------------------------------------------------------------------+

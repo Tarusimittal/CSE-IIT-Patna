@@ -1,0 +1,50 @@
+________________________________________________________
+
+Name  : Tanishq Malu
+Rollno: 1901CS63
+CS355 : LAB_warmup
+Date  : 29/07/2021
+________________________________________________________
+
+
+-> Installation and setup of MySQL in my Windows system  
+ - Setup the port(3306) and the host(localhost) and password for root user.
+ 
+-> Open command prompt in the bin folder of mysql and use the following commands:- 
+ 
+ - mysql –u root –p         /* To connect to MySQL server as a root user */
+                            /* Enter the password correctly to connect to MySQL server */ 
+
+ - show databases;          /* Displays all exsisting databases */
+ - Create database dblab;   /* Create new database */
+ - use dblab;               /* Use this newly created database */
+                            /* !! This command differ for linux and windows */ 
+
+ - create table student(Rollno varchar (10), SName varchar (10), City varchar (10));   /* Creating tables named student and course in dblab */
+ - create table course(CID varchar(10), CName varchar(10), Credit int);
+ 
+ - insert into student values(1,"Tanishq","bhopal"),(2,"tarusi","chandigarh"),(3,"anish","goa"),(4,"sushant","patna"),(5,"ramesh","bhopal"),(6,"rajan","raipur"),
+   (7,"amish","bhopal"),(8,"raj","dholpur"),(9,"imam","bhopal"),(10,"srajan","raipur") ;
+
+ - insert into course values("101","science",8),("201","maths",8),("301","english",4),("401","social science",6),("501","biology", 6),("601","advanced physics",8),
+   ("701","Arts",6),("801","Calculus",3),("901","CPP",6),(10,"PE",4 ) ;
+ 
+ - select * from student;                                      /* Displays all the entries of student */ 
+ - create user ‘scot’@’localhost’ identified by ‘tiger’;       /* Creates a new user name- scot password- tiger */
+ - grant all privileges on dblab.* to ‘scot’@’localhost’;      /* Grants all permission to user scot for all tables of database dblab */
+ 
+ - exit;                /* sign out of the mysql server */
+ - mysql -u scot -p     /* signing in as 'scot' */
+                        /* Enter the correct password ie. tiger */
+ - show databases;
+ - use dblab;
+ - select * from student;
+ - update student set Sname = "Puneet" where Rollno = 5;     /* Updates the name corresponding to roll no 5 */
+ - update course set CID = "111" where CName = "maths";      /* Updates the CID corresponding to CName maths */
+ - select * from student;                                    /* view the updated table */
+ - select * rom course;
+ - exit;
+
++---------+
+| THE END |
++---------+

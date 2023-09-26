@@ -1,0 +1,145 @@
++----------------------------+
+|          TASK B            |
++----------------------------+
+
+mysql> create database fp;
+
+mysql> use fp;
+
+mysql> create table Faculty (FID smallint Primary Key, FName varchar(20), DoB date,ExtNo int, DoJ date, DeptCode char(2));
+
+mysql> create table Project(PID smallint Primary Key, PName varchar(30), StartingDate date, EndingDate date, SanctionedFund int );
+
+
+mysql> create Table FacProj( FID smallint, PID smallint,role varchar(10), foreign key(FID) references faculty(FID), foreign key (PID) references project(PID));
+
++----------------------------+
+|          TASK B            |
++----------------------------+
+
+mysql> LOAD DATA LOCAL INFILE "C:\\Users\\Tarusi Mittal\\Desktop\\lab\\projData.txt" INTO TABLE project FIELDS TERMINATED BY ',' LINES TERMINATED BY ';';
+
+mysql> LOAD DATA LOCAL INFILE "C:\\Users\\Tarusi Mittal\\Desktop\\lab\\facultyData.txt" INTO TABLE faculty FIELDS TERMINATED BY ',' LINES TERMINATED BY ';';
+
+mysql> LOAD DATA LOCAL INFILE "C:\\Users\\Tarusi Mittal\\Desktop\\lab\\fp.txt" INTO TABLE facproj FIELDS TERMINATED BY ',' LINES TERMINATED BY ';';
+Records: 11  Deleted: 0  Skipped: 0  Warnings: 0
+
++----------------------------+
+|          TASK C            |
++----------------------------+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 1------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question: List all faculties (FID and FName) who do not have any projects as PI within one year of joining.
+
+mysql> select FID,FName from faculty where fid not in(
+    -> select faculty.fid from project,facproj,faculty
+    -> where facproj.pid=project.pid and facproj.fid=faculty.fid and facproj.role="pi"
+    -> and datediff(project.startingdate,doj)/365 <=1);
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 2------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question:Find the FID of the faculty who has obtained the project most recently as PI.
+
+mysql> select FID from facproj,project where
+    -> facproj.pid=project.pid and facproj.role="pi" and startingdate=(
+    -> select max(cnt)from(
+    -> select max(startingdate) as
+    -> cnt from project) as ques2);
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 3------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question: Give the project title of a project that was completed in shortest duration.
+
+mysql> select PID,PName,datediff(endingdate,startingdate)as MinimumDaysToComplete
+    -> from project where datediff(endingdate,startingdate) = (
+    -> select min(cnt) from (
+    -> select datediff(endingdate,startingdate) as cnt from project) as ques3);
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 4------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question:Create a view name dept proj that will give you the department and the total sanctioned amount of the projects.
+
+mysql> create view dept_proj as select DeptCode, SUM(SanctionedFund) from (SELECT * FROM (Faculty NATURAL JOIN FacProj) NATURAL JOIN Project) as Combinded group by DeptCode;
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 5------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question:Find the FID(s) of the PIs with highest number of project counts.
+
+select FID from Faculty natural join(FacProj natural join Project) where Role='PI' group by FID order by  count(*)desc  limit 1;
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 6------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question:List names of faculties, along with Project Names. If any faculty do not have project, then show the ProjectName as null. (Do
+not use SQL outerjoin syntax here, write it from scratch.)
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 7------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question:Find the FIDs of PIs whose projects are not yet completed
+
+mysql> select distinct(FID) from facproj, project where facproj.pid=project.pid and facproj.role="pi" and curdate()<endingdate;
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 8------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question:Find the FIDs of the PIs who have obtained projects within 6 months of their joining.
+
+mysql> select distinct( FID) from Faculty natural join(FacProj natural join Project) where StartingDate<=Doj+interval 6 month;
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 9------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question: Find the FIDs of the PIs who are less than 30 years of age and obtained 3 projects
+
+mysql> select distinct FID from Faculty natural join FacProj
+    -> natural join Project where Timestampdiff(
+    -> Year, DoB, Curdate()) < 30 and
+    -> Role = 'PI' group by FID having count(*) = 3;
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 10-----------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question:Find the name of the faculties who have projects both as PI and CoPI
+
+mysql> select faculty.FName from faculty where fid in (select distinct(fid)
+    -> from facproj where facproj.role='PI' and
+    -> fid in (select distinct(fid) from
+    -> facproj where facproj.role = 'COPI'));
+
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 11-----------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question:If PIs of the projects earn 10% of SanctionedFund and CoPIs earn 5% of SanctionedFund then for each FID show the earning
+amount using a view (with name facEarnings).
+
++-----------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------Question 12-----------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+Question: Update the phone numbers of faculty table by adding 119600 with the existing ExtNo (extension number)
+
+mysql> update faculty set ExtNo=1196000000+extno;
+
+
++----------------------------+
+|          TASK D            |
++----------------------------+
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysqldump  -u scot -p fp> CS355_mtbackup.sql
+Enter password: *****
+
+=======================================================================
+
++-----------------------------------------------------------------------------------------------------------------+
+################################################ END ##############################################################
++-----------------------------------------------------------------------------------------------------------------+

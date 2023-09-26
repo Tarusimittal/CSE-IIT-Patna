@@ -1,0 +1,119 @@
+++++++++++++++++++++++++++++
+|     Input and Output     |
+++++++++++++++++++++++++++++
+ 
+Enter the length of the array: 8
+Enter the value of k:
+2
+Enter the numbers in the array:
+1
+2
+-3
+-4
+9
+0
+-1
+8
+Final Array after Sorting:
+-4
+-3
+-1
+0
+1
+2
+8
+9
+Kth smallest element in the array is: 
+-1
+
+++++++++++++++++++++++++++++++
+| Initial State of Registers |
+++++++++++++++++++++++++++++++
+PC       = 0
+EPC      = 0
+Cause    = 0
+BadVAddr = 0
+Status   = 3000ff10
+
+HI       = 0
+LO       = 0
+
+R0  [r0] = 0
+R1  [at] = 0
+R2  [v0] = 0
+R3  [v1] = 0
+R4  [a0] = 2
+R5  [a1] = 7ffff454
+R6  [a2] = 7ffff460
+R7  [a3] = 0
+R8  [t0] = 0
+R9  [t1] = 0
+R10 [t2] = 0
+R11 [t3] = 0
+R12 [t4] = 0
+R13 [t5] = 0
+R14 [t6] = 0
+R15 [t7] = 0
+R16 [s0] = 0
+R17 [s1] = 0
+R18 [s2] = 0
+R19 [s3] = 0
+R20 [s4] = 0
+R21 [s5] = 0
+R22 [s6] = 0
+R23 [s7] = 0
+R24 [t8] = 0
+R25 [t9] = 0
+R26 [k0] = 0
+R27 [k1] = 0
+R28 [gp] = 10008000
+R29 [sp] = 7ffff450
+R30 [s8] = 0
+R31 [ra] = 0
+
+++++++++++++++++++++++++++++
+| Final State of Registers |
+++++++++++++++++++++++++++++
+
+PC       = 4002d0
+EPC      = 0
+Cause    = 0
+BadVAddr = 0
+Status   = 3000ff10
+
+HI       = 1
+LO       = 0
+
+R0  [r0] = 0
+R1  [at] = 1
+R2  [v0] = a
+R3  [v1] = 0
+R4  [a0] = ffffffff
+R5  [a1] = 100101b4
+R6  [a2] = 100101b0
+R7  [a3] = 100101ac
+R8  [t0] = 100101b4
+R9  [t1] = 2
+R10 [t2] = 1001019c
+R11 [t3] = 1
+R12 [t4] = 100101b0
+R13 [t5] = 2
+R14 [t6] = 9
+R15 [t7] = 0
+R16 [s0] = 0
+R17 [s1] = 10010194
+R18 [s2] = 100101b0
+R19 [s3] = 10010198
+R20 [s4] = 0
+R21 [s5] = 0
+R22 [s6] = 0
+R23 [s7] = 0
+R24 [t8] = 4
+R25 [t9] = 1
+R26 [k0] = 0
+R27 [k1] = 0
+R28 [gp] = 10008000
+R29 [sp] = 7ffff450
+R30 [s8] = 0
+R31 [ra] = 40022c
+

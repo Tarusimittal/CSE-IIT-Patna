@@ -1,0 +1,564 @@
++---------------+
+| Tarusi Mittal |
+| 1901Cs65      |
+| Assignment 09	|
++---------------+
+
+
++-----------------------------------------------------------------------------------------------------------------+
++---------------------------------------------------Setup---------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------+
+
+//login as user scot
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.0.26 MySQL Community Server - GPL
+
+
++------------------------------------+
+|          IMPORTANT NOTE            |
++------------------------------------+
+
+//A GENRAL NOTE: WHILE RUNNING THE COMMANDS TO ENSURE THAT THE TIME TAKEN IS CORRECT WAIT ATLEAST 10 SECONDS BEFORE RUNNING THE COMMAND AGAIN AND SOMETIMES YOU MIGHT HAVE TO LOGIN AND LOGOUT OF THE USER TO ENSURE THAT THE TIME IS NOT BECAUSE OF CACHE 
+//WHILE DOING THE INDEXED AND UNINDEXED BREAKS WERE SAME EX: IF I EXIT AND LOGINED AGIN AFTER 3 QUERY IN SELECT IN UNINDEXED I DID THE SAME IN INDEXED SO THAT THE PROCESS IS SMOOTH AND UNIASED
+
+// THE QUERY NO WERE NOT IN SEQUENCE AS THEY WERE OF MULTIPLE EBTRIES SO I CHANGED THEM TO CONSQUITVE
+
++----------------------------+
+|          TASK A            |
++----------------------------+
+
+//Creating  a table
+mysql> CREATE TABLE transactions(
+    -> Series_reference varchar(20),
+    -> Period varchar(8),
+    -> Data_value float,
+    -> Suppressed varchar(20),
+    -> STATUS varchar(20),
+    -> UNITS varchar(20),
+    -> Magnitude int,
+    -> Subject text,
+    -> Group_data text,
+    -> Series_title_1 text,
+    -> Series_title_2 text,
+    -> Series_title_3 text,
+    -> Series_title_4 text,
+    -> Series_title_5 text);
+
+mysql> exit;
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p
+
+mysql> use dblab;
+Database changed
+mysql> SET GLOBAL local_infile=1;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT SUPER ON *.* TO scot@localhost;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> exit;
+Bye
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql --local_infile=1 -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 21
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use dblab;
+Database changed
+
+mysql> LOAD DATA LOCAL INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\transactions.csv' INTO TABLE transactions FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' ignore 1 rows;
+
+
++----------------------------+
+|          TASK B            |
++----------------------------+
+
+mysql> set profiling =1;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+//Setting profiling equal to 1 to maitain the time taken by queries
+
++----------------------------+
+|   SELECT COMMAND           |
++----------------------------+
+mysql> select * from transactions where Data_value>30000.0 and data_value <40000.0;
+mysql> show profiles;
++----------+------------+-----------------------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                                       |
++----------+------------+-----------------------------------------------------------------------------+
+|        1 | 0.01794450 | select * from transactions where Data_value>30000.0 and data_value <40000.0 |
++----------+------------+-----------------------------------------------------------------------------+
+
+Time Taken = 0.01794450
+
+SImlarly running the command for 5 times gives:
+mysql> show profiles;
++----------+------------+-----------------------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                                       |
++----------+------------+-----------------------------------------------------------------------------+
+|        1 | 0.01794450 | select * from transactions where Data_value>30000.0 and data_value <40000.0 |
+|        2 | 0.01894375 | select * from transactions where Data_value>30000.0 and data_value <40000.0 |
+|        3 | 0.01179375 | select * from transactions where Data_value>30000.0 and data_value <40000.0 |
+|        4 | 0.01430200 | select * from transactions where Data_value>30000.0 and data_value <40000.0 |
+|        5 | 0.02901350 | select * from transactions where Data_value>30000.0 and data_value <40000.0 |
++----------+------------+-----------------------------------------------------------------------------+
+TOTAL TIME OF 5 =0.0919975
+AVERAGE TIME TAKEN = 0.0919975/5
+                   = 0.0183995
+
++----------------------------+
+|   UPDATE COMMAND           |
++----------------------------+
+
+mysql> UPDATE transactions SET Data_value = Data_value + 5 WHERE Data_value < 3000.0;
+Query OK, 11434 rows affected (0.12 sec)
+Rows matched: 11434  Changed: 11434  Warnings: 0
+
+mysql> show profiles;
+
+//Repeating This 5 times we get:
+
+
+mysql> show profiles;
++----------+------------+-------------------------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                                         |
++----------+------------+-------------------------------------------------------------------------------+
+|        9 | 0.12474275 | UPDATE transactions SET Data_value = Data_value + 5 WHERE Data_value < 3000.0 |
+|       10 | 0.13395975 | UPDATE transactions SET Data_value = Data_value + 5 WHERE Data_value < 3000.0 |
+|       11 | 0.13661550 | UPDATE transactions SET Data_value = Data_value + 5 WHERE Data_value < 3000.0 |
+|       12 | 0.12575950 | UPDATE transactions SET Data_value = Data_value + 5 WHERE Data_value < 3000.0 |
+|       13 | 0.13243250 | UPDATE transactions SET Data_value = Data_value + 5 WHERE Data_value < 3000.0 |
++----------+------------+-------------------------------------------------------------------------------+
+TOTAL TIME OF 5 = 0.65351
+AVERAGE TIME TAKEN = 0.65351/5
+                   = 0.130702
+
+
++----------------------------+
+|   INSERT COMMAND           |
++----------------------------+
+
+mysql> INSERT INTO transactions VALUES("ECTA.S19A2", "2018.03", 13452.1, "", "F", "Dollars", 6, "Electronic Card Transactions (ANZSIC06) - ECT", "Total values - Electronic card transactions A/S/T by division", "Actual", "RTS total industries", "", "", "");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show profiles;
+
+THE times are as follows:
+
+|       14 | 0.00920975 | 
+|       15 | 0.00784700 | 
+|       16 | 0.00761300 | 
+|       17 | 0.00882725 | 
+|       18 | 0.00783350 |
+
+TOTAL TIME OF 5 = 0.0413305
+AVERAGE TIME TAKEN = 0.0413305/5
+                   = 0.0082661
+
++----------------------------+
+|          TASK C            |
++----------------------------+
+
+mysql> Create table table_newt like transactions;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT table_newt select * from transactions;
+Query OK, 16357 rows affected (0.33 sec)
+Records: 16357  Duplicates: 0  Warnings: 0
+
+mysql> Create index idx_newt on table_newt(Data_value);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
++----------------------------+
+|          TASK D            |
++----------------------------+
++----------------------------+
+|   SELECT COMMAND           |
++----------------------------+
+mysql> select * from table_newt where Data_value>30000.0 and data_value <40000.0;
+mysql> show profiles;
+//Repeating it for 5 times
+
++----------+------------+-----------------------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                                       |
++----------+------------+-----------------------------------------------------------------------------+
+|        6 | 0.00917750 | select * from table_newt where Data_value>30000.0 and data_value <40000.0   |
+|        7 | 0.00972800 | select * from table_newt where Data_value>30000.0 and data_value <40000.0   |
+|        8 | 0.00871825 | select * from table_newt where Data_value>30000.0 and data_value <40000.0   |
+|        9 | 0.00973550 | select * from table_newt where Data_value>30000.0 and data_value <40000.0   |
+|       10 | 0.00748550 | select * from table_newt where Data_value>30000.0 and data_value <40000.0   |
++----------+------------+-----------------------------------------------------------------------------+
+TOTAL TIME OF 5 = 0.044845
+AVERAGE TIME TAKEN = 0.044845/5
+                   = 0.008969
+
++----------------------------+
+|   UPDATE COMMAND           |
++----------------------------+
+mysql> UPDATE table_newt SET Data_value = Data_value + 5 WHERE Data_value < 3000.0;
+Query OK, 11363 rows affected (0.22 sec)
+Rows matched: 11363  Changed: 11363  Warnings: 0
+
+mysql> show profiles;
+
+//Repeating it for 5 times
+
++----------+------------+-----------------------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                                       |
++----------+------------+-----------------------------------------------------------------------------+
+|       11 | 0.25402950 | UPDATE table_newt SET Data_value = Data_value + 5 WHERE Data_value < 3000.0 |
+|       12 | 0.27860075 | UPDATE table_newt SET Data_value = Data_value + 5 WHERE Data_value < 3000.0 |
+|       13 | 0.23109800 | UPDATE table_newt SET Data_value = Data_value + 5 WHERE Data_value < 3000.0 |
+|       14 | 0.26388825 | UPDATE table_newt SET Data_value = Data_value + 5 WHERE Data_value < 3000.0 |
+|       15 | 0.22114075 | UPDATE table_newt SET Data_value = Data_value + 5 WHERE Data_value < 3000.0 |
++----------+------------+-----------------------------------------------------------------------------+
+15 rows in set, 1 warning (0.00 sec)
+
+TOTAL TIME OF 5 = 1.24956905
+AVERAGE TIME TAKEN = 1.24956905/5
+                   = 0.24991381
+
++----------------------------+
+|   INSERT COMMAND           |
++----------------------------+
+mysql> INSERT INTO table_newt VALUES("ECTA.S19A2", "2018.03", 13452.1, "", "F", "Dollars", 6, "Electronic Card Transactions (ANZSIC06) - ECT", "Total values - Electronic card transactions A/S/T by division", "Actual", "RTS total industries", "", "", "");
+
+mysql> show profiles;
+
+//Repeating it 5 times
+|       21 | 0.01142000 | INSERT INTO table_newt VALUES("ECTA.S19A2", "2018.03", 13452.1, "", "F", "Dollars", 6, "Electronic Card Transactions (ANZSIC06) - ECT", "Total values - Electronic card transactions A/S/T by division", "Actual", "RTS total industries", "", "", "") |
+|       22 | 0.00901400 | INSERT INTO table_newt VALUES("ECTA.S19A2", "2018.03", 13452.1, "", "F", "Dollars", 6, "Electronic Card Transactions (ANZSIC06) - ECT", "Total values - Electronic card transactions A/S/T by division", "Actual", "RTS total industries", "", "", "") |
+|       23 |  0.00881700 | INSERT INTO table_newt VALUES("ECTA.S19A2", "2018.03", 13452.1, "", "F", "Dollars", 6, "Electronic Card Transactions (ANZSIC06) - ECT", "Total values - Electronic card transactions A/S/T by division", "Actual", "RTS total industries", "", "", "") |
+|       24 | 0.00668825 | INSERT INTO table_newt VALUES("ECTA.S19A2", "2018.03", 13452.1, "", "F", "Dollars", 6, "Electronic Card Transactions (ANZSIC06) - ECT", "Total values - Electronic card transactions A/S/T by division", "Actual", "RTS total industries", "", "", "") |
+|       26 | 0.00885250 | INSERT INTO table_newt VALUES("ECTA.S19A2", "2018.03", 13452.1, "", "F", "Dollars", 6, "Electronic Card Transactions (ANZSIC06) - ECT", "Total values - Electronic card transactions A/S/T by division", "Actual", "RTS total industries", "", "", "") |
+
+TOTAL TIME OF 5 = 0.04479175
+AVERAGE TIME TAKEN = 0.04479175/5
+                   = 0.00895835
+
+
++----------------------------+
+|          TASK E            |
++----------------------------+
+
+JUSTIFICATION
+
+SELECT: The SELECT query Takes less time  due to indexing of the Data_value column. The average time for unindexed table is = 0.0183995 and for indexed table is = 0.008969 which implies that indexed table is about times 2.05 faster than the unindexd table;
+
+-- UPDATE: The UPDATE query slows down. The average time for unindexed table is =0.130702 and for indexed table is = 0.24991381 which implies that indexed table is about 1.912 times  slower than the unindexd table. The index table gets updated which takes more time in the new table.If we notice theincreased time is in certain queries.
+
+-- INSERT: The INSERT query takes slightly greater time. he average time for unindexed table is =0.0082661 and for indexed table is =0.00895835 which implies that indexed table is about 1.0837 times slower than the unindexd table. The time is higher because there are more entries now and the increased time is distributed over all queries
+
+
+
+
+
+
+
++-------------------------------------------------------------------------------------------------+
+|                                     FOR OWN INDIVIDUAL CSV                                      |
++-------------------------------------------------------------------------------------------------+
+
+I have downloaded the csv from the site: https://eforexcel.com/wp/downloads-18-sample-csv-files-data-sets-for-testing-sales/
+
+The file chosen is : 50000 Sales Records
+
+I have uploaded the file on my drive the link for which is: 
+https://drive.google.com/file/d/1P_k8DgkM8Ri1o3TDiTqHNrb76FpwAxaR/view?usp=sharing
+
+
++----------------------------+
+|          TASK A            |
++----------------------------+
+
+//Creating  a table
+
+mysql> CREATE TABLE Sales(
+    -> Region text,
+    -> Country text,
+    -> Item_Type text,
+    -> Sales_Channel text,
+    -> Order_Priority varchar(20),
+    -> Order_date varchar(20),
+    -> Order_ID varchar(20),
+    -> Ship_date varchar(20),
+    -> Units_sold int,
+    -> Unit_price float,
+    -> Unit_cost float,
+    -> Total_Revenue float,
+    -> Total_cost float,
+    -> Total_profit float);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> exit;
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p
+
+mysql> use dblab;
+Database changed
+mysql> SET GLOBAL local_infile=1;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT SUPER ON *.* TO scot@localhost;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> exit;
+Bye
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql --local_infile=1 -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 21
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use dblab;
+Database changed
+mysql> LOAD DATA LOCAL INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\Sales_records.csv' INTO TABLE Sales FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
+Query OK, 50001 rows affected, 50006 warnings (0.69 sec)
+Records: 50001  Deleted: 0  Skipped: 0  Warnings: 50006
+
+
++----------------------------+
+|          TASK B            |
++----------------------------+
+
+
+mysql> set profiling =1;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+//Setting profiling equal to 1 to maitain the time taken by queries
+
++----------------------------+
+|   SELECT COMMAND           |
++----------------------------+
+
+mysql> select * from sales where units_sold <200 and units_sold>100;
+
+
+mysql> show profiles;
+
+//REPEATING THE ABOVE COMMAND 5 TIMES
++----------+------------+--------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                        |
++----------+------------+--------------------------------------------------------------+
+|        3 | 0.05285000 | select * from sales where units_sold <200 and units_sold>100 |
+|        4 | 0.04120400 | select * from sales where units_sold <200 and units_sold>100 |
+|        5 | 0.03688725 | select * from sales where units_sold <200 and units_sold>100 |
+|        6 | 0.04118100 | select * from sales where units_sold <200 and units_sold>100 |
+|        7 | 0.05111600 | select * from sales where units_sold <200 and units_sold>100 |
++----------+------------+--------------------------------------------------------------+
+
+TOTAL TIME OF 5 = 0.22323825
+AVERAGE TIME TAKEN = 0.22323825/5
+                   = 0.04464765
+
+
++----------------------------+
+|   UPDATE COMMAND           |
++----------------------------+
+
+mysql> UPDATE Sales SET units_sold = units_sold + 1 WHERE units_sold < 100;
+Query OK, 565 rows affected (0.08 sec)
+Rows matched: 565  Changed: 565  Warnings: 0
+
+mysql> UPDATE Sales SET units_sold = units_sold + 1 WHERE units_sold < 100;
+Query OK, 556 rows affected (0.09 sec)
+Rows matched: 556  Changed: 556  Warnings: 0
+
+mysql> UPDATE Sales SET units_sold = units_sold + 1 WHERE units_sold < 100;
+Query OK, 544 rows affected (0.09 sec)
+Rows matched: 544  Changed: 544  Warnings: 0
+
+mysql> UPDATE Sales SET units_sold = units_sold + 1 WHERE units_sold < 100;
+Query OK, 539 rows affected (0.06 sec)
+Rows matched: 539  Changed: 539  Warnings: 0
+
+mysql> UPDATE Sales SET units_sold = units_sold + 1 WHERE units_sold < 100;
+Query OK, 535 rows affected (0.09 sec)
+Rows matched: 535  Changed: 535  Warnings: 0
+
+mysql> show profiles;
++----------+------------+---------------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                               |
++----------+------------+---------------------------------------------------------------------+
+|       10 | 0.07703750 | UPDATE Sales SET units_sold = units_sold + 1 WHERE units_sold < 100 |
+|       11 | 0.09080450 | UPDATE Sales SET units_sold = units_sold + 1 WHERE units_sold < 100 |
+|       12 | 0.08578775 | UPDATE Sales SET units_sold = units_sold + 1 WHERE units_sold < 100 |
+|       13 | 0.05947625 | UPDATE Sales SET units_sold = units_sold + 1 WHERE units_sold < 100 |
+|       14 | 0.09364525 | UPDATE Sales SET units_sold = units_sold + 1 WHERE units_sold < 100 |
++----------+------------+---------------------------------------------------------------------+
+
+TOTAL TIME OF 5 = 0.40675125
+AVERAGE TIME TAKEN = 0.40675125/5
+                   = 0.08135025 
+
++----------------------------+
+|   INSERT COMMAND           |
++----------------------------+
+mysql> INSERT INTO sales VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1");   
+mysql> show profiles;
+
+//REPEAT THIS 5 TIMES
+|       16 | 0.00983675 | INSERT INTO sales VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1") |
+|       17 | 0.00923000 | INSERT INTO sales VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1") |
+|       18 | 0.00765600 | INSERT INTO sales VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1") |
+|       19 | 0.00661700 | INSERT INTO sales VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1") |
+|       20 | 0.00568100 | INSERT INTO sales VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1") |
+
+TOTAL TIME OF 5 = 0.03857375
+AVERAGE TIME TAKEN = 0.03857375/5
+                   = 0.00771475
+
++----------------------------+
+|          TASK C            |
++----------------------------+
+
+mysql> Create table table_news like sales;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT table_news select * from sales;
+Query OK, 50006 rows affected (0.72 sec)
+Records: 50006  Duplicates: 0  Warnings: 0
+
+mysql> Create index idx_news on table_news(units_sold);
+Query OK, 0 rows affected (0.28 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
++----------------------------+
+|          TASK D            |
++----------------------------+
+mysql> exit;
+Bye
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql --local_infile=1 -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 22
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use dblab;
+Database changed
+mysql> set profiling =1;
+Query OK, 0 rows affected, 1 warning (0.00 sec)]
+
++----------------------------+
+|   SELECT COMMAND           |
++----------------------------+
+
+
+mysql> select * from table_news where units_sold <200 and units_sold>100;
+
+mysql> show profiles;
+
+
+//REPEATING IT 5 TIMES
+mysql> show profiles;
++----------+------------+-------------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                             |
++----------+------------+-------------------------------------------------------------------+
+|        1 | 0.04965850 | select * from table_news where units_sold <200 and units_sold>100 |
+|        2 | 0.03735550 | select * from table_news where units_sold <200 and units_sold>100 |
+|        3 | 0.04568675 | select * from table_news where units_sold <200 and units_sold>100 |
+|        4 | 0.05209175 | select * from table_news where units_sold <200 and units_sold>100 |
+|        5 | 0.03754425 | select * from table_news where units_sold <200 and units_sold>100 |
++----------+------------+-------------------------------------------------------------------+
+5 rows in set, 1 warning (0.00 sec)
+
+TOTAL TIME OF 5 = 0.22233675
+AVERAGE TIME TAKEN = 0.22233675/5
+                   = 0.04446735
+
+
+
++----------------------------+
+|   UPDATE COMMAND           |
++----------------------------+
+UPDATE table_news SET units_sold = units_sold + 1 WHERE units_sold < 100;
+
+//RePEATING IT 5 TIMES
+mysql> show profiles;
++----------+------------+--------------------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                                    |
++----------+------------+--------------------------------------------------------------------------+
+|        6 | 0.19959450 | UPDATE table_news SET units_sold = units_sold + 1 WHERE units_sold < 100 |
+|        7 | 0.11037225 | UPDATE table_news SET units_sold = units_sold + 1 WHERE units_sold < 100 |
+|        8 | 0.10682625 | UPDATE table_news SET units_sold = units_sold + 1 WHERE units_sold < 100 |
+|        9 | 0.10138250 | UPDATE table_news SET units_sold = units_sold + 1 WHERE units_sold < 100 |
+|       10 | 0.09580800 | UPDATE table_news SET units_sold = units_sold + 1 WHERE units_sold < 100 |
++----------+------------+--------------------------------------------------------------------------+
+TOTAL TIME OF 5 = 0.6161955
+AVERAGE TIME TAKEN = 0.6161955/5
+                   = 0.1232391 
+
+
++----------------------------+
+|   INSERT COMMAND           |
++----------------------------+
+mysql> INSERT INTO table_news VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1");
+Query OK, 1 row affected (0.01 sec) 
+
+
+|       15 | 0.00952350 | INSERT INTO table_news VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1") |
+|       16 | 0.01103000  | INSERT INTO table_news VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1") |
+|       17 | 0.00838650 | INSERT INTO table_news VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1") |
+|       18 | 0.00884000 | INSERT INTO table_news VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1") |
+|       19 | 0.00918775 | INSERT INTO table_news VALUES("North Side", "India", "Household", "Online", "H", "2/2/2020", "123456789","4/4/2020", 125, "23.45", "21.12", "287654.97", "233113.87","54541.1") |
+
+TOTAL TIME OF 5 = 0.04696775
+AVERAGE TIME TAKEN = 0.04696775/5
+                   = 0.00939355 
+
+
++----------------------------+
+|          TASK E            |
++----------------------------+
+
+
+
+JUSTIFICATION
+
+SELECT: The SELECT query TAKES LESS TIME due to indexing of the Data_value column. The average time for unindexed table is = 0.04464765 and for indexed table is = 0.04446735 which implies that indexed table is about 1.004 times faster than the unindexd table;
+
+-- UPDATE: The UPDATE query slows down to. The average time for unindexed table is = 0.08135025 and for indexed table is = 0.1232391 which implies that indexed table is about 1.5149 times slower than the unindexd table. The index table gets updated which takes more time in the new table.If we notice theincreased time is in certain queries.
+
+-- INSERT: The INSERT query takes slightly greater time. he average time for unindexed table is = 0.00771475 and for indexed table is = 0.00939355  which implies that indexed table is about 1.2176 times slower than the unindexd table. The time is higher because there are more entries now and the increased time is distributed over all queries
+
+
+
++-----------------------------------------------------------------------------------------------------------------+
+################################################ END ##############################################################
++-----------------------------------------------------------------------------------------------------------------+

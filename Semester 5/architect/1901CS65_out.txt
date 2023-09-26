@@ -1,0 +1,276 @@
+#Tarusi Mittal
+#1901CS65
+# Architecture Lab assignment 1
+
+Function:
+# Compute the sum of N integers: 1 + 2 + 3 + ... + N
+
+# data segment
+.data
+
+output1:	.asciiz	"Please enter N =>  "
+output2:	.asciiz	"Sum of first N numbers => "
+newline:     	.asciiz	"\n"
+
+# Code Segment
+.text
+.globl	main
+
+main:
+	# Initialize registers
+	li	$t1, 0		# Initialize the counter (i)
+	li	$t2, 0		# Initialize sum
+
+	# Print the message of output1
+	li	$v0,4		# print_string syscall code = 4
+	la	$a0, output1	# load output1 into register $a0
+	syscall
+
+	# Input N from user and store in register
+	li	$v0,5		# read_int syscall code = 5
+	syscall	
+	move	$t0,$v0		# syscall results returned in $v0
+
+	# Run a loop till N
+loop:	addi	$t1, $t1, 1	# i = i + 1
+	add	$t2, $t2, $t1	# sum = sum + i
+	beq	$t0, $t1, exit	# if i = N, continue
+	j	loop
+
+	# Exit routine - print output2
+exit:	li	$v0, 4		# print_string syscall code = 4
+	la	$a0, output2	# load output2 into register a0
+	syscall
+
+	# Print the message of output2
+	li	$v0,1		# print_int syscall code = 1
+	move	$a0, $t2
+	syscall
+
+	li	$v0,10		# exit
+	syscall
+
+
+
+Let us dry run the approach!
+PC       = 0
+EPC      = 0
+Cause    = 0
+BadVAddr = 0
+Status   = 3000ff10
+
+HI       = 0
+LO       = 0
+
+R0  [r0] = 0
+R1  [at] = 0
+R2  [v0] = 0
+R3  [v1] = 0
+R4  [a0] = 4
+R5  [a1] = 7ffff458
+R6  [a2] = 7ffff46c
+R7  [a3] = 0
+R8  [t0] = 0
+R9  [t1] = 0
+R10 [t2] = 0
+R11 [t3] = 0
+R12 [t4] = 0
+R13 [t5] = 0
+R14 [t6] = 0
+R15 [t7] = 0
+R16 [s0] = 0
+R17 [s1] = 0
+R18 [s2] = 0
+R19 [s3] = 0
+R20 [s4] = 0
+R21 [s5] = 0
+R22 [s6] = 0
+R23 [s7] = 0
+R24 [t8] = 0
+R25 [t9] = 0
+R26 [k0] = 0
+R27 [k1] = 0
+R28 [gp] = 10008000
+R29 [sp] = 7ffff454
+R30 [s8] = 0
+R31 [ra] = 0
+
+Running the single step now:
+PC       = 400004
+EPC      = 0
+Cause    = 0
+BadVAddr = 0
+Status   = 3000ff10
+
+HI       = 0
+LO       = 0
+
+R0  [r0] = 0
+R1  [at] = 0
+R2  [v0] = 0
+R3  [v1] = 0
+R4  [a0] = 4
+R5  [a1] = 7ffff458
+R6  [a2] = 7ffff46c
+R7  [a3] = 0
+R8  [t0] = 0
+R9  [t1] = 0
+R10 [t2] = 0
+R11 [t3] = 0
+R12 [t4] = 0
+R13 [t5] = 0
+R14 [t6] = 0
+R15 [t7] = 0
+R16 [s0] = 0
+R17 [s1] = 0
+R18 [s2] = 0
+R19 [s3] = 0
+R20 [s4] = 0
+R21 [s5] = 0
+R22 [s6] = 0
+R23 [s7] = 0
+R24 [t8] = 0
+R25 [t9] = 0
+R26 [k0] = 0
+R27 [k1] = 0
+R28 [gp] = 10008000
+R29 [sp] = 7ffff454
+R30 [s8] = 0
+R31 [ra] = 0
+
+
+
+PC       = 40003c
+EPC      = 0
+Cause    = 0
+BadVAddr = 0
+Status   = 3000ff10
+
+HI       = 0
+LO       = 0
+
+R0  [r0] = 0
+R1  [at] = 0
+R2  [v0] = 5
+R3  [v1] = 0
+R4  [a0] = 10010000
+R5  [a1] = 7ffff458
+R6  [a2] = 7ffff46c
+R7  [a3] = 0
+R8  [t0] = 0
+R9  [t1] = 0
+R10 [t2] = 0
+R11 [t3] = 0
+R12 [t4] = 0
+R13 [t5] = 0
+R14 [t6] = 0
+R15 [t7] = 0
+R16 [s0] = 0
+R17 [s1] = 0
+R18 [s2] = 0
+R19 [s3] = 0
+R20 [s4] = 0
+R21 [s5] = 0
+R22 [s6] = 0
+R23 [s7] = 0
+R24 [t8] = 0
+R25 [t9] = 0
+R26 [k0] = 0
+R27 [k1] = 0
+R28 [gp] = 10008000
+R29 [sp] = 7ffff454
+R30 [s8] = 0
+R31 [ra] = 400018
+
+
+After we entered the value of n=5;
+PC       = 400044
+R8  [t0] = 5
+
+For step sum=sum+i
+PC       = 400048 
+R9  [t1] = 1
+
+For step if i!=N;
+PC       = 40004c
+R10 [t2] = 1
+
+And now the loop will run for 4 more times as shown below:
+
+#RUN 1
+PC       = 400050
+PC       = 400044 
+
+PC       = 400048  
+R9  [t1] = 2  //i=i+1;
+
+PC       = 40004c 
+R10 [t2] = 3  //sum=sum+i;
+
+//continue as i!=N
+
+#RUN 2
+Loop runs again
+PC       = 400050
+PC       = 400044 
+
+PC       = 400048 
+R9  [t1] = 3  //i=i+1
+
+PC       = 40004c
+R10 [t2] = 6  //sum=sum+i;
+
+//continue as i!=N
+
+#RUN 3
+Loop runs again
+PC       = 400050
+PC       = 400044 
+
+PC       = 400048 
+R9  [t1] = 4  //i=i+1
+
+PC       = 40004c
+R10 [t2] = a  //sum=sum+i;
+
+//continue as i!=N
+
+#RUN 4
+Loop runs again
+PC       = 400050
+PC       = 400044 
+
+PC       = 400048 
+R9  [t1] = 5  //i=i+1
+
+PC       = 40004c
+R10 [t2] = f  //sum=sum+i;
+
+//it breaks as i==N
+#EXITS THE LOOP
+
+PC       = 400054
+
+PC       = 400058
+R2  [v0] = 4  //prints the string
+
+PC       = 40005c
+R1  [at] = 10010000 //loads output into register
+
+PC       = 400060
+R4  [a0] = 10010014  //syscall
+
+PC       = 400064 //prints_int syscall
+
+PC       = 400068
+R2  [v0] = 1  //move $ a0,$ t2
+
+PC       = 40006c
+R4  [a0] = f    //syscall
+
+PC       = 400070 //prints the output and exit 
+
+PC       = 400074
+R2  [v0] = a //syscall
+
+

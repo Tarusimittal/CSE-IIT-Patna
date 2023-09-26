@@ -1,0 +1,686 @@
++-------------------------+
+|        LAB-01           |
+|     Tanishq Malu        |
+|       1901CS63          |
++-------------------------+
+
+====================================================================================================================================================
+
+Login to mysql server as scot:-
+
+mysql --port=3307 --host=localhost -u scot -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dblab              |
+| information_schema |
++--------------------+
+2 rows in set (1.62 sec)
+
+mysql> use dblab;
+Database changed
+
+====================================================================================================================================================
+# Question 1
+
+Insert atleast 10 records in Student table assuming RollNo is unique.
+Similarly, insert 10 records in Course table assuming CCode is unique.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Creation of Student Table
+
+mysql> create table Student(RollNo varchar(8), SName varchar(20), Gender char(1), City varchar(20));
+Query OK, 0 rows affected (3.83 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Insertion of values in Student Table
+
+mysql> insert into Student values("iit01","tanishq",'M',"bhopal"),("iit02","tarusi",'F',"chandigarh"),
+    -> ("iit03","anish",'M',"goa"),("iit04","sushant",'M',"patna"),
+    -> ("iit05","ramesh",'M',"mumbai"),("iit06","rajan",'M',"raipur"),
+    -> ("iit07","amish",'M',"mumbai"),("iit08","raj",'M',"patna"),
+    -> ("iit09","imam",'M',"mumbai"),("iit10","srajan",'M',"raipur");
+Query OK, 10 rows affected (1.55 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+// Resulting Table
+
+mysql> select * from student;
++--------+---------+--------+------------+
+| RollNo | SName   | Gender | City       |
++--------+---------+--------+------------+
+| iit01  | tanishq | M      | bhopal     |
+| iit02  | tarusi  | F      | chandigarh |
+| iit03  | anish   | M      | goa        |
+| iit04  | sushant | M      | patna      |
+| iit05  | ramesh  | M      | mumbai     |
+| iit06  | rajan   | M      | raipur     |
+| iit07  | amish   | M      | mumbai     |
+| iit08  | raj     | M      | patna      |
+| iit09  | imam    | M      | mumbai     |
+| iit10  | srajan  | M      | raipur     |
++--------+---------+--------+------------+
+10 rows in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Creation of Course Table
+
+mysql> create table Course(CCode varchar(5), CName varchar(20), Credit smallint);
+Query OK, 0 rows affected (0.76 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Insertion of values in Course Table
+
+mysql> insert into Course values("c101","science",8),("c201","maths",8),
+    -> ("c301","english",4),("c401","social science",6),
+    -> ("c501","biology", 6),("c601","advanced physics",8),
+    -> ("c701","Arts",6),("c801","Calculus",3),
+    -> ("c901","CPP",6),("c1001","Physical Education",4 );
+Query OK, 10 rows affected (0.25 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> select * from course;
++-------+--------------------+--------+
+| CCode | CName              | Credit |
++-------+--------------------+--------+
+| c101  | science            |      8 |
+| c201  | maths              |      8 |
+| c301  | english            |      4 |
+| c401  | social science     |      6 |
+| c501  | biology            |      6 |
+| c601  | advanced physics   |      8 |
+| c701  | Arts               |      6 |
+| c801  | Calculus           |      3 |
+| c901  | CPP                |      6 |
+| c1001 | Physical Education |      4 |
++-------+--------------------+--------+
+10 rows in set (0.00 sec)
+
+
+=====================================================================================================================================================
+# Question 2
+
+Insert 5 records in Enrolled table. Also, check whether you can insert any RollNo and CCode combination in the Enrolled table? 
+Check whether duplicate entries can be inserted.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Creation of Enrolled Table
+
+mysql> create table Enrolled (RollNo varchar(8), CCode varchar(5));
+Query OK, 0 rows affected (1.14 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Insertion of values in Enrolled Table
+
+mysql> insert into Enrolled values("iit01","c201"),("iit02","c101"),
+    -> ("iit03","c201"),("iit01","c501"),
+    -> ("iit04","c301");
+Query OK, 5 rows affected (0.46 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Resulting Table
+
+mysql> select * from enrolled;
++--------+-------+
+| RollNo | CCode |
++--------+-------+
+| iit01  | c201  |
+| iit02  | c101  |
+| iit03  | c201  |
+| iit01  | c501  |
+| iit04  | c301  |
++--------+-------+
+5 rows in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Checking whether duplicate values can be inserted
+
+mysql> insert into Enrolled values("iit01","c201");
+Query OK, 1 row affected (0.22 sec)
+
+
+/** Yes, Duplicate values can be inserted.
+*   As you can see in the below table row1 and row6 has the duplicate records hence duplicate values can be inserted.
+*   It can be reasoned by the fact that there is no primary key defined in the Enrolled table hence the duplicacy. 
+**/
+
+mysql> select * from enrolled;
++--------+-------+
+| RollNo | CCode |
++--------+-------+
+| iit01  | c201  |   **
+| iit02  | c101  |
+| iit03  | c201  |
+| iit01  | c501  |
+| iit04  | c301  |
+| iit01  | c201  |   **
++--------+-------+
+6 rows in set (0.02 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Checking :- Any Combination of RollNo and CCode can be inserted.
+
+mysql> insert into Enrolled values("iit11","c602");
+Query OK, 1 row affected (0.15 sec)
+
+
+/** Yes, Can be inserted.
+*   In the below table row 7 consist of RollNo and CCode which is not present in Student and Course tables respectively. 
+*   Thus any RollNo and CCode combination can be inserted as there is no relationship among tables.
+*   Each act as an independent table.
+**/
+
+
+mysql> select * from enrolled;
++--------+-------+
+| RollNo | CCode |
++--------+-------+
+| iit01  | c201  |
+| iit02  | c101  |
+| iit03  | c201  |
+| iit01  | c501  |
+| iit04  | c301  |
+| iit01  | c201  |
+| iit11  | c602  | **
++--------+-------+
+7 rows in set (0.00 sec)
+
+
+=====================================================================================================================================================
+# Question 3
+
+Find the list of students who are from Patna and Mumbai cities.
+Assume that you have made some entries with Patna and Mumbai cities.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+// Filtering Student records with required city
+
+mysql> select * from Student where City = "mumbai" or City = "patna";
++--------+---------+--------+--------+
+| RollNo | SName   | Gender | City   |
++--------+---------+--------+--------+
+| iit04  | sushant | M      | patna  |
+| iit05  | ramesh  | M      | mumbai |
+| iit07  | amish   | M      | mumbai |
+| iit08  | raj     | M      | patna  |
+| iit09  | imam    | M      | mumbai |
++--------+---------+--------+--------+
+5 rows in set (0.01 sec)
+
+
+=====================================================================================================================================================
+# Question 4  
+
+Find all the distinct names of Male students.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Distinct name of Male students. 'M'
+
+mysql> select distinct SName from student where Gender = 'M';
++---------+
+| SName   |
++---------+
+| tanishq |
+| anish   |
+| sushant |
+| ramesh  |
+| rajan   |
+| amish   |
+| raj     |
+| imam    |
+| srajan  |
++---------+
+9 rows in set (0.13 sec)
+
+
+=====================================================================================================================================================
+# Question 5
+
+Find the name of the courses which have credit less than 6 and rename it as Courses_with_lessCredit.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Course name for course credit less than 6.
+
+mysql> select CName from Course where Credit < 6;
++--------------------+
+| CName              |
++--------------------+
+| english            |
+| Calculus           |
+| Physical Education |
++--------------------+
+3 rows in set (0.11 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Note: - Using Courses_with_lessCredit as "lowCreditCourse".
+
+mysql> update course set CName = "lowCreditCourse" where Credit < 6;
+Query OK, 3 rows affected (0.95 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Resulting Course Table
+
+mysql> select * from course;
++-------+------------------+--------+
+| CCode | CName            | Credit |
++-------+------------------+--------+
+| c101  | science          |      8 |
+| c201  | maths            |      8 |
+| c301  | lowCreditCourse  |      4 | **
+| c401  | social science   |      6 |
+| c501  | biology          |      6 |
+| c601  | advanced physics |      8 |
+| c701  | Arts             |      6 |
+| c801  | lowCreditCourse  |      3 | **
+| c901  | CPP              |      6 |
+| c1001 | lowCreditCourse  |      4 | **
++-------+------------------+--------+ 
+10 rows in set (0.00 sec)
+
+
+=====================================================================================================================================================
+# Question 6
+
+Update the CName of CS354 course from “Database” to “Database Systems”
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Note: - Changing Course name whose Course Code is "c201" instead of "CS354" as former is entered in course table.
+
+mysql> update course set CName = "mathematics" where CCode = "c201";
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from course;
++-------+------------------+--------+
+| CCode | CName            | Credit |
++-------+------------------+--------+
+| c101  | science          |      8 |
+| c201  | mathematics      |      8 | **
+| c301  | lowCreditCourse  |      4 |
+| c401  | social science   |      6 |
+| c501  | biology          |      6 |
+| c601  | advanced physics |      8 |
+| c701  | Arts             |      6 |
+| c801  | lowCreditCourse  |      3 |
+| c901  | CPP              |      6 |
+| c1001 | lowCreditCourse  |      4 |
++-------+------------------+--------+
+10 rows in set (0.02 sec)
+
+
+
+=====================================================================================================================================================
+# Question 7
+
+Now make RollNo and CCode as the primary keys of Student and Course tables respectively
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Adding Primary Key to Student Table.
+
+mysql> alter table student
+    -> add primary key(RollNo);
+Query OK, 0 rows affected (3.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Adding Primary Key to Course Table.
+
+mysql> alter table course
+    -> add primary key(CCode);
+Query OK, 0 rows affected (1.99 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+=====================================================================================================================================================
+# Question 8
+
+Create a primary key in table Enrolled. The primary key consists of attributes RollNo and CCode.
+Can you successfully define it?
+If there are any duplicate entries in the table then delete those records and try to define the primary key again.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Adding Primary Key (RollNo, CCode) to Enrolled Table.
+
+mysql> alter table enrolled
+    -> add primary key(RollNo,CCode);
+ERROR 1062 (23000): Duplicate entry 'iit01-c201' for key 'enrolled.PRIMARY'
+
+/** Not Successful in creating primary key. 
+*   As table already contains duplicate record which was entered in # Question 2.
+*   Primary Key contains unique and not null values.
+*   Thus need to delete the record before declaring the primary key.
+**/
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Deleting the duplicate record.
+
+mysql> delete from enrolled where RollNo = "iit01" and CCode = "c201";
+Query OK, 2 rows affected (0.11 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Adding Primary key to Enrolled Table.
+
+mysql> alter table enrolled
+    -> add primary key(RollNo,CCode);
+Query OK, 0 rows affected (3.26 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+// Successful
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Checking if duplicate records can be entered to Enrolled Table.
+
+mysql> insert into Enrolled values("iit01","c201");
+Query OK, 1 row affected (0.97 sec)
+
+// No. They Cannot be entered
+
+mysql> insert into Enrolled values("iit01","c201");
+ERROR 1062 (23000): Duplicate entry 'iit01-c201' for key 'enrolled.PRIMARY'
+
+
+
+=====================================================================================================================================================
+# Question 9
+
+Create two foreign keys in the Enrolled table.
+One foreign key is defined on attribute RollNo which refers to the RollNo attribute of Students table.
+Another foreign key is defined on attribute CCode which refers to the CCode attribute of Course table.
+Insert 15 new entries in this table. Check again whether you can insert any combination of RollNo and CCode now.
+Write the necessary justification.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Adding foreign Key to Enrolled Table with Reference table as Student table.
+
+mysql> alter table enrolled
+    -> add constraint fk1 foreign key (RollNo) references Student(RollNo);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`dblab`.`#sql-3880_25`, CONSTRAINT `fk1` FOREIGN KEY (`RollNo`) REFERENCES `student` (`RollNo`))
+
+/** We cannot add foreign key as Enrolled table contains RollNo iit11 which is not present in Student Table.
+*   Thus violating Foreign Key constraint.
+*   We need to delete the record in order to add foreign key.
+**/
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Deleting the invalid record.
+ 
+mysql> delete from enrolled where RollNo = "iit11" and CCode = "c602";
+Query OK, 1 row affected (0.18 sec)
+
+// Adding Foreign Key.
+
+mysql> alter table enrolled
+    -> add constraint fk1 foreign key (RollNo) references Student(RollNo);
+Query OK, 5 rows affected (3.21 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Similarly for Course Table
+
+mysql> insert into Enrolled values("iit10","c652");
+Query OK, 1 row affected (0.26 sec)
+
+mysql> alter table enrolled
+    -> add constraint fk2 foreign key (CCode) references Course(CCode);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`dblab`.`#sql-3880_25`, CONSTRAINT `fk2` FOREIGN KEY (`CCode`) REFERENCES `course` (`CCode`))
+mysql> delete from enrolled where RollNo = "iit10" and CCode = "c652";
+Query OK, 1 row affected (0.27 sec)
+
+mysql> alter table enrolled
+    -> add constraint fk2 foreign key (CCode) references Course(CCode);
+Query OK, 5 rows affected (3.08 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+//Checking for the foreign key Constraint
+
+mysql> insert into Enrolled values("iit62","c652");
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`dblab`.`enrolled`, CONSTRAINT `fk1` FOREIGN KEY (`RollNo`) REFERENCES `student` (`RollNo`))
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Adding 15 entries
+
+mysql> insert into Enrolled values("iit07","c101"),("iit08","c201"),
+    -> ("iit09","c301"),("iit05","c401"),
+    -> ("iit06","c501"),("iit07","c601"),
+    -> ("iit08","c101"),("iit09","c801"),
+    -> ("iit10","c301"),("iit02","c1001"),
+    -> ("iit03","c101"),("iit04","c201"),
+    -> ("iit05","c301"),("iit06","c401"),
+    -> ("iit07","c501");
+Query OK, 15 rows affected (0.37 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Resulting table
+
+mysql> select * from enrolled;
++--------+-------+
+| RollNo | CCode |
++--------+-------+
+| iit02  | c1001 |
+| iit02  | c101  |
+| iit03  | c101  |
+| iit07  | c101  |
+| iit08  | c101  |
+| iit01  | c201  |
+| iit03  | c201  |
+| iit04  | c201  |
+| iit08  | c201  |
+| iit04  | c301  |
+| iit05  | c301  |
+| iit09  | c301  |
+| iit10  | c301  |
+| iit05  | c401  |
+| iit06  | c401  |
+| iit01  | c501  |
+| iit06  | c501  |
+| iit07  | c501  |
+| iit07  | c601  |
+| iit09  | c801  |
++--------+-------+
+20 rows in set (0.00 sec)
+
+
+=====================================================================================================================================================
+# Question 10
+
+From Enrolled table, find the course codes which were enrolled by student with RollNo "1901CS09".
+Assume that you have already made an entry with this RollNo.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Filtering all Course code with RollNo "iit07" instead of "1901CS09" as former is entered in Student and Enrolled table.
+
+mysql> select CCode from enrolled where RollNo = "iit07";
++-------+
+| CCode |
++-------+
+| c101  |
+| c501  |
+| c601  |
++-------+
+3 rows in set (0.03 sec)
+
+
+=====================================================================================================================================================
+# Question 11
+
+Find all the unique name of female students who are enrolled to CS204 course. Assume there is a course with CCode CS204.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Filtering all unique female names enrolled in course = "c101" instead of "CS204" as former is entered in Course and Enrolled table.
+// Using nested sql queries to find the reuqired result
+
+mysql> select distinct SName from Student where RollNo in (Select RollNo from enrolled where CCode = "c101") and Gender = 'F';
++--------+
+| SName  |
++--------+
+| tarusi |
++--------+
+1 row in set (0.00 sec)
+
+
+
+
+=====================================================================================================================================================
+# Question 12
+
+Add an attribute YoE (Year of Enrollment) of int type in Enrolled table and update each entry with a relevant year.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Adding YOE column to Enrolled Table.
+
+mysql> alter table enrolled
+    -> add YOE int;
+Query OK, 0 rows affected (2.15 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Adding default value as 2019
+
+mysql> update enrolled set YOE = 2019;
+Query OK, 20 rows affected (0.08 sec)
+Rows matched: 20  Changed: 20  Warnings: 0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Resulting Enrolled Table
+
+mysql> select * from enrolled;
++--------+-------+------+
+| RollNo | CCode | YOE  |
++--------+-------+------+
+| iit01  | c201  | 2019 |
+| iit01  | c501  | 2019 |
+| iit02  | c1001 | 2019 |
+| iit02  | c101  | 2019 |
+| iit03  | c101  | 2019 |
+| iit03  | c201  | 2019 |
+| iit04  | c201  | 2019 |
+| iit04  | c301  | 2019 |
+| iit05  | c301  | 2019 |
+| iit05  | c401  | 2019 |
+| iit06  | c401  | 2019 |
+| iit06  | c501  | 2019 |
+| iit07  | c101  | 2019 |
+| iit07  | c501  | 2019 |
+| iit07  | c601  | 2019 |
+| iit08  | c101  | 2019 |
+| iit08  | c201  | 2019 |
+| iit09  | c301  | 2019 |
+| iit09  | c801  | 2019 |
+| iit10  | c301  | 2019 |
++--------+-------+------+
+20 rows in set (0.14 sec)
+
+
+
+
+=====================================================================================================================================================
+# Question 13
+
+Check whether a student can take the same course in two different years. If yes then show an
+example. If not then suggest and show with an example what you need to do to capture this kind of
+requirements.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Checking for the condition.
+
+mysql> insert into enrolled values("iit01","c501",2021);
+ERROR 1062 (23000): Duplicate entry 'iit01-c501' for key 'enrolled.PRIMARY'
+
+/** It can be updated by changing the primary key from combination of (RollNo,CCode) to (RollNo,CCode,YOE).
+*   It can be done by dropping the current primary key and adding a new primary key.
+**/
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// dropping and adding primary key
+
+mysql> alter table enrolled drop primary key, add primary key (RollNo,CCode,YOE);
+Query OK, 0 rows affected (3.52 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// inserting same course with different year
+
+mysql> insert into enrolled values("iit01","c501",2021);
+Query OK, 1 row affected (0.16 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+//Resulting Enrolled Table
+
+mysql> select * from enrolled;
++--------+-------+------+
+| RollNo | CCode | YOE  |
++--------+-------+------+
+| iit02  | c1001 | 2019 |
+| iit02  | c101  | 2019 |
+| iit03  | c101  | 2019 |
+| iit07  | c101  | 2019 |
+| iit08  | c101  | 2019 |
+| iit01  | c201  | 2019 |
+| iit03  | c201  | 2019 |
+| iit04  | c201  | 2019 |
+| iit08  | c201  | 2019 |
+| iit04  | c301  | 2019 |
+| iit05  | c301  | 2019 |
+| iit09  | c301  | 2019 |
+| iit10  | c301  | 2019 |
+| iit05  | c401  | 2019 |
+| iit06  | c401  | 2019 |
+| iit01  | c501  | 2019 | **
+| iit01  | c501  | 2021 | **
+| iit06  | c501  | 2019 |
+| iit07  | c501  | 2019 |
+| iit07  | c601  | 2019 |
+| iit09  | c801  | 2019 |
++--------+-------+------+
+21 rows in set (0.00 sec)
+
+=====================================================================================================================================================
+
++---------+
+| THE END |
++---------+

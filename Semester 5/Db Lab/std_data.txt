@@ -1,0 +1,11 @@
+1901CB02,Sahil Jindal,M,Bathinda,jindalsahil@gmail.com,2002-01-12
+1901GH08,Dharika Rajput,F,Delhi,rajputdharika@gmail.com,2002-06-11
+1901MM34,Sanchit Bansal,M,Manali,sanchit@gmail.com,2001-08-23
+1901GS53,Ankita Gupta,F,Gurgaon,guptaankita@gmail.com,2001-05-04
+1901DJ59,Narsi Ram,M,Mount Abu,ramnarsi@gmail.com,2002-09-07
+1901SG49,Samarth Kansal,M,Shimla,sammykansal@gmail.com,2001-12-10
+1901QW38,Mohit Sharma,M,Chennai,sharmamohit@gmail.com,2000-09-21
+1901SJ19,Saurabh Goyal,M,Hyderabad,saurabh@gmail.com,2002-03-12
+1901AB07,Gyan Chand,M,Bangalore,chandgyan@gmail.com,2001-11-03
+1901TB19,Rashi Gombher,F,Nagpur,rashi@gmail.com,2002-02-22
+1901GJ10,Kartik Narayan,M,Mizram,narayan@gmail.com,2002-08-29
