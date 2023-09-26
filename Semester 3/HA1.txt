@@ -1,0 +1,249 @@
+TARUSI MITTAL
+1901CS65
+
+
+QUESTION (a): GIVEN A LIST L OF N UNORDERED INTEGERS. YOU ARE ASKED TO FIND OUT MINIMUM AS WELL AS MAXIMUM OF 
+N ELEMENTS. 
+ANALYZE THE COST OF YOUR ALGORITHM IN TERMS OF NUMBER OF COMPARISON MADE.
+
+ANSWER (a)
+Case 1:- If no of elements in the array are odd.
+
+ we define the 
+     minimum=First elementof the array 
+     maximum=First element of the array
+the current index is initalised to 1
+while(current index is less the the last position ){
+    compare the current index element with the element just next to it //1st comparison
+
+    compare the smallest of the two with the minimum element set//2nd comparison
+    if(the value is less than the current minimum set, change the current minimum value
+
+    compare the larger of the two with the maximum element set//3rd comparison
+    if(the value is more than the current maximum set, change the current maximum value
+  
+    the current index value to be increased by 2
+}
+        
+Case 2:- If n is even 
+
+ if(First element of the array id greater than second element of the array){
+     minimum=second element of the array
+     maximum=First element of the array
+   }
+ else{
+    minimum=First element of the array 
+    maximum=second element of the array
+    }
+
+starting the current index from position two
+
+while(current index is less than the second last position){
+     follow case 1
+     }
+     
+*********Total Operations made****************
+
+-> CASE 1: n is odd:
+                   3 comparisons at each step.
+                   total = 3*(n-1)/2
+
+-> CASE 2: n is even: 
+                    1 inital comparison in the starting between arr[0] and arr[1] 
+                    then 3 comparisons at each step
+                    total = 1 + 3*(n-2)/2
+
+ 
+
+--------------------------****************************************END OF QUESTION**********************************************--------------------------------
+
+QUESTION (b) DEVELOP A RECURSIVE CODE FOR TERNARY SEARCH. MAKE A COMPARISON OF WORST CASE COST FOR BINARY SEARCH AND TERNARY SEARCH FOR N=10-100 AND 
+FIND IF YOU CAN CONCLUDE WHICH ONE IS BETTER. 
+
+ANSWER (b)
+ 
+**********************TERNARY SEARCH***********************
+The steps involved in this algorithm are:
+(The list must be in sorted order)
+
+Step 1: Divide the search space (initially, the list) in three parts (with two mid-points: mid1 and mid2)
+Step 2: The target element is compared with the edge elements that is elements at location mid1, mid2 and the end of the search space. If element matches, go to step 3 else predict in which section the target element lies. The search space is reduced to 1/3rd. If the element is not in the list, go to step 4 or to step 1.
+Step 3: Element found. Return index and exit.
+Step 4: Element not found. Exit.
+
+
+initially left=0;
+right is initialised to size-1;
+and find is the element to find;
+
+int ternarySearch(int left, int right, int find, int ar[]) 
+{ 
+	if (right >= left) { 
+
+		Find the mid1 and mid2 
+		int mid1 = left + (right - left) / 3; 
+		int mid2 = right - (right - left) / 3; 
+
+		Check if find is present at first mid 
+		if (ar[mid1] == find) { 
+			return mid1; 
+		} 
+       Check if find is present at second mid 
+		if (ar[mid2] == find) { 
+			return mid2; 
+		} 
+
+		if find is not present at mid,check in which region it is present
+        then continuue the search operation in that region 
+
+		if (find < ar[mid1]) { 
+
+			The find lies in between left and mid1 
+			return ternarySearch(left, mid1 - 1, find, ar); 
+		} 
+		else if (find > ar[mid2]) { 
+
+			if The find lies in between mid2 and right
+			return ternarySearch(mid2 + 1, right, find, ar); 
+		} 
+		else { 
+
+			if The find lies in between mid1 and mid2 
+			return ternarySearch(mid1 + 1, mid2 - 1, find, ar); 
+		} 
+	} 
+
+	if find is not found then exit
+} 
+
+********Comparing ternary and binary search***********
+
+Worst case time complexity in ternary search:  (when element is in the middle)
+n=11
+Array - 1 2 3 4 5 6 7 8 9 10 11 
+key - 6
+
+Worst case time complexity in binary search:  (when element is at the end)
+n=11
+Array - 1 2 3 4 5 6 7 8 9 10 11
+key - 11
+NO. of iteration required 3
+
+
+
+The recursive formula for comparisons in worst case of Binary Search.
+   T(n) = T(n/2) + 2
+
+The recursive formula for comparisons in worst case of Ternary Search.
+   T(n) = T(n/3) + 4
+
+Time Complexity for Binary search = 2clog2n + O(1)
+Time Complexity for Ternary search = 4clog3n + O(1) = 2*((2 / Log2 3) * Log2n)>2clog2n
+hence binary seach is better than ternary search 
+
+
+------------------------*******************************************END OF QUESTION**********************************************---------------------------------
+
+
+QUESTION (c): PRINT ALL POSSIBLE PERMUTATIONS OF 1,2,3,4
+
+ANSWER (c)
+Function to print permutations of string 
+ The function takes three parameters: 
+ 1. String which needs to be permuted denoted by s
+ 2. Starting index of the string denoted by x
+ 3. Ending index of the string denoted by y
+
+void permutationofstring(string s, int x, int y){
+//base case
+if (starting index is equal to the ending index)
+display the string;
+
+else{
+// main code
+  initate integer i to starting index ie x
+  repeat until i equalises ending index ie y
+  (
+   swap the element at starting index of the string with the element at the current index at position i
+   ie swap(s[x, s[i])
+  
+   recurively calling the function for string, index x+1 and index y ie;
+   permutationofstring(s, x+1, y)
+
+   back swapping the element at starting index of the string with the element at the current index at position i
+   ie swap(s[x], s[i])
+  )
+ }
+
+}
+
+THE ANSWER WOULD BE
+1,2,3,4
+1,2,4,3
+1,3,2,4
+1,3,4,2
+1,4,3,2
+1,4,2,3
+2,1,3,4
+2,1,4,3
+2,3,1,4
+2,3,4,1
+2,4,3,1
+2,4,1,3
+3,2,1,4
+3,2,4,1
+3,1,2,4
+3,1,4,2
+3,4,1,2
+3,4,2,1
+4,2,3,1
+4,2,1,3
+4,3,2,1
+4,3,1,2
+4,1,3,2
+4,1,2,3
+
+
+------------------------*******************************************END OF QUESTION**********************************************---------------------------------
+QUESTION (d): PRINT ALL POSSIBLE COMBINATIONS OF 1,2,3,4
+
+ANSWER (d)
+initially index is 0;
+right is 1
+n is 4
+
+void combinations(int arr[], int n, int temp[], int index, int right, int i)
+{
+  if(i == right){
+    display temp;
+    exit;
+    }
+   if(i>= length)exit;
+ 
+   temp[index]=arr[i]
+
+  if we include the temporary data then
+  combinations(arr,n,temp,index,right,i+1);
+  
+  if we do not include the temporary data then
+  combinations(arr,n,temp,index,right,i+1);
+
+the ans will be when the right will run from first element till last element;
+
+THE ANSWER WOULD BE
+1 
+1,2
+1,2,3 
+1,2,3,4
+1,2,4
+1,3 
+1,3,4
+1,4
+2
+2,3
+2,3,4
+2,4
+3
+3,4
+4
+------------------------*******************************************END OF ASSIGNMENT**********************************************---------------------------------
